@@ -33,7 +33,7 @@ const DownloadSection: React.FC = () => {
   useEffect(() => {
     const fetchLatestRelease = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/YOUR-GITHUB-USERNAME/workflow-visualizer/releases/latest');
+        const response = await fetch('https://api.github.com/repos/peterkingsmesn/workflow-visualizer/releases/latest');
         if (response.ok) {
           const release = await response.json();
           setLatestRelease(release);
