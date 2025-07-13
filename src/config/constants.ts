@@ -47,7 +47,18 @@ export const CONFIG = {
       NETWORK_DIVISOR: 100,
       CACHE_BONUS: 20
     }
+  },
+
+  // Color Configuration
+  COLOR: {
+    YIQ_BRIGHTNESS_THRESHOLD: 128,
+    CONTRAST_RATIO_AA: 4.5,
+    CONTRAST_RATIO_AAA: 7.0,
   }
 };
 
-export default CONFIG;
+export const API_ROUTES = CONFIG.API.ENDPOINTS;
+
+export const getApiUrl = (endpoint: string) => {
+  return `${CONFIG.API.BASE_URL}${endpoint}`;
+};

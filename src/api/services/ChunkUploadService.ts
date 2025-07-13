@@ -16,7 +16,7 @@ interface ChunkInfo {
   hash?: string;
 }
 
-import { CONFIG, getApiUrl, API_ROUTES } from '../../config/constants';
+import { CONFIG } from '../../config/constants';
 
 export class ChunkUploadService {
   private static readonly DEFAULT_CHUNK_SIZE = CONFIG.UPLOAD.MAX_CHUNK_SIZE_MB * 1024 * 1024;
@@ -111,7 +111,7 @@ export class ChunkUploadService {
    * 업로드 세션 초기화
    */
   private async initializeUploadSession(file: File, totalChunks: number): Promise<{id: string}> {
-    const response = await fetch(getApiUrl(API_ROUTES.uploadInit()), {
+    const response = await fetch(`${CONFIG.API.BASE_URL}${CONFIG.API.ENDPOINTS.UPLOAD_INIT}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ export class ChunkUploadService {
     formData.append('chunkHash', chunk.hash || '');
     formData.append('chunk', chunk.data);
 
-    const response = await fetch(getApiUrl(API_ROUTES.uploadChunk()), {
+    const response = await fetch(`${CONFIG.API.BASE_URL}${CONFIG.API.ENDPOINTS.UPLOAD_CHUNK}`, {
       method: 'POST',
       body: formData
     });
@@ -181,7 +181,7 @@ export class ChunkUploadService {
    * 업로드 완료 처리
    */
   private async finalizeUpload(sessionId: string): Promise<any> {
-    const response = await fetch(getApiUrl(API_ROUTES.uploadFinalize()), {
+    const response = await fetch(`${CONFIG.API.BASE_URL}${CONFIG.API.ENDPOINTS.UPLOAD_FINALIZE}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ export class ChunkUploadService {
    * 업로드 중단
    */
   async cancelUpload(sessionId: string): Promise<void> {
-    await fetch(getApiUrl(API_ROUTES.uploadCancel()), {
+    await fetch(`${CONFIG.API.BASE_URL}${CONFIG.API.ENDPOINTS.UPLOAD_CANCEL}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -252,7 +252,7 @@ export class ChunkUploadService {
    */
   async resumeUpload(sessionId: string): Promise<void> {
     // 서버에서 업로드된 chunk 정보 조회
-    const response = await fetch(getApiUrl(API_ROUTES.uploadStatus(sessionId)));
+    const response = await fetch(`${CONFIG.API.BASE_URL}${CONFIG.API.ENDPOINTS.UPLOAD_STATUS}`);
     const status = await response.json();
     
     // 업로드되지 않은 chunk들만 재업로드
