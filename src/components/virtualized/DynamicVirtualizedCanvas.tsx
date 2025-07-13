@@ -43,7 +43,9 @@ interface ItemData {
   enableMultiSelect: boolean;
 }
 
-interface DynamicItemProps extends ListChildComponentProps {
+interface DynamicItemProps {
+  index: number;
+  style: React.CSSProperties;
   data: ItemData;
 }
 

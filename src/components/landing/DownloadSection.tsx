@@ -99,8 +99,8 @@ const DownloadSection: React.FC = () => {
             className="flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
             onClick={() => {
               // 다운로드 통계 추적
-              if (typeof gtag !== 'undefined') {
-                gtag('event', 'download', {
+              if (typeof (window as any).gtag !== 'undefined') {
+                (window as any).gtag('event', 'download', {
                   event_category: 'desktop_app',
                   event_label: userOS,
                   value: 1

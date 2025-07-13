@@ -17,7 +17,9 @@ interface VirtualizedNodeListProps {
   filterQuery?: string;
 }
 
-interface NodeItemProps extends ListChildComponentProps {
+interface NodeItemProps {
+  index: number;
+  style: React.CSSProperties;
   data: {
     nodes: Node[];
     onNodeClick?: (node: Node) => void;

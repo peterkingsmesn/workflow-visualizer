@@ -3,7 +3,7 @@
 export const CONFIG = {
   // API Configuration
   API: {
-    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001',
+    BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
     ENDPOINTS: {
       WORKFLOWS: '/api/workflows',
       FILES: '/api/files',
@@ -22,30 +22,30 @@ export const CONFIG = {
 
   // Upload Configuration
   UPLOAD: {
-    MAX_FILE_SIZE_MB: parseInt(import.meta.env.VITE_MAX_FILE_SIZE_MB) || 50,
-    MAX_CHUNK_SIZE_MB: parseInt(import.meta.env.VITE_MAX_CHUNK_SIZE_MB) || 1,
-    MAX_CONCURRENT_UPLOADS: parseInt(import.meta.env.VITE_MAX_CONCURRENT_UPLOADS) || 3,
-    RETRY_ATTEMPTS: parseInt(import.meta.env.VITE_UPLOAD_RETRY_ATTEMPTS) || 3,
-    MAX_FILES: parseInt(import.meta.env.VITE_MAX_UPLOAD_FILES) || 10
+    MAX_FILE_SIZE_MB: 50,
+    MAX_CHUNK_SIZE_MB: 1,
+    MAX_CONCURRENT_UPLOADS: 3,
+    RETRY_ATTEMPTS: 3,
+    MAX_FILES: 10
   },
 
   // Performance Configuration
   PERFORMANCE: {
-    MONITOR_INTERVAL_MS: parseInt(import.meta.env.VITE_PERFORMANCE_MONITOR_INTERVAL_MS) || 5000,
-    DATA_RETENTION_MS: parseInt(import.meta.env.VITE_PERFORMANCE_DATA_RETENTION_MS) || 86400000, // 24 hours
+    MONITOR_INTERVAL_MS: 5000,
+    DATA_RETENTION_MS: 86400000, // 24 hours
     THRESHOLDS: {
-      MEMORY: parseFloat(import.meta.env.VITE_PERFORMANCE_MEMORY_THRESHOLD) || 0.8,
-      RENDER_TIME_MS: parseInt(import.meta.env.VITE_PERFORMANCE_RENDER_TIME_MS) || 16,
-      NETWORK_RESPONSE_MS: parseInt(import.meta.env.VITE_PERFORMANCE_NETWORK_RESPONSE_MS) || 2000,
-      INTERACTION_RESPONSE_MS: parseInt(import.meta.env.VITE_PERFORMANCE_INTERACTION_RESPONSE_MS) || 100,
-      CACHE_HIT_RATE: parseFloat(import.meta.env.VITE_PERFORMANCE_CACHE_HIT_RATE) || 0.8,
-      ERROR_RATE: parseFloat(import.meta.env.VITE_PERFORMANCE_ERROR_RATE) || 0.02
+      MEMORY: 0.8,
+      RENDER_TIME_MS: 16,
+      NETWORK_RESPONSE_MS: 2000,
+      INTERACTION_RESPONSE_MS: 100,
+      CACHE_HIT_RATE: 0.8,
+      ERROR_RATE: 0.02
     },
     SCORING: {
-      MEMORY_PENALTY: parseInt(import.meta.env.VITE_PERFORMANCE_MEMORY_PENALTY) || 50,
-      RENDER_PENALTY: parseInt(import.meta.env.VITE_PERFORMANCE_RENDER_PENALTY) || 2,
-      NETWORK_DIVISOR: parseInt(import.meta.env.VITE_PERFORMANCE_NETWORK_DIVISOR) || 100,
-      CACHE_BONUS: parseInt(import.meta.env.VITE_PERFORMANCE_CACHE_BONUS) || 20
+      MEMORY_PENALTY: 50,
+      RENDER_PENALTY: 2,
+      NETWORK_DIVISOR: 100,
+      CACHE_BONUS: 20
     }
   },
 
