@@ -7,6 +7,8 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -79,7 +81,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     
     steps:
     - name: Download all artifacts
@@ -88,10 +90,32 @@ jobs:
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: ${{ github.ref_name || 'latest' }}
+        name: "Workflow Visualizer ${{ github.ref_name || 'Latest Build' }}"
+        body: |
+          🚀 **Workflow Visualizer Desktop App**
+          
+          월 $9.9 구독으로 모든 고급 기능을 사용하세요!
+          
+          📥 **다운로드:**
+          - Windows: `.exe` 파일
+          - macOS: `.dmg` 파일  
+          - Linux: `.AppImage` 파일
+          
+          🔑 **사용 방법:**
+          1. [Gumroad에서 구독](https://spiderverse10.gumroad.com/l/workflow-visualizer)
+          2. 라이센스 키 수령
+          3. 앱 실행 후 키 입력
+          4. 모든 기능 활성화!
+          
+          **시스템 요구사항:**
+          - Windows 10+, macOS 10.14+, Linux (Ubuntu 18.04+)
+          - 4GB RAM, 1GB 저장공간
         files: |
           windows-app/*
           macos-app/*
           linux-app/*
         generate_release_notes: true
+        prerelease: ${{ !startsWith(github.ref, 'refs/tags/v') }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

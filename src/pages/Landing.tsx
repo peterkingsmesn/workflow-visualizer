@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import DownloadSection from '../components/landing/DownloadSection';
 
 // Custom hook: useScrollAnimation
 const useScrollAnimation = () => {
@@ -1242,6 +1243,9 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 다운로드 섹션 */}
+      <DownloadSection />
     </div>
   );
 };
