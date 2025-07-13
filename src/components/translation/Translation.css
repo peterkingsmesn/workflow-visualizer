@@ -1,0 +1,509 @@
+/* 번역 관리 컴포넌트 스타일 */
+.translation-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--background-color, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.translation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: var(--surface-color, #f9fafb);
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.translation-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.translation-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.translation-action {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  background: var(--button-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.translation-action:hover {
+  background: var(--button-hover, #f3f4f6);
+  border-color: var(--primary-color, #3b82f6);
+}
+
+.translation-action.primary {
+  background: var(--primary-color, #3b82f6);
+  color: white;
+  border-color: var(--primary-color, #3b82f6);
+}
+
+.translation-action.primary:hover {
+  background: var(--primary-color-dark, #2563eb);
+}
+
+.translation-filters {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  background: var(--surface-color, #f9fafb);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary, #6b7280);
+  margin: 0;
+}
+
+.filter-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 4px;
+  background: var(--input-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+  font-size: 12px;
+  min-width: 100px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(59, 130, 246, 0.1));
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  background: var(--input-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+  font-size: 14px;
+  placeholder-color: var(--text-secondary, #6b7280);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(59, 130, 246, 0.1));
+}
+
+.translation-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.translation-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  padding: 16px;
+  background: var(--surface-color, #f9fafb);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+  margin: 0 0 4px 0;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.translation-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface-color, #ffffff);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.translation-table th {
+  background: var(--table-header, #f9fafb);
+  padding: 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.translation-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  vertical-align: top;
+}
+
+.translation-table tr:last-child td {
+  border-bottom: none;
+}
+
+.translation-table tr:hover {
+  background: var(--hover-color, #f9fafb);
+}
+
+.translation-key {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 12px;
+  color: var(--code-color, #1f2937);
+  background: var(--code-background, #f3f4f6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.translation-value {
+  font-size: 13px;
+  color: var(--text-primary, #1f2937);
+  line-height: 1.4;
+  max-width: 300px;
+}
+
+.translation-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.translation-status.completed {
+  background: var(--success-background, #d1fae5);
+  color: var(--success-color, #065f46);
+}
+
+.translation-status.pending {
+  background: var(--warning-background, #fef3c7);
+  color: var(--warning-color, #92400e);
+}
+
+.translation-status.missing {
+  background: var(--error-background, #fee2e2);
+  color: var(--error-color, #991b1b);
+}
+
+.translation-status.outdated {
+  background: var(--info-background, #dbeafe);
+  color: var(--info-color, #1e40af);
+}
+
+.translation-actions-cell {
+  display: flex;
+  gap: 4px;
+}
+
+.translation-action-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--action-background, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.translation-action-btn:hover {
+  background: var(--action-hover, #e5e7eb);
+  color: var(--text-primary, #1f2937);
+}
+
+.translation-action-btn.edit {
+  background: var(--info-color, #3b82f6);
+  color: white;
+}
+
+.translation-action-btn.edit:hover {
+  background: var(--info-color-dark, #2563eb);
+}
+
+.translation-action-btn.delete {
+  background: var(--error-color, #ef4444);
+  color: white;
+}
+
+.translation-action-btn.delete:hover {
+  background: var(--error-color-dark, #dc2626);
+}
+
+.translation-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.translation-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  color: var(--text-tertiary, #9ca3af);
+}
+
+.translation-empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0 0 8px 0;
+}
+
+.translation-empty-message {
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.translation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.translation-modal-content {
+  background: var(--surface-color, #ffffff);
+  border-radius: 8px;
+  padding: 24px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.translation-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.translation-modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+}
+
+.translation-modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--action-background, #f3f4f6);
+  color: var(--text-secondary, #6b7280);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.translation-modal-close:hover {
+  background: var(--action-hover, #e5e7eb);
+  color: var(--text-primary, #1f2937);
+}
+
+.translation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+}
+
+.form-input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  background: var(--input-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+  font-size: 14px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(59, 130, 246, 0.1));
+}
+
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.form-button {
+  padding: 10px 20px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  background: var(--button-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.form-button:hover {
+  background: var(--button-hover, #f3f4f6);
+  border-color: var(--primary-color, #3b82f6);
+}
+
+.form-button.primary {
+  background: var(--primary-color, #3b82f6);
+  color: white;
+  border-color: var(--primary-color, #3b82f6);
+}
+
+.form-button.primary:hover {
+  background: var(--primary-color-dark, #2563eb);
+}
+
+/* 다크 모드 */
+[data-theme="dark"] .translation-panel {
+  --background-color: #1f2937;
+  --surface-color: #374151;
+  --border-color: #4b5563;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --hover-color: #374151;
+  --input-background: #374151;
+  --button-background: #4b5563;
+  --button-hover: #374151;
+  --action-background: #4b5563;
+  --action-hover: #374151;
+  --table-header: #374151;
+  --code-background: #4b5563;
+  --code-color: #f9fafb;
+  --primary-color: #60a5fa;
+  --primary-color-alpha: rgba(96, 165, 250, 0.2);
+  --primary-color-dark: #3b82f6;
+  --success-background: rgba(52, 211, 153, 0.1);
+  --success-color: #34d399;
+  --warning-background: rgba(251, 191, 36, 0.1);
+  --warning-color: #fbbf24;
+  --error-background: rgba(248, 113, 113, 0.1);
+  --error-color: #f87171;
+  --error-color-dark: #ef4444;
+  --info-background: rgba(96, 165, 250, 0.1);
+  --info-color: #60a5fa;
+  --info-color-dark: #3b82f6;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .translation-filters {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .translation-stats {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+  }
+  
+  .translation-table {
+    font-size: 12px;
+  }
+  
+  .translation-table th,
+  .translation-table td {
+    padding: 8px;
+  }
+  
+  .translation-modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-button {
+    width: 100%;
+  }
+}

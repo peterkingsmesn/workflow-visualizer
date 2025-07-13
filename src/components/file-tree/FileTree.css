@@ -1,0 +1,201 @@
+/* 파일 트리 컴포넌트 스타일 */
+.file-tree-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--background-color, #ffffff);
+  border-right: 1px solid var(--border-color, #e5e7eb);
+}
+
+.file-tree-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  background: var(--surface-color, #f9fafb);
+}
+
+.file-tree-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+}
+
+.file-tree-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.file-tree-search {
+  padding: 0 16px 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--input-background, #ffffff);
+  color: var(--text-primary, #1f2937);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(59, 130, 246, 0.1));
+}
+
+.file-tree-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.tree-node {
+  position: relative;
+  user-select: none;
+}
+
+.tree-node-content {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.tree-node-content:hover {
+  background: var(--hover-color, #f3f4f6);
+}
+
+.tree-node-content.selected {
+  background: var(--primary-color-light, #eff6ff);
+  color: var(--primary-color, #3b82f6);
+}
+
+.tree-node-indent {
+  width: 16px;
+  flex-shrink: 0;
+}
+
+.tree-node-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-right: 6px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.tree-node-expand {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: transform 0.15s ease;
+}
+
+.tree-node-expand:hover {
+  background: var(--hover-color, #f3f4f6);
+}
+
+.tree-node-expand.expanded {
+  transform: rotate(90deg);
+}
+
+.tree-node-label {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-primary, #1f2937);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-node-size {
+  font-size: 11px;
+  color: var(--text-tertiary, #9ca3af);
+  margin-left: 8px;
+}
+
+.tree-node-children {
+  margin-left: 16px;
+}
+
+.file-tree-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-secondary, #6b7280);
+  font-size: 14px;
+}
+
+.file-tree-loading {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-secondary, #6b7280);
+  font-size: 14px;
+}
+
+.refresh-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-secondary, #6b7280);
+  transition: all 0.15s ease;
+}
+
+.refresh-button:hover {
+  background: var(--hover-color, #f3f4f6);
+  color: var(--text-primary, #1f2937);
+}
+
+/* 다크 모드 */
+[data-theme="dark"] .file-tree-panel {
+  --background-color: #1f2937;
+  --surface-color: #374151;
+  --border-color: #4b5563;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --hover-color: #374151;
+  --input-background: #374151;
+  --primary-color: #60a5fa;
+  --primary-color-light: rgba(96, 165, 250, 0.1);
+  --primary-color-alpha: rgba(96, 165, 250, 0.2);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .file-tree-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    z-index: 100;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .file-tree-header {
+    padding: 12px;
+  }
+  
+  .file-tree-search {
+    padding: 0 12px 12px;
+  }
+}

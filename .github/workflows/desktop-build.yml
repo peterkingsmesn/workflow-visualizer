@@ -1,0 +1,288 @@
+name: 🖥️ Desktop App Build - Multi-Platform EXE
+
+on:
+  push:
+    tags:
+      - 'desktop-v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+env:
+  ELECTRON_CACHE: ${{ github.workspace }}/.cache/electron
+  ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+
+jobs:
+  # 💰 웹 앱 빌드 (모든 플랫폼에서 공통 사용)
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 🔧 Install dependencies
+        run: npm ci
+
+      - name: 🏗️ Build web application
+        run: npm run build
+
+      - name: 📤 Upload web build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+          retention-days: 1
+
+  # 💰 Windows EXE 빌드
+  build-windows:
+    needs: build-web
+    runs-on: windows-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📥 Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+
+      - name: 🔧 Install desktop dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: 🏗️ Build Windows EXE
+        working-directory: desktop
+        run: npm run build:windows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+
+      - name: 📤 Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-exe
+          path: desktop/dist/*.exe
+          retention-days: 30
+
+      - name: 📋 List Windows build files
+        working-directory: desktop/dist
+        run: dir
+
+  # 💰 macOS APP/DMG 빌드 (Intel + Apple Silicon)
+  build-macos:
+    needs: build-web
+    runs-on: macos-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📥 Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+
+      - name: 🔧 Install desktop dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: 🍎 Setup macOS signing
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
+        run: |
+          echo "Setting up macOS code signing..."
+
+      - name: 🏗️ Build macOS APP/DMG
+        working-directory: desktop
+        run: npm run build:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
+
+      - name: 📤 Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: desktop/dist/*.dmg
+          retention-days: 30
+
+      - name: 📋 List macOS build files
+        working-directory: desktop/dist
+        run: ls -la
+
+  # 💰 Linux AppImage 빌드
+  build-linux:
+    needs: build-web
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📥 Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: dist/
+
+      - name: 🔧 Install desktop dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: 🐧 Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3-dev libatk-bridge2.0-dev libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libxss1 libasound2-dev
+
+      - name: 🏗️ Build Linux AppImage
+        working-directory: desktop
+        run: npm run build:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-appimage
+          path: desktop/dist/*.AppImage
+          retention-days: 30
+
+      - name: 📋 List Linux build files
+        working-directory: desktop/dist
+        run: ls -la
+
+  # 💰 GitHub Release 생성 (모든 플랫폼 완료 후)
+  create-release:
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/desktop-v')
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📥 Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts/
+
+      - name: 📋 List all artifacts
+        run: |
+          echo "=== All Release Artifacts ==="
+          find release-artifacts/ -type f -name "*.exe" -o -name "*.dmg" -o -name "*.AppImage" | sort
+
+      - name: 🏷️ Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/desktop-v}" >> $GITHUB_OUTPUT
+
+      - name: 📝 Create Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << EOF
+          # 🖥️ Workflow Visualizer Desktop v${{ steps.version.outputs.VERSION }}
+          
+          ## 💰 Subscription: $9.9/month
+          
+          ### 📦 Downloads by Platform:
+          
+          | Platform | File | Architecture |
+          |----------|------|--------------|
+          | 🪟 **Windows** | \`WorkflowVisualizer-Setup-${{ steps.version.outputs.VERSION }}.exe\` | x64 |
+          | 🍎 **macOS Intel** | \`WorkflowVisualizer-${{ steps.version.outputs.VERSION }}-x64.dmg\` | Intel (x64) |
+          | 🍎 **macOS Apple Silicon** | \`WorkflowVisualizer-${{ steps.version.outputs.VERSION }}-arm64.dmg\` | Apple Silicon (arm64) |
+          | 🐧 **Linux** | \`WorkflowVisualizer-${{ steps.version.outputs.VERSION }}.AppImage\` | x64 |
+          
+          ### ✨ Features:
+          - 🔄 **Real-time workflow analysis**
+          - 📊 **Advanced code metrics**
+          - 🔍 **Dependency visualization** 
+          - 🚀 **Performance insights**
+          - 🛡️ **Security scanning**
+          - 📱 **Multi-device support** (3 devices for PRO)
+          - 🌐 **Offline capability** (30 days)
+          - 🔄 **Auto-updates**
+          
+          ### 🔐 License Requirements:
+          - **FREE**: 10 files, basic analysis
+          - **PRO**: Unlimited files, advanced features, 3 devices (\$9.9/month)
+          - **ENTERPRISE**: Team management, unlimited devices (\$49/month)
+          
+          ### 📋 System Requirements:
+          - **Windows**: Windows 10/11 (64-bit)
+          - **macOS**: macOS 10.15+ (Catalina or later)
+          - **Linux**: Ubuntu 18.04+ or equivalent
+          
+          ### 🔧 Installation:
+          1. Download the appropriate file for your platform
+          2. Install and launch the application
+          3. Enter your license key (get one at [workflow-visualizer.com](https://workflow-visualizer.com))
+          4. Start analyzing your code!
+          
+          ---
+          
+          💡 **Need a license?** Subscribe at [workflow-visualizer.com](https://workflow-visualizer.com) to get your license key.
+          EOF
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: desktop-v${{ steps.version.outputs.VERSION }}
+          name: "🖥️ Desktop App v${{ steps.version.outputs.VERSION }}"
+          body_path: release_notes.md
+          files: |
+            release-artifacts/windows-exe/*.exe
+            release-artifacts/macos-dmg/*.dmg
+            release-artifacts/linux-appimage/*.AppImage
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # 💰 빌드 성공 알림 (Slack/Discord 등)
+  notify-success:
+    needs: [create-release]
+    runs-on: ubuntu-latest
+    if: success() && startsWith(github.ref, 'refs/tags/desktop-v')
+    steps:
+      - name: 🎉 Notify build success
+        run: |
+          echo "🎉 Desktop build completed successfully!"
+          echo "📦 All platform executables created:"
+          echo "  - Windows: .exe"
+          echo "  - macOS: .dmg (Intel + Apple Silicon)"  
+          echo "  - Linux: .AppImage"
+          echo "💰 Ready for $9.9/month subscription distribution!"

@@ -1,0 +1,681 @@
+/* 🚀 접근성 최적화: 종합 접근성 스타일 */
+
+/* ===== 접근성 변수 정의 ===== */
+:root {
+  --a11y-focus-color: #3b82f6;
+  --a11y-focus-bg: rgba(59, 130, 246, 0.1);
+  --a11y-error-color: #ef4444;
+  --a11y-warning-color: #f59e0b;
+  --a11y-success-color: #10b981;
+  --a11y-info-color: #3b82f6;
+  --a11y-text-primary: #1f2937;
+  --a11y-text-secondary: #6b7280;
+  --a11y-text-tertiary: #9ca3af;
+  --a11y-bg-primary: #ffffff;
+  --a11y-bg-secondary: #f9fafb;
+  --a11y-bg-tertiary: #f3f4f6;
+  --a11y-border-primary: #d1d5db;
+  --a11y-border-secondary: #e5e7eb;
+  --a11y-shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  --a11y-radius: 4px;
+  --a11y-transition: all 0.2s ease;
+}
+
+/* 다크 모드 접근성 변수 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --a11y-focus-color: #60a5fa;
+    --a11y-focus-bg: rgba(96, 165, 250, 0.1);
+    --a11y-text-primary: #f9fafb;
+    --a11y-text-secondary: #d1d5db;
+    --a11y-text-tertiary: #9ca3af;
+    --a11y-bg-primary: #1f2937;
+    --a11y-bg-secondary: #374151;
+    --a11y-bg-tertiary: #4b5563;
+    --a11y-border-primary: #6b7280;
+    --a11y-border-secondary: #4b5563;
+    --a11y-shadow-focus: 0 0 0 3px rgba(96, 165, 250, 0.2);
+  }
+}
+
+/* ===== 스크린 리더 전용 요소 ===== */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0.25rem 0.5rem !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  border: 1px solid var(--a11y-focus-color) !important;
+  background: var(--a11y-bg-primary) !important;
+  color: var(--a11y-text-primary) !important;
+  border-radius: var(--a11y-radius) !important;
+  box-shadow: var(--a11y-shadow-focus) !important;
+  z-index: 10000 !important;
+}
+
+/* ===== 라이브 영역 ===== */
+.live-region {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+[aria-live] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===== 스킵 링크 ===== */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--a11y-focus-color);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 10000;
+  font-weight: 600;
+  transition: var(--a11y-transition);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
+/* ===== 포커스 인디케이터 개선 ===== */
+:focus {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+}
+
+/* 높은 대비 포커스 스타일 */
+@media (prefers-contrast: high) {
+  :focus {
+    outline: 3px solid var(--a11y-focus-color);
+    outline-offset: 3px;
+    background: var(--a11y-focus-bg);
+  }
+}
+
+/* 포커스 가시성 개선 */
+:focus-visible {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+}
+
+/* 키보드 사용자를 위한 인터랙티브 요소 스타일 */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+  box-shadow: var(--a11y-shadow-focus);
+}
+
+/* 워크플로우 캔버스 특화 포커스 스타일 */
+.workflow-canvas:focus {
+  outline: 3px solid var(--accent-color, #3b82f6);
+  outline-offset: -3px;
+}
+
+/* 노드 포커스 스타일 */
+.react-flow__node:focus,
+.react-flow__node.focused {
+  outline: 2px solid var(--focus-color, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.react-flow__node.selected:focus {
+  outline: 2px solid var(--selected-focus-color, #059669);
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.2);
+}
+
+/* 엣지 포커스 스타일 */
+.react-flow__edge:focus,
+.react-flow__edge.focused {
+  stroke: var(--focus-color, #3b82f6);
+  stroke-width: 3;
+}
+
+.react-flow__edge.selected:focus {
+  stroke: var(--selected-focus-color, #059669);
+  stroke-width: 3;
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  .workflow-canvas {
+    --focus-color: #000000;
+    --selected-focus-color: #000000;
+    --focus-bg: #ffff00;
+  }
+  
+  .react-flow__node:focus {
+    background: var(--focus-bg, #ffff00);
+    border: 3px solid var(--focus-color, #000000);
+  }
+  
+  .react-flow__edge:focus {
+    stroke: var(--focus-color, #000000);
+    stroke-width: 4;
+  }
+}
+
+/* 애니메이션 감소 지원 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .react-flow__node,
+  .react-flow__edge {
+    transition: none !important;
+  }
+}
+
+/* 키보드 내비게이션 힌트 */
+.keyboard-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--bg-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+  z-index: 1000;
+  max-width: 300px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.keyboard-hint.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.keyboard-hint h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+}
+
+.keyboard-hint ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.keyboard-hint li {
+  margin: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.keyboard-hint .key {
+  background: var(--bg-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* 라이브 리전 스타일 */
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+[aria-live] {
+  /* 라이브 리전이 화면에 보이지 않도록 하되, 스크린 리더가 읽을 수 있도록 */
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* 상태 표시 개선 */
+[aria-pressed="true"] {
+  background: var(--pressed-bg, #3b82f6);
+  color: var(--pressed-text, #ffffff);
+}
+
+[aria-expanded="true"] {
+  background: var(--expanded-bg, #f3f4f6);
+}
+
+[aria-selected="true"] {
+  background: var(--selected-bg, #eff6ff);
+  border-color: var(--selected-border, #3b82f6);
+}
+
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 툴팁 접근성 개선 */
+[role="tooltip"] {
+  background: var(--tooltip-bg, #1f2937);
+  color: var(--tooltip-text, #ffffff);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  max-width: 200px;
+  z-index: 10000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 모달 및 다이얼로그 접근성 */
+[role="dialog"],
+[role="alertdialog"] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+/* 테이블 접근성 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  background: var(--bg-secondary, #f8f9fa);
+  border-bottom: 2px solid var(--border-color, #e5e7eb);
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-light, #f3f4f6);
+}
+
+/* 폼 접근성 */
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: var(--text-primary, #1f2937);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+input:invalid, select:invalid, textarea:invalid {
+  border-color: var(--error-color, #ef4444);
+}
+
+.field-error {
+  color: var(--error-color, #ef4444);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* 상태 메시지 */
+.status-message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 16px 0;
+  font-weight: 500;
+}
+
+.status-message.success {
+  background: var(--success-bg, #d1fae5);
+  color: var(--success-text, #065f46);
+  border: 1px solid var(--success-border, #a7f3d0);
+}
+
+.status-message.error {
+  background: var(--error-bg, #fee2e2);
+  color: var(--error-text, #991b1b);
+  border: 1px solid var(--error-border, #fca5a5);
+}
+
+.status-message.warning {
+  background: var(--warning-bg, #fef3c7);
+  color: var(--warning-text, #92400e);
+  border: 1px solid var(--warning-border, #fde68a);
+}
+
+.status-message.info {
+  background: var(--info-bg, #dbeafe);
+  color: var(--info-text, #1e40af);
+  border: 1px solid var(--info-border, #93c5fd);
+}
+
+/* 로딩 상태 접근성 */
+.loading {
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--border-light, #f3f4f6);
+  border-top: 2px solid var(--accent-color, #3b82f6);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 다크 모드 접근성 개선 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --focus-color: #60a5fa;
+    --selected-focus-color: #34d399;
+    --focus-bg: #1e3a8a;
+    --bg-primary: #1f2937;
+    --bg-secondary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #4b5563;
+    --border-light: #374151;
+    --accent-color: #60a5fa;
+  }
+  
+  .keyboard-hint {
+    background: var(--bg-secondary, #374151);
+    border-color: var(--border-color, #4b5563);
+  }
+  
+  [role="tooltip"] {
+    background: var(--bg-secondary, #374151);
+    color: var(--text-primary, #f9fafb);
+  }
+}
+
+/* ===== 추가 접근성 구성 요소 ===== */
+
+/* 접근성 버튼 */
+.a11y-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--a11y-bg-primary);
+  color: var(--a11y-text-primary);
+  border: 2px solid var(--a11y-border-primary);
+  border-radius: var(--a11y-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--a11y-transition);
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.a11y-button:hover {
+  background: var(--a11y-bg-secondary);
+  border-color: var(--a11y-focus-color);
+}
+
+.a11y-button:focus {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+  box-shadow: var(--a11y-shadow-focus);
+}
+
+/* 접근성 입력 필드 */
+.a11y-input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--a11y-text-primary);
+  background: var(--a11y-bg-primary);
+  border: 2px solid var(--a11y-border-primary);
+  border-radius: var(--a11y-radius);
+  transition: var(--a11y-transition);
+  min-height: 44px;
+}
+
+.a11y-input:focus {
+  outline: 0;
+  border-color: var(--a11y-focus-color);
+  box-shadow: var(--a11y-shadow-focus);
+}
+
+/* 접근성 알림 */
+.a11y-alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--a11y-radius);
+  border: 1px solid;
+  font-weight: 500;
+}
+
+.a11y-alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--a11y-error-color);
+  border-color: var(--a11y-error-color);
+}
+
+.a11y-alert-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--a11y-warning-color);
+  border-color: var(--a11y-warning-color);
+}
+
+.a11y-alert-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--a11y-success-color);
+  border-color: var(--a11y-success-color);
+}
+
+.a11y-alert-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--a11y-info-color);
+  border-color: var(--a11y-info-color);
+}
+
+/* 접근성 모달 */
+.a11y-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.a11y-modal {
+  background: var(--a11y-bg-primary);
+  color: var(--a11y-text-primary);
+  border: 1px solid var(--a11y-border-primary);
+  border-radius: var(--a11y-radius);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.a11y-modal:focus {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: -2px;
+}
+
+/* 접근성 유틸리티 */
+.a11y-hidden {
+  display: none !important;
+}
+
+.a11y-invisible {
+  visibility: hidden !important;
+}
+
+.a11y-focusable {
+  cursor: pointer;
+}
+
+.a11y-focusable:focus {
+  outline: 2px solid var(--a11y-focus-color);
+  outline-offset: 2px;
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  :root {
+    --a11y-focus-color: #0000ff;
+    --a11y-error-color: #ff0000;
+    --a11y-warning-color: #ffff00;
+    --a11y-success-color: #00ff00;
+    --a11y-text-primary: #000000;
+    --a11y-text-secondary: #000000;
+    --a11y-text-tertiary: #000000;
+    --a11y-bg-primary: #ffffff;
+    --a11y-bg-secondary: #ffffff;
+    --a11y-bg-tertiary: #ffffff;
+    --a11y-border-primary: #000000;
+    --a11y-border-secondary: #000000;
+  }
+  
+  .a11y-button,
+  .a11y-input {
+    border-width: 3px;
+  }
+  
+  .a11y-alert {
+    border-width: 3px;
+  }
+}
+
+/* 애니메이션 감소 모드 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 터치 디바이스 접근성 */
+@media (pointer: coarse) {
+  .a11y-button,
+  .a11y-input {
+    min-height: 48px;
+  }
+}
+
+/* 프린트 모드 접근성 */
+@media print {
+  .skip-link,
+  .keyboard-hint,
+  [role="tooltip"] {
+    display: none !important;
+  }
+  
+  .workflow-canvas {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .react-flow__node {
+    border: 1px solid black !important;
+    background: white !important;
+    color: black !important;
+  }
+  
+  .react-flow__edge {
+    stroke: black !important;
+  }
+  
+  .a11y-button,
+  .a11y-input {
+    border: 2px solid #000000 !important;
+  }
+  
+  .a11y-alert {
+    border: 2px solid #000000 !important;
+  }
+}

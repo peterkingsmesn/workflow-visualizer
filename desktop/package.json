@@ -1,0 +1,135 @@
+{
+  "name": "workflow-visualizer-desktop",
+  "version": "1.0.0",
+  "description": "Workflow Visualizer Desktop App - $9.9/month subscription",
+  "main": "src/main.js",
+  "author": "Workflow Visualizer Inc.",
+  "license": "Commercial",
+  "homepage": "https://workflow-visualizer.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/workflow-visualizer.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run dev:web\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev:web": "cd .. && npm run dev",
+    "build": "npm run build:web && npm run build:electron",
+    "build:web": "cd .. && npm run build",
+    "build:electron": "electron-builder",
+    
+    "build:windows": "electron-builder --windows --x64",
+    "build:mac": "electron-builder --mac --x64 --arm64",
+    "build:linux": "electron-builder --linux --x64",
+    "build:all": "electron-builder --windows --mac --linux",
+    
+    "pack": "electron-builder --dir",
+    "dist": "npm run build:web && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "concurrently": "^8.2.0",
+    "wait-on": "^7.0.1"
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "electron-updater": "^6.1.4",
+    "node-machine-id": "^1.1.12"
+  },
+  "build": {
+    "appId": "com.workflowvisualizer.desktop",
+    "productName": "Workflow Visualizer",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "../dist/**/*",
+      "!../dist/stats.html"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist",
+        "to": "app",
+        "filter": ["**/*"]
+      }
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "your-org",
+      "repo": "workflow-visualizer"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "publisherName": "Workflow Visualizer Inc.",
+      "verifyUpdateCodeSignature": false,
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "sign": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Workflow Visualizer"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "category": "public.app-category.developer-tools",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements.mac.plist"
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ],
+      "category": "Development",
+      "desktop": {
+        "Name": "Workflow Visualizer",
+        "Comment": "Code workflow analysis and visualization tool",
+        "Keywords": "workflow;code;analysis;visualization;development;"
+      },
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "appImage": {
+      "license": "assets/license.txt"
+    }
+  }
+}

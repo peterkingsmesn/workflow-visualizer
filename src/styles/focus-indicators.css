@@ -1,0 +1,323 @@
+/* 🚀 접근성 최적화: 포커스 인디케이터 스타일 */
+
+/* 기본 포커스 링 제거 */
+*:focus {
+  outline: none;
+}
+
+/* 커스텀 포커스 인디케이터 */
+.focus-indicator {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.focus-indicator:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 고대비 모드에서 포커스 인디케이터 */
+@media (prefers-contrast: high) {
+  .focus-indicator:focus {
+    outline: 3px solid var(--primary-focus, #3b82f6);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 1px var(--bg-primary, #ffffff);
+  }
+}
+
+/* 버튼 포커스 스타일 */
+button:focus,
+.button:focus,
+[role="button"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 입력 필드 포커스 스타일 */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 0;
+  border-color: var(--primary-focus, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 링크 포커스 스타일 */
+a:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  border-radius: 3px;
+  background: rgba(59, 130, 246, 0.05);
+  text-decoration: underline;
+  text-decoration-color: var(--primary-focus, #3b82f6);
+  text-decoration-thickness: 2px;
+}
+
+/* 카드 및 컨테이너 포커스 스타일 */
+.card:focus,
+.container:focus,
+[tabindex]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 탭 포커스 스타일 */
+.tab:focus,
+[role="tab"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+/* 메뉴 아이템 포커스 스타일 */
+.menu-item:focus,
+[role="menuitem"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: -2px;
+  background: var(--focus-bg, rgba(59, 130, 246, 0.1));
+}
+
+/* 리스트 아이템 포커스 스타일 */
+.list-item:focus,
+[role="listitem"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: -2px;
+  background: var(--focus-bg, rgba(59, 130, 246, 0.1));
+}
+
+/* 토글 버튼 포커스 스타일 */
+.toggle:focus,
+[role="switch"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 체크박스 및 라디오 포커스 스타일 */
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 슬라이더 포커스 스타일 */
+input[type="range"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* 드롭다운 포커스 스타일 */
+.dropdown:focus,
+[role="combobox"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 모달 포커스 스타일 */
+.modal:focus,
+[role="dialog"]:focus {
+  outline: 3px solid var(--primary-focus, #3b82f6);
+  outline-offset: -3px;
+}
+
+/* 스킵 링크 포커스 스타일 */
+.skip-link:focus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--primary-focus, #3b82f6);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  z-index: 10000;
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
+/* 포커스 가능한 요소 표시 */
+[tabindex="0"]:focus,
+[tabindex="-1"]:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* 포커스 내부 요소 스타일 */
+:focus-within {
+  outline: 2px solid rgba(59, 130, 246, 0.3);
+  outline-offset: 2px;
+}
+
+/* 포커스 가시성 향상 */
+:focus-visible {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* 키보드 전용 포커스 스타일 */
+.keyboard-focus:focus {
+  outline: 2px solid var(--primary-focus, #3b82f6);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 마우스 포커스 숨기기 */
+.mouse-focus:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* 포커스 트랩 컨테이너 */
+.focus-trap {
+  position: relative;
+}
+
+.focus-trap::before,
+.focus-trap::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 애니메이션 감소 설정 */
+@media (prefers-reduced-motion: reduce) {
+  .focus-indicator,
+  button,
+  input,
+  textarea,
+  select,
+  a,
+  .card,
+  .container,
+  [tabindex] {
+    transition: none !important;
+  }
+}
+
+/* 다크 모드 포커스 스타일 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-focus: #60a5fa;
+    --focus-bg: rgba(96, 165, 250, 0.1);
+    --bg-primary: #1f2937;
+  }
+  
+  .skip-link:focus {
+    background: var(--primary-focus, #60a5fa);
+    color: #1f2937;
+  }
+  
+  :focus-within {
+    outline-color: rgba(96, 165, 250, 0.3);
+  }
+}
+
+/* 고대비 모드 포커스 스타일 */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-focus: #0066cc;
+  }
+  
+  .focus-indicator:focus,
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus,
+  a:focus,
+  .card:focus,
+  .container:focus,
+  [tabindex]:focus {
+    outline-width: 3px;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 1px var(--bg-primary, #ffffff), 0 0 0 5px rgba(0, 102, 204, 0.2);
+  }
+  
+  .skip-link:focus {
+    outline: 3px solid white;
+    outline-offset: -3px;
+  }
+}
+
+/* 터치 디바이스 포커스 조정 */
+@media (pointer: coarse) {
+  .focus-indicator:focus,
+  button:focus,
+  input:focus,
+  textarea:focus,
+  select:focus,
+  a:focus,
+  .card:focus,
+  .container:focus,
+  [tabindex]:focus {
+    outline-width: 3px;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* 특수 포커스 상태 */
+.focus-error:focus {
+  outline: 2px solid var(--error-color, #ef4444);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.focus-warning:focus {
+  outline: 2px solid var(--warning-color, #f59e0b);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+.focus-success:focus {
+  outline: 2px solid var(--success-color, #10b981);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* 포커스 링 숨기기 (접근성 위반이므로 신중하게 사용) */
+.no-focus-ring:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* 커스텀 포커스 링 */
+.custom-focus-ring:focus {
+  outline: 2px dashed var(--primary-focus, #3b82f6);
+  outline-offset: 4px;
+  animation: focus-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes focus-pulse {
+  0% {
+    outline-color: var(--primary-focus, #3b82f6);
+  }
+  100% {
+    outline-color: rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* 애니메이션 감소 시 펄스 효과 제거 */
+@media (prefers-reduced-motion: reduce) {
+  .custom-focus-ring:focus {
+    animation: none;
+  }
+}

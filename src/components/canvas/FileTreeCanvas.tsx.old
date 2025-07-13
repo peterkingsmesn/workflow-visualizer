@@ -1,0 +1,480 @@
+import React, { useCallback, useState, useMemo, useEffect, memo } from 'react';
+import ReactFlow, {
+  MiniMap,
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+  Node,
+  Edge,
+  ReactFlowProvider,
+  Handle,
+  Position,
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import { ErrorDetailModal } from '../nodes/ErrorDetailModal';
+
+interface FileTreeNode {
+  id: string;
+  name: string;
+  path: string;
+  type: 'file' | 'folder';
+  children?: FileTreeNode[];
+  hasErrors?: boolean;
+  hasWarnings?: boolean;
+  errors?: any[];
+  warnings?: any[];
+  size?: number;
+  fileType?: string;
+}
+
+// 커스텀 폴더 노드 컴포넌트
+const FolderNode = memo(({ data }: { data: any }) => {
+  const isExpanded = data.isExpanded;
+  
+  return (
+    <div style={{
+      padding: '8px 16px',
+      borderRadius: '6px',
+      backgroundColor: data.hasErrors ? '#dc2626' : data.hasWarnings ? '#f59e0b' : '#3b82f6',
+      color: 'white',
+      cursor: 'pointer',
+      border: isExpanded ? '3px solid #60a5fa' : '2px solid rgba(255,255,255,0.3)',
+      minWidth: '150px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px'
+    }}>
+      <span>{isExpanded ? '📂' : '📁'}</span>
+      <span>{data.label}</span>
+      {data.fileCount > 0 && <span style={{ opacity: 0.8 }}>({data.fileCount})</span>}
+      <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
+      <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
+    </div>
+  );
+});
+
+FolderNode.displayName = 'FolderNode';
+
+// 커스텀 파일 노드 컴포넌트
+const FileNode = memo(({ data }: { data: any }) => {
+  const getFileIcon = (type: string) => {
+    const iconMap: Record<string, string> = {
+      'ts': '🔷', 'tsx': '⚛️', 'js': '🟨', 'jsx': '⚛️',
+      'css': '🎨', 'scss': '🎨', 'html': '🌐', 'json': '📋',
+      'py': '🐍', 'java': '☕', 'md': '📝'
+    };
+    return iconMap[type] || '📄';
+  };
+  
+  return (
+    <div style={{
+      padding: '6px 12px',
+      borderRadius: '4px',
+      backgroundColor: data.hasErrors ? '#dc2626' : data.hasWarnings ? '#f59e0b' : '#e2e8f0',
+      color: data.hasErrors || data.hasWarnings ? 'white' : '#1f2937',
+      border: data.hasErrors ? '2px solid #fecaca' : data.hasWarnings ? '2px solid #fed7aa' : '1px solid #d1d5db',
+      minWidth: '120px',
+      fontSize: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '6px'
+    }}>
+      <span>{getFileIcon(data.fileType || '')}</span>
+      <span>{data.label}</span>
+      <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
+      <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
+    </div>
+  );
+});
+
+FileNode.displayName = 'FileNode';
+
+const nodeTypes = {
+  folder: FolderNode,
+  file: FileNode,
+};
+
+const FileTreeCanvasContent = memo<{
+  analysisResults: any;
+  projectName: string;
+}>(({ analysisResults, projectName }) => {
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
+  const [selectedNodeDetail, setSelectedNodeDetail] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // 안전한 파일 트리 생성
+  const fileTree = useMemo(() => {
+    console.log('🌲 FileTreeCanvas - analysisResults:', analysisResults);
+    
+    try {
+      if (!analysisResults) {
+        return { id: 'root', name: 'No Data', type: 'folder' as const, children: [] };
+      }
+
+      const realFiles = analysisResults?.realFiles || [];
+      const topDirectories = analysisResults?.topDirectories || [];
+      const fileTypes = analysisResults?.fileTypes || {};
+      const errors = analysisResults?.errors || [];
+      const warnings = analysisResults?.warnings || [];
+      
+      console.log('📁 Real files count:', realFiles.length);
+      console.log('📁 Top directories:', topDirectories.length);
+      console.log('📁 File types:', Object.keys(fileTypes).length);
+      
+      // 에러/경고 맵 생성
+      const errorsByPath = new Map();
+      const warningsByPath = new Map();
+      
+      errors.forEach((error: any) => {
+        const path = error?.path || error?.file || '';
+        if (path) {
+          if (!errorsByPath.has(path)) errorsByPath.set(path, []);
+          errorsByPath.get(path).push(error);
+        }
+      });
+      
+      warnings.forEach((warning: any) => {
+        const path = warning?.path || warning?.file || '';
+        if (path) {
+          if (!warningsByPath.has(path)) warningsByPath.set(path, []);
+          warningsByPath.get(path).push(warning);
+        }
+      });
+      
+      // realFiles가 있으면 사용
+      if (realFiles.length > 0) {
+        return buildTreeFromRealFiles(realFiles, errorsByPath, warningsByPath);
+      }
+      
+      // realFiles가 없으면 topDirectories로 가상 트리 생성
+      if (topDirectories.length > 0 || Object.keys(fileTypes).length > 0) {
+        return buildVirtualTree(topDirectories, fileTypes);
+      }
+      
+      // 아무것도 없으면 기본 트리
+      return { id: 'root', name: 'Empty Project', type: 'folder' as const, children: [] };
+      
+    } catch (error) {
+      console.error('❌ Error building file tree:', error);
+      return { id: 'error', name: 'Error Loading Files', type: 'folder' as const, children: [] };
+    }
+  }, [analysisResults]);
+  
+  // realFiles로 트리 구성
+  const buildTreeFromRealFiles = useCallback((files: any[], errorsByPath: Map<string, any[]>, warningsByPath: Map<string, any[]>) => {
+    const rootNode: FileTreeNode = {
+      id: 'root',
+      name: 'Project Root',
+      path: '',
+      type: 'folder',
+      children: []
+    };
+    
+    const folderMap = new Map<string, FileTreeNode>();
+    folderMap.set('', rootNode);
+    
+    // 안전한 정렬
+    const sortedFiles = files.filter(f => f && (f.path || f.name)).sort((a, b) => {
+      const pathA = a?.path || a?.name || '';
+      const pathB = b?.path || b?.name || '';
+      return pathA.localeCompare(pathB);
+    });
+    
+    sortedFiles.forEach((file: any) => {
+      try {
+        const filePath = file.path || file.name || 'unknown';
+        const pathParts = filePath.split('/').filter(Boolean);
+        let currentPath = '';
+        let currentParent = rootNode;
+        
+        // 폴더 경로 생성
+        for (let i = 0; i < pathParts.length - 1; i++) {
+          const folderName = pathParts[i] || 'folder';
+          currentPath = currentPath ? `${currentPath}/${folderName}` : folderName;
+          
+          if (!folderMap.has(currentPath)) {
+            const folderNode: FileTreeNode = {
+              id: currentPath.replace(/[\/\s\.]/g, '-') || `folder-${i}`,
+              name: folderName,
+              path: currentPath,
+              type: 'folder',
+              children: []
+            };
+            
+            folderMap.set(currentPath, folderNode);
+            currentParent.children!.push(folderNode);
+          }
+          
+          currentParent = folderMap.get(currentPath)!;
+        }
+        
+        // 파일 노드 생성
+        const fileName = pathParts[pathParts.length - 1] || file.name || 'unnamed';
+        const fileNode: FileTreeNode = {
+          id: filePath.replace(/[\/\s\.]/g, '-') || `file-${Math.random()}`,
+          name: fileName,
+          path: filePath,
+          type: 'file',
+          hasErrors: errorsByPath.has(filePath) || file.hasErrors || false,
+          hasWarnings: warningsByPath.has(filePath) || file.hasWarnings || false,
+          errors: errorsByPath.get(filePath) || [],
+          warnings: warningsByPath.get(filePath) || [],
+          size: file.size || 0,
+          fileType: file.type || 'unknown'
+        };
+        
+        currentParent.children!.push(fileNode);
+      } catch (error) {
+        console.warn('⚠️ Error processing file:', file, error);
+      }
+    });
+    
+    console.log('🌳 Built tree from real files:', rootNode);
+    return rootNode;
+  }, []);
+  
+  // 가상 트리 생성
+  const buildVirtualTree = useCallback((directories: any[], fileTypes: any) => {
+    const rootNode: FileTreeNode = {
+      id: 'root',
+      name: 'Project Root',
+      path: '',
+      type: 'folder',
+      children: []
+    };
+    
+    // 디렉토리로 폴더 생성
+    directories.slice(0, 10).forEach((dir, index) => {
+      const dirName = dir?.directory || `Directory ${index + 1}`;
+      const folderNode: FileTreeNode = {
+        id: `dir-${index}`,
+        name: dirName,
+        path: dirName,
+        type: 'folder',
+        children: []
+      };
+      
+      // 파일 타입별로 샘플 파일 생성
+      Object.entries(fileTypes).slice(0, 5).forEach(([type, count], fileIndex) => {
+        const fileName = `sample.${type}`;
+        const fileNode: FileTreeNode = {
+          id: `${folderNode.id}-file-${fileIndex}`,
+          name: fileName,
+          path: `${folderNode.path}/${fileName}`,
+          type: 'file',
+          fileType: type,
+          size: 1024
+        };
+        folderNode.children!.push(fileNode);
+      });
+      
+      rootNode.children!.push(folderNode);
+    });
+    
+    console.log('🌳 Built virtual tree:', rootNode);
+    return rootNode;
+  }, []);
+  
+  // ReactFlow 노드로 변환
+  const convertToFlowNodes = useCallback((
+    treeNode: FileTreeNode, 
+    parentId: string | null = null,
+    depth: number = 0,
+    index: number = 0,
+    parentY: number = 0
+  ): { nodes: Node[]; edges: Edge[]; totalHeight: number } => {
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+    const nodeSpacing = 80;
+    const depthSpacing = 200;
+    
+    const x = depth * depthSpacing + 100;
+    const y = parentY + index * nodeSpacing;
+    
+    const isFolder = treeNode.type === 'folder';
+    const isExpanded = expandedFolders.has(treeNode.id);
+    
+    // 현재 노드 생성
+    nodes.push({
+      id: treeNode.id,
+      type: isFolder ? 'folder' : 'file',
+      position: { x, y },
+      data: {
+        label: treeNode.name,
+        isExpanded,
+        hasErrors: treeNode.hasErrors,
+        hasWarnings: treeNode.hasWarnings,
+        errors: treeNode.errors || [],
+        warnings: treeNode.warnings || [],
+        fileType: treeNode.fileType,
+        filePath: treeNode.path,
+        fileCount: treeNode.children?.length || 0,
+        isFolder,
+      }
+    });
+    
+    // 부모와 연결
+    if (parentId) {
+      edges.push({
+        id: `${parentId}-${treeNode.id}`,
+        source: parentId,
+        target: treeNode.id,
+        type: 'smoothstep',
+        style: { stroke: '#94a3b8', strokeWidth: 1 }
+      });
+    }
+    
+    let totalHeight = nodeSpacing;
+    
+    // 폴더가 펼쳐져 있으면 자식 노드들 처리
+    if (isFolder && isExpanded && treeNode.children) {
+      let childY = y;
+      treeNode.children.forEach((child, childIndex) => {
+        const childResult = convertToFlowNodes(
+          child, 
+          treeNode.id, 
+          depth + 1, 
+          childIndex,
+          childY
+        );
+        nodes.push(...childResult.nodes);
+        edges.push(...childResult.edges);
+        childY += childResult.totalHeight;
+        totalHeight += childResult.totalHeight;
+      });
+    }
+    
+    return { nodes, edges, totalHeight };
+  }, [expandedFolders]);
+  
+  // 노드와 엣지 업데이트
+  useEffect(() => {
+    console.log('🌳 Converting file tree to flow nodes');
+    try {
+      const { nodes: flowNodes, edges: flowEdges } = convertToFlowNodes(fileTree);
+      setNodes(flowNodes);
+      setEdges(flowEdges);
+    } catch (error) {
+      console.error('❌ Error converting to flow nodes:', error);
+      setNodes([]);
+      setEdges([]);
+    }
+  }, [fileTree, convertToFlowNodes, setNodes, setEdges]);
+  
+  // 노드 클릭 핸들러
+  const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+    console.log('🖱️ Node clicked:', node.id, node.data);
+    
+    if (node.data.isFolder) {
+      // 폴더 토글
+      const newExpanded = new Set(expandedFolders);
+      if (newExpanded.has(node.id)) {
+        newExpanded.delete(node.id);
+        console.log('📁 Folder collapsed:', node.id);
+      } else {
+        newExpanded.add(node.id);
+        console.log('📂 Folder expanded:', node.id);
+      }
+      setExpandedFolders(newExpanded);
+    } else {
+      // 파일 상세 정보 표시
+      setSelectedNodeDetail({
+        fileName: node.data.label,
+        filePath: node.data.filePath || '',
+        errors: node.data.errors || [],
+        warnings: node.data.warnings || [],
+        info: `File: ${node.data.label}`
+      });
+      setIsModalOpen(true);
+    }
+  }, [expandedFolders]);
+  
+  return (
+    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        nodeTypes={nodeTypes}
+        fitView
+        fitViewOptions={{ padding: 0.2 }}
+      >
+        <Controls />
+        <MiniMap />
+        <Background color="#f0f0f0" gap={12} size={1} />
+      </ReactFlow>
+      
+      {/* 상태 정보 패널 */}
+      <div style={{ 
+        position: 'absolute', 
+        top: '10px', 
+        left: '10px', 
+        background: 'white',
+        padding: '15px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        maxWidth: '300px'
+      }}>
+        <h4 style={{ margin: '0 0 10px 0' }}>📁 {projectName}</h4>
+        <div style={{ fontSize: '13px' }}>
+          <div>📊 총 파일: {analysisResults?.totalFiles || 0}개</div>
+          <div>❌ 오류: {analysisResults?.errors?.length || 0}개</div>
+          <div>⚠️ 경고: {analysisResults?.warnings?.length || 0}개</div>
+        </div>
+        <div style={{ marginTop: '10px', fontSize: '11px', color: '#6b7280' }}>
+          💡 폴더를 클릭하여 펼치기/접기
+        </div>
+      </div>
+      
+      <ErrorDetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        detail={selectedNodeDetail}
+      />
+    </div>
+  );
+});
+
+FileTreeCanvasContent.displayName = 'FileTreeCanvasContent';
+
+const FileTreeCanvas = memo<{
+  analysisResults?: any;
+  projectName?: string;
+}>(({ analysisResults, projectName = 'Project' }) => {
+  if (!analysisResults) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '16px'
+      }}>
+        <p>분석 결과를 기다리는 중...</p>
+        <p style={{ fontSize: '14px', color: '#666' }}>
+          폴더를 선택하고 분석이 완료되면 파일 트리가 표시됩니다.
+        </p>
+      </div>
+    );
+  }
+  
+  return (
+    <ReactFlowProvider>
+      <FileTreeCanvasContent 
+        analysisResults={analysisResults} 
+        projectName={projectName} 
+      />
+    </ReactFlowProvider>
+  );
+});
+
+FileTreeCanvas.displayName = 'FileTreeCanvas';
+
+export default FileTreeCanvas;

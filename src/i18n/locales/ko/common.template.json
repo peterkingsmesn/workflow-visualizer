@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "워크플로우 비주얼라이저",
+    "tagline": "코드를 시각화하고. 워크플로우를 최적화하세요."
+  },
+  "nav": {
+    "features": "기능",
+    "pricing": "가격",
+    "testimonials": "고객 후기",
+    "login": "로그인",
+    "register": "무료 시작",
+    "dashboard": "대시보드",
+    "logout": "로그아웃"
+  },
+  "hero": {
+    "title": "코드를 시각화하세요.",
+    "subtitle": "워크플로우를 최적화하세요.",
+    "description": "복잡한 코드베이스를 명확하고 인터랙티브한 시각화로 변환하세요. 문제를 감지하고, 의존성을 이해하며, 그 어느 때보다 팀과 협업하세요.",
+    "cta": {
+      "primary": "무료 체험 시작",
+      "secondary": "데모 보기"
+    },
+    "disclaimer": "신용카드 불필요 • 14일 무료 체험 • 언제든 취소 가능"
+  },
+  "auth": {
+    "login": {
+      "title": "다시 오신 것을 환영합니다",
+      "subtitle": "워크플로우 비주얼라이저를 계속 사용하려면 로그인하세요",
+      "email": "이메일 주소",
+      "password": "비밀번호",
+      "submit": "로그인",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "noAccount": "계정이 없으신가요?",
+      "signUp": "무료 가입",
+      "demoCredentials": {
+        "title": "데모 계정으로 체험해보세요",
+        "admin": {
+          "email": "{{TEST_ADMIN_EMAIL}}",
+          "password": "{{TEST_ADMIN_PASSWORD}}",
+          "role": "관리자"
+        },
+        "pro": {
+          "email": "{{TEST_PRO_EMAIL}}",
+          "password": "{{TEST_PRO_PASSWORD}}",
+          "role": "프로 사용자"
+        },
+        "user": {
+          "email": "{{TEST_USER_EMAIL}}",
+          "password": "{{TEST_USER_PASSWORD}}",
+          "role": "일반 사용자"
+        }
+      }
+    }
+  },
+  "pricing": {
+    "title": "모든 규모의 팀을 위한 플랜",
+    "subtitle": "소규모 프로젝트부터 엔터프라이즈까지, 적합한 플랜을 선택하세요",
+    "free": {
+      "name": "무료",
+      "price": "$0",
+      "period": "영구 무료",
+      "popular": false
+    },
+    "pro": {
+      "name": "프로",
+      "price": "${{PRO_MONTHLY_PRICE}}",
+      "period": "월",
+      "popular": true
+    },
+    "enterprise": {
+      "name": "엔터프라이즈",
+      "price": "맞춤형",
+      "period": "문의",
+      "popular": false
+    }
+  }
+}

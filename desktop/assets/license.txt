@@ -1,0 +1,36 @@
+WORKFLOW VISUALIZER DESKTOP APPLICATION
+Commercial License Agreement
+
+Copyright (c) 2024 Workflow Visualizer Inc.
+
+SUBSCRIPTION SOFTWARE LICENSE
+
+This software is provided under a subscription-based license model.
+
+SUBSCRIPTION PLANS:
+- FREE: 10 files, basic analysis, 1 device
+- PRO: Unlimited files, advanced features, 3 devices ($9.9/month)  
+- ENTERPRISE: Team management, unlimited devices ($49/month)
+
+LICENSE TERMS:
+1. This software is licensed, not sold.
+2. Valid subscription required for continued use.
+3. License is device-specific and non-transferable.
+4. Offline use permitted for up to 30 days.
+5. Reverse engineering is prohibited.
+6. Commercial use permitted with valid subscription.
+
+SUBSCRIPTION REQUIREMENTS:
+- Valid payment method required
+- License key must be obtained from workflow-visualizer.com
+- Internet connection required for initial activation and periodic validation
+- Multi-device usage subject to plan limits
+
+DISCLAIMER:
+This software is provided "as is" without warranty of any kind.
+
+For full terms and conditions, visit:
+https://workflow-visualizer.com/terms
+
+For support and subscription management:
+https://workflow-visualizer.com/support

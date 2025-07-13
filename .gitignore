@@ -1,0 +1,144 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Misc
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Cache
+.eslintcache
+.cache/
+.parcel-cache/
+
+# 업로드 파일
+uploads/
+*.upload
+
+# 로그 파일
+logs/
+*.log
+server.log
+production.log
+
+# 임시 파일
+temp/
+.tmp/
+*.tmp
+
+# 진단 보고서
+diagnostic_report.html
+*.diagnostic
+
+# 압축 파일
+*.zip
+*.tar.gz
+*.rar
+
+# 백업 파일
+*.bak
+*.backup
+
+# 데이터베이스
+*.sqlite
+*.sqlite3
+*.db
+data/
+
+# 사용자 설정
+.user.js
+.user.json
+
+# 성능 및 프로파일링
+.profile
+*.prof
+
+# 소스맵
+*.map
+!dist/**/*.map
+/generated/prisma
+
+# 🚨 민감한 정보 보안 처리
+# 비즈니스 로직 및 아키텍처 정보
+performance-optimization-workflow.json
+project-workflow.json
+
+# 시장 분석 및 전략 문서
+MARKET_ANALYSIS_REPORT.html
+REFACTORING_DIAGNOSIS_REPORT.html
+SELF_DIAGNOSIS_REPORT.html
+
+# 진단 및 분석 보고서
+diagnose_report.md
+diagnose_report_final.md
+workflow-fixes-final-report.md
+workflow-fixes-todo.md
+workflow-visualizer-plan.md
+
+# 실제 워크플로우 데이터
+data/workflows/*.json
+work/*.json
+
+# 가이드 및 전략 문서
+guide/
+halo-workflow-project-spec.md
+
+# 개발 관련 계획서
+docs/IMPLEMENTATION_PLAN.md
+docs/MISSING_FEATURES.md
+docs/SERVICE_ROADMAP.md
+
+# 백업 파일들
+*backup*
+*.tar.gz
+halo-src-backup-*
+
+# HTML 리포트 파일들
+*.html
+!index.html
+!public/**/*.html
+
+# 테스트 계정이 포함된 국제화 파일들 (임시)
+src/i18n/locales/*/common.json
+src/locales/*/landing.json
+
+# Desktop app build outputs
+desktop/dist/
+desktop/node_modules/
+desktop/assets/*.ico
+desktop/assets/*.icns
+desktop/assets/*.png
+!desktop/assets/entitlements.mac.plist
+!desktop/assets/license.txt

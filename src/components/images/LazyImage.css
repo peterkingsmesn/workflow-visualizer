@@ -1,0 +1,362 @@
+/* 🚀 성능 최적화: 지연 로딩 이미지 컴포넌트 스타일 */
+
+.lazy-image-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background-color: var(--bg-skeleton, #f3f4f6);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.lazy-image-container.loaded {
+  background-color: transparent;
+}
+
+/* 플레이스홀더 이미지 */
+.lazy-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.placeholder-image.blur {
+  filter: blur(10px);
+  transform: scale(1.1); /* 블러 효과로 인한 경계 숨김 */
+}
+
+.lazy-image-container.loaded .placeholder-image {
+  opacity: 0;
+}
+
+/* 로딩 스피너 */
+.lazy-image-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-light, #e5e7eb);
+  border-top: 2px solid var(--primary-color, #3b82f6);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.lazy-image-container.loaded .lazy-image-spinner {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 실제 이미지 */
+.lazy-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 3;
+}
+
+.lazy-image.fade {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazy-image.fade.visible {
+  opacity: 1;
+}
+
+/* 에러 상태 */
+.lazy-image-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--bg-error, #fef2f2);
+  border: 1px solid var(--border-error, #fecaca);
+  border-radius: 4px;
+  z-index: 4;
+}
+
+.error-icon {
+  font-size: 24px;
+  opacity: 0.6;
+}
+
+.error-text {
+  font-size: 12px;
+  color: var(--text-error, #dc2626);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 로딩 상태 애니메이션 */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 스켈레톤 애니메이션 */
+.lazy-image-container:not(.loaded):not(.error) {
+  background: linear-gradient(
+    90deg,
+    var(--bg-skeleton, #f3f4f6) 0%,
+    var(--bg-skeleton-highlight, #e5e7eb) 50%,
+    var(--bg-skeleton, #f3f4f6) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 로딩 완료 시 스켈레톤 애니메이션 제거 */
+.lazy-image-container.loaded {
+  animation: none;
+}
+
+/* 반응형 이미지 */
+.lazy-image-container.responsive {
+  width: 100%;
+  height: auto;
+}
+
+.lazy-image-container.responsive .lazy-image {
+  width: 100%;
+  height: auto;
+}
+
+/* 원형 이미지 */
+.lazy-image-container.circular {
+  border-radius: 50%;
+}
+
+.lazy-image-container.circular .lazy-image {
+  border-radius: 50%;
+}
+
+/* 사이즈 변형 */
+.lazy-image-container.size-xs {
+  width: 32px;
+  height: 32px;
+}
+
+.lazy-image-container.size-sm {
+  width: 64px;
+  height: 64px;
+}
+
+.lazy-image-container.size-md {
+  width: 128px;
+  height: 128px;
+}
+
+.lazy-image-container.size-lg {
+  width: 256px;
+  height: 256px;
+}
+
+.lazy-image-container.size-xl {
+  width: 512px;
+  height: 512px;
+}
+
+/* 테두리 변형 */
+.lazy-image-container.bordered {
+  border: 2px solid var(--border-color, #e5e7eb);
+}
+
+.lazy-image-container.bordered.loaded {
+  border-color: var(--border-success, #a7f3d0);
+}
+
+.lazy-image-container.bordered.error {
+  border-color: var(--border-error, #fecaca);
+}
+
+/* 그림자 효과 */
+.lazy-image-container.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.lazy-image-container.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.lazy-image-container.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 호버 효과 */
+.lazy-image-container.hoverable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lazy-image-container.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 포커스 상태 */
+.lazy-image-container:focus {
+  outline: 2px solid var(--focus-color, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+  .lazy-image-container {
+    --bg-skeleton: #374151;
+    --bg-skeleton-highlight: #4b5563;
+    --bg-error: #7f1d1d;
+    --border-error: #dc2626;
+    --text-error: #fca5a5;
+    --border-success: #059669;
+    --border-color: #4b5563;
+    --primary-color: #60a5fa;
+    --focus-color: #60a5fa;
+  }
+}
+
+/* 고대비 모드 */
+@media (prefers-contrast: high) {
+  .lazy-image-container {
+    border: 1px solid var(--border-color, #000);
+  }
+  
+  .lazy-image-error {
+    border-width: 2px;
+  }
+  
+  .error-text {
+    font-weight: 600;
+  }
+}
+
+/* 애니메이션 감소 */
+@media (prefers-reduced-motion: reduce) {
+  .lazy-image-container,
+  .placeholder-image,
+  .lazy-image.fade,
+  .lazy-image-spinner,
+  .lazy-image-container.hoverable {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .spinner {
+    animation: none !important;
+  }
+}
+
+/* 터치 디바이스 최적화 */
+@media (pointer: coarse) {
+  .lazy-image-container.hoverable:hover {
+    transform: none;
+  }
+  
+  .lazy-image-container.hoverable:active {
+    transform: scale(0.98);
+  }
+}
+
+/* 프린트 모드 */
+@media print {
+  .lazy-image-spinner,
+  .lazy-image-placeholder {
+    display: none !important;
+  }
+  
+  .lazy-image-container {
+    background: white !important;
+    animation: none !important;
+  }
+  
+  .lazy-image-error {
+    background: white !important;
+    border: 1px solid #000 !important;
+  }
+}
+
+/* 고성능 설정 */
+.lazy-image-container.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.lazy-image-container.gpu-accelerated .lazy-image {
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+/* 메모리 효율성을 위한 최적화 */
+.lazy-image-container.memory-efficient {
+  contain: layout style paint;
+}
+
+.lazy-image-container.memory-efficient .lazy-image {
+  contain: layout style paint;
+}
+
+/* 지연 로딩 상태 표시 */
+.lazy-image-container.loading .lazy-image-spinner {
+  opacity: 1;
+}
+
+.lazy-image-container:not(.loading) .lazy-image-spinner {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 디버깅 모드 */
+.lazy-image-container.debug {
+  border: 2px dashed #ff6b6b;
+  position: relative;
+}
+
+.lazy-image-container.debug::before {
+  content: attr(data-debug);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  color: #ff6b6b;
+  font-weight: bold;
+  background: white;
+  padding: 2px 4px;
+  border-radius: 2px;
+  z-index: 1000;
+}
