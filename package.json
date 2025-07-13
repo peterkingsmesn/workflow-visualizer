@@ -1,6 +1,6 @@
 {
   "name": "workflow-visualizer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI 시대의 코드베이스 이해 도구 - 워크플로우 시각화 프로그램",
   "private": true,
   "scripts": {

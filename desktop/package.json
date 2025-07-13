@@ -1,6 +1,6 @@
 {
   "name": "workflow-visualizer-desktop",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Workflow Visualizer Desktop App - $9.9/month subscription",
   "main": "src/main.js",
   "author": "Workflow Visualizer Inc.",
