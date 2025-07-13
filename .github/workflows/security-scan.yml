@@ -1,0 +1,284 @@
+# 🛡️ 보안 스캔 워크플로우
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # 매주 월요일 02:00 UTC에 실행
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  dependency-scan:
+    runs-on: ubuntu-latest
+    name: Dependency Security Scan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run npm audit
+      run: |
+        npm audit --audit-level=moderate --json > audit-report.json || true
+        npm audit --audit-level=moderate
+        
+    - name: Install desktop dependencies
+      run: |
+        cd desktop
+        npm ci
+        
+    - name: Run desktop npm audit
+      run: |
+        cd desktop
+        npm audit --audit-level=moderate --json > ../desktop-audit-report.json || true
+        npm audit --audit-level=moderate
+        
+    - name: Upload audit reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-audit-reports
+        path: |
+          audit-report.json
+          desktop-audit-report.json
+        retention-days: 30
+
+  code-scan:
+    runs-on: ubuntu-latest
+    name: Code Security Scan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: javascript-typescript
+        queries: +security-and-quality
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build project
+      run: npm run build
+      
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:javascript-typescript"
+
+  license-check:
+    runs-on: ubuntu-latest
+    name: License Compliance Check
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install license checker
+      run: npm install -g license-checker
+      
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Check main project licenses
+      run: |
+        echo "## Main Project License Report" > license-report.md
+        license-checker --summary --markdown >> license-report.md
+        echo "" >> license-report.md
+        
+    - name: Install desktop dependencies
+      run: |
+        cd desktop
+        npm ci
+        
+    - name: Check desktop project licenses
+      run: |
+        cd desktop
+        echo "## Desktop Project License Report" >> ../license-report.md
+        license-checker --summary --markdown >> ../license-report.md
+        
+    - name: Upload license report
+      uses: actions/upload-artifact@v4
+      with:
+        name: license-compliance-report
+        path: license-report.md
+        retention-days: 30
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    name: Secret Detection Scan
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: TruffleHog OSS Secret Scan
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+        extra_args: --debug --only-verified
+
+  docker-scan:
+    runs-on: ubuntu-latest
+    name: Docker Security Scan
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Build Electron base image
+      run: |
+        cat > Dockerfile.electron << 'EOF'
+        FROM electronuserland/builder:18-wine
+        WORKDIR /app
+        COPY package*.json ./
+        RUN npm ci
+        COPY . .
+        RUN npm run build
+        EOF
+        
+        docker build -f Dockerfile.electron -t workflow-visualizer:electron .
+        
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'workflow-visualizer:electron'
+        format: 'sarif'
+        output: 'docker-scan-results.sarif'
+        
+    - name: Upload Docker scan results
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'docker-scan-results.sarif'
+
+  security-report:
+    needs: [dependency-scan, code-scan, license-check, secret-scan]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      
+    - name: Generate security summary
+      run: |
+        echo "# 🛡️ Security Scan Summary" > security-summary.md
+        echo "" >> security-summary.md
+        echo "**Scan Date:** $(date -u)" >> security-summary.md
+        echo "**Repository:** ${{ github.repository }}" >> security-summary.md
+        echo "**Branch:** ${{ github.ref_name }}" >> security-summary.md
+        echo "**Commit:** ${{ github.sha }}" >> security-summary.md
+        echo "" >> security-summary.md
+        
+        echo "## 📊 Scan Results" >> security-summary.md
+        echo "" >> security-summary.md
+        
+        # Dependency scan results
+        if [ -f "security-audit-reports/audit-report.json" ]; then
+          VULNERABILITIES=$(jq '.metadata.vulnerabilities | to_entries | map(.value) | add' security-audit-reports/audit-report.json 2>/dev/null || echo "0")
+          echo "- **Dependency Vulnerabilities (Main):** $VULNERABILITIES" >> security-summary.md
+        fi
+        
+        if [ -f "security-audit-reports/desktop-audit-report.json" ]; then
+          DESKTOP_VULNERABILITIES=$(jq '.metadata.vulnerabilities | to_entries | map(.value) | add' security-audit-reports/desktop-audit-report.json 2>/dev/null || echo "0")
+          echo "- **Dependency Vulnerabilities (Desktop):** $DESKTOP_VULNERABILITIES" >> security-summary.md
+        fi
+        
+        echo "- **Code Analysis:** ${{ needs.code-scan.result }}" >> security-summary.md
+        echo "- **License Check:** ${{ needs.license-check.result }}" >> security-summary.md
+        echo "- **Secret Scan:** ${{ needs.secret-scan.result }}" >> security-summary.md
+        echo "" >> security-summary.md
+        
+        echo "## 🔧 Recommendations" >> security-summary.md
+        echo "" >> security-summary.md
+        echo "1. **정기적인 의존성 업데이트**: 월 1회 이상" >> security-summary.md
+        echo "2. **보안 패치 적용**: 즉시 적용" >> security-summary.md
+        echo "3. **코드 리뷰**: 모든 PR에 대해 보안 관점 검토" >> security-summary.md
+        echo "4. **라이센스 컴플라이언스**: 상용 라이센스 충돌 방지" >> security-summary.md
+        echo "5. **시크릿 관리**: 환경 변수 및 GitHub Secrets 사용" >> security-summary.md
+        echo "" >> security-summary.md
+        
+        echo "## 📋 Next Steps" >> security-summary.md
+        echo "" >> security-summary.md
+        echo "- [ ] 발견된 취약점 수정" >> security-summary.md
+        echo "- [ ] 라이센스 컴플라이언스 확인" >> security-summary.md
+        echo "- [ ] 보안 정책 문서화" >> security-summary.md
+        echo "- [ ] 팀 보안 교육 실시" >> security-summary.md
+        
+    - name: Upload security summary
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-summary
+        path: security-summary.md
+        retention-days: 90
+        
+    - name: Comment PR with security results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          if (fs.existsSync('security-summary.md')) {
+            const summary = fs.readFileSync('security-summary.md', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+          }
+
+  notify-security-team:
+    needs: [dependency-scan, code-scan, secret-scan]
+    runs-on: ubuntu-latest
+    if: failure() && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Notify security team
+      run: |
+        echo "🚨 Security scan failed on main branch"
+        echo "Repository: ${{ github.repository }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "Workflow: ${{ github.workflow }}"
+        
+        # Discord/Slack 알림 (웹훅 URL이 설정된 경우)
+        if [ -n "${{ secrets.SECURITY_WEBHOOK_URL }}" ]; then
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "content": "🚨 **Security Alert**\n\nWorkflow Visualizer 보안 스캔 실패\n- Repository: ${{ github.repository }}\n- Branch: ${{ github.ref_name }}\n- Commit: ${{ github.sha }}\n- Workflow: ${{ github.run_id }}"
+               }' \
+               "${{ secrets.SECURITY_WEBHOOK_URL }}"
+        fi

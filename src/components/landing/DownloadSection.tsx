@@ -71,6 +71,39 @@ const DownloadSection: React.FC = () => {
     );
   };
 
+  // 다운로드 처리 함수
+  const handleDownload = (downloadUrl: string, platform: string, fileName: string) => {
+    // 다운로드 시작
+    window.open(downloadUrl, '_blank');
+    
+    // 다운로드 통계 추적
+    if (typeof (window as any).gtag !== 'undefined') {
+      (window as any).gtag('event', 'download', {
+        event_category: 'desktop_app',
+        event_label: platform,
+        value: fileName
+      });
+    }
+
+    // 구독 안내 표시
+    setTimeout(() => {
+      const message = `✅ 다운로드가 시작되었습니다!
+
+🔑 앱을 사용하려면 라이센스 구독이 필요합니다.
+
+📋 구독하기:
+• 월 $9.9로 모든 기능 이용
+• 최대 3대 기기에서 사용 가능
+• 이메일로 라이센스 키 즉시 발송
+
+지금 구독 페이지로 이동하시겠습니까?`;
+
+      if (confirm(message)) {
+        window.open('/pricing', '_blank');
+      }
+    }, 1500);
+  };
+
   // 추천 다운로드 버튼
   const RecommendedDownload = () => {
     const recommendedAsset = getDownloadLink(userOS);
@@ -94,10 +127,12 @@ const DownloadSection: React.FC = () => {
               {recommendedAsset.name} • {formatFileSize(recommendedAsset.size)}
             </p>
           </div>
-          <a
-            href={recommendedAsset.browser_download_url}
+          <button
             className="flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
             onClick={() => {
+              // 다운로드 시작
+              window.open(recommendedAsset.browser_download_url, '_blank');
+              
               // 다운로드 통계 추적
               if (typeof (window as any).gtag !== 'undefined') {
                 (window as any).gtag('event', 'download', {
@@ -106,11 +141,18 @@ const DownloadSection: React.FC = () => {
                   value: 1
                 });
               }
+
+              // 2초 후 구독 페이지 안내
+              setTimeout(() => {
+                if (confirm('다운로드가 시작되었습니다!\n\n앱을 사용하려면 라이센스 구독이 필요합니다.\n구독 페이지로 이동하시겠습니까?')) {
+                  window.open('/pricing', '_blank');
+                }
+              }, 2000);
             }}
           >
             <Download className="w-5 h-5" />
             다운로드
-          </a>
+          </button>
         </div>
       </div>
     );
@@ -169,13 +211,13 @@ const DownloadSection: React.FC = () => {
                       {windowsAsset.name}<br />
                       {formatFileSize(windowsAsset.size)} • {windowsAsset.download_count.toLocaleString()} 다운로드
                     </div>
-                    <a
-                      href={windowsAsset.browser_download_url}
+                    <button
+                      onClick={() => handleDownload(windowsAsset.browser_download_url, 'windows', windowsAsset.name)}
                       className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
                     >
                       <Download className="w-5 h-5" />
                       .exe 다운로드
-                    </a>
+                    </button>
                   </div>
                 );
               }
@@ -204,13 +246,13 @@ const DownloadSection: React.FC = () => {
                       {macAsset.name}<br />
                       {formatFileSize(macAsset.size)} • {macAsset.download_count.toLocaleString()} 다운로드
                     </div>
-                    <a
-                      href={macAsset.browser_download_url}
+                    <button
+                      onClick={() => handleDownload(macAsset.browser_download_url, 'mac', macAsset.name)}
                       className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-900 transition-colors flex items-center justify-center gap-2"
                     >
                       <Download className="w-5 h-5" />
                       .dmg 다운로드
-                    </a>
+                    </button>
                   </div>
                 );
               }
@@ -239,13 +281,13 @@ const DownloadSection: React.FC = () => {
                       {linuxAsset.name}<br />
                       {formatFileSize(linuxAsset.size)} • {linuxAsset.download_count.toLocaleString()} 다운로드
                     </div>
-                    <a
-                      href={linuxAsset.browser_download_url}
+                    <button
+                      onClick={() => handleDownload(linuxAsset.browser_download_url, 'linux', linuxAsset.name)}
                       className="w-full bg-orange-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-700 transition-colors flex items-center justify-center gap-2"
                     >
                       <Download className="w-5 h-5" />
                       .AppImage 다운로드
-                    </a>
+                    </button>
                   </div>
                 );
               }

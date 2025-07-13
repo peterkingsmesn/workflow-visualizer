@@ -1,0 +1,172 @@
+/* 🚀 동적 가상화 캔버스 스타일 */
+
+.dynamic-virtualized-canvas {
+  width: 100%;
+  height: 100%;
+  background: var(--canvas-bg, #ffffff);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.virtualized-list {
+  outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.virtualized-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.virtualized-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.virtualized-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.virtualized-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 🎯 개별 아이템 스타일 */
+.virtualized-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  background: var(--item-bg, #ffffff);
+}
+
+.virtualized-item:hover {
+  background: var(--item-hover-bg, #f3f4f6);
+  border-color: var(--border-hover-color, #d1d5db);
+}
+
+.virtualized-item.selected {
+  background: var(--item-selected-bg, #dbeafe);
+  border-color: var(--border-selected-color, #3b82f6);
+  color: var(--item-selected-color, #1e40af);
+}
+
+.virtualized-item.hovered {
+  background: var(--item-hovered-bg, #f0f9ff);
+  transform: translateX(2px);
+  box-shadow: 2px 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* 🚀 아이템 내용 스타일 */
+.item-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.item-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-label {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text-primary, #111827);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-type {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--text-secondary, #6b7280);
+  background: var(--badge-bg, #f3f4f6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* 🎯 빈 상태 스타일 */
+.empty-canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  background: var(--empty-bg, #f9fafb);
+  border: 2px dashed var(--empty-border, #d1d5db);
+  border-radius: 8px;
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--text-secondary, #6b7280);
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-message p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 🌙 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .dynamic-virtualized-canvas {
+    --canvas-bg: #1f2937;
+    --border-color: #374151;
+    --border-hover-color: #4b5563;
+    --border-selected-color: #3b82f6;
+    --item-bg: #1f2937;
+    --item-hover-bg: #374151;
+    --item-selected-bg: #1e3a8a;
+    --item-hovered-bg: #1e40af;
+    --item-selected-color: #dbeafe;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --badge-bg: #374151;
+    --empty-bg: #111827;
+    --empty-border: #374151;
+  }
+}
+
+/* 🚀 성능 최적화: GPU 가속 */
+.virtualized-item {
+  will-change: transform, background-color;
+  transform: translateZ(0);
+}
+
+/* 📱 반응형 지원 */
+@media (max-width: 768px) {
+  .virtualized-item {
+    padding: 12px 8px;
+  }
+  
+  .item-content {
+    gap: 8px;
+  }
+  
+  .item-type {
+    display: none;
+  }
+}

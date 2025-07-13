@@ -3,15 +3,15 @@ const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const isDev = process.env.NODE_ENV === 'development';
 
-// 💰 라이선스 시스템 클래스들
-const LicenseManager = require('./license/LicenseManager');
-const DeviceFingerprinting = require('./license/DeviceFingerprinting');
+// 🔐 라이센스 시스템 클래스들
+const LicenseService = require('./services/LicenseService');
+const LicenseDialog = require('./components/LicenseDialog');
 
 class WorkflowVisualizerApp {
   constructor() {
     this.mainWindow = null;
-    this.licenseManager = new LicenseManager();
-    this.deviceFingerprinting = new DeviceFingerprinting();
+    this.licenseService = new LicenseService();
+    this.licenseDialog = new LicenseDialog(this.licenseService);
     this.isQuitting = false;
     
     this.setupApp();
@@ -54,57 +54,36 @@ class WorkflowVisualizerApp {
 
   async validateLicenseAndCreateWindow() {
     try {
-      // 💰 저장된 라이선스 키 확인
-      const licenseValidation = await this.licenseManager.validateLicense();
+      // 🔐 저장된 라이센스 상태 확인
+      const licenseStatus = this.licenseService.getLicenseStatus();
       
-      if (!licenseValidation.valid) {
-        // 💰 라이선스 없거나 만료된 경우 -> 라이선스 입력 창
-        await this.showLicenseDialog();
+      if (licenseStatus.status === 'unlicensed' || licenseStatus.status === 'expired') {
+        // 🔐 라이센스 없거나 만료된 경우 -> 라이센스 입력 창
+        const result = await this.licenseDialog.show();
+        
+        if (result.success) {
+          // 라이센스 활성화 성공 -> 메인 앱 실행
+          this.createMainWindow();
+        } else {
+          // 라이센스 활성화 실패 -> 앱 종료
+          app.quit();
+        }
       } else {
-        // 💰 유효한 라이선스 -> 메인 앱 실행
+        // 🔐 유효한 라이센스 -> 메인 앱 실행
         this.createMainWindow();
       }
     } catch (error) {
-      console.error('라이선스 검증 오류:', error);
-      await this.showLicenseDialog();
-    }
-  }
-
-  async showLicenseDialog() {
-    const licenseWindow = new BrowserWindow({
-      width: 500,
-      height: 400,
-      resizable: false,
-      show: false,
-      webPreferences: {
-        nodeIntegration: false,
-        contextIsolation: true,
-        preload: path.join(__dirname, 'preload.js')
-      },
-      icon: this.getAppIcon()
-    });
-
-    // 💰 라이선스 입력 페이지 로드
-    if (isDev) {
-      licenseWindow.loadURL('http://localhost:3000/#/license');
-    } else {
-      licenseWindow.loadFile(path.join(__dirname, '../dist/index.html'), {
-        hash: 'license'
-      });
-    }
-
-    licenseWindow.once('ready-to-show', () => {
-      licenseWindow.show();
-    });
-
-    // 💰 라이선스 검증 완료 후 메인 윈도우로 전환
-    licenseWindow.webContents.on('ipc-message', async (event, channel, data) => {
-      if (channel === 'license-validated') {
-        licenseWindow.close();
+      console.error('라이센스 검증 오류:', error);
+      const result = await this.licenseDialog.show();
+      
+      if (result.success) {
         this.createMainWindow();
+      } else {
+        app.quit();
       }
-    });
+    }
   }
+
 
   createMainWindow() {
     this.mainWindow = new BrowserWindow({
@@ -212,7 +191,13 @@ class WorkflowVisualizerApp {
             }
           },
           {
-            label: 'License',
+            label: 'License Manager',
+            click: () => {
+              this.showLicenseManager();
+            }
+          },
+          {
+            label: 'License Info',
             click: () => {
               this.showLicenseInfo();
             }
@@ -250,25 +235,7 @@ class WorkflowVisualizerApp {
   }
 
   setupIpcHandlers() {
-    // 💰 라이선스 검증
-    ipcMain.handle('license:validate', async (event, licenseKey) => {
-      try {
-        const result = await this.licenseManager.validateLicense(licenseKey);
-        return result;
-      } catch (error) {
-        return { valid: false, reason: 'VALIDATION_ERROR', error: error.message };
-      }
-    });
-
-    // 💰 디바이스 정보 조회
-    ipcMain.handle('device:getFingerprint', async () => {
-      try {
-        return this.deviceFingerprinting.generateFingerprint();
-      } catch (error) {
-        console.error('디바이스 핑거프린트 생성 오류:', error);
-        return null;
-      }
-    });
+    // 🔐 라이센스 관련 IPC는 LicenseDialog에서 처리됨
 
     // 💰 앱 정보 조회
     ipcMain.handle('app:getInfo', () => {
@@ -361,17 +328,51 @@ class WorkflowVisualizerApp {
     });
   }
 
+  async showLicenseManager() {
+    const licenseManagerWindow = new BrowserWindow({
+      width: 700,
+      height: 800,
+      resizable: true,
+      show: false,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      },
+      title: 'License Manager',
+      icon: this.getAppIcon(),
+      parent: this.mainWindow,
+      modal: true
+    });
+
+    licenseManagerWindow.loadFile(path.join(__dirname, 'pages/license-manager.html'));
+
+    licenseManagerWindow.once('ready-to-show', () => {
+      licenseManagerWindow.show();
+    });
+  }
+
   async showLicenseInfo() {
     try {
-      const licenseInfo = await this.licenseManager.getCurrentLicenseInfo();
-      dialog.showMessageBox(this.mainWindow, {
-        type: 'info',
-        title: 'License Information',
-        message: `Plan: ${licenseInfo.planType}`,
-        detail: `Valid until: ${licenseInfo.validUntil}\\nDevices: ${licenseInfo.deviceCount}/${licenseInfo.maxDevices}`
-      });
+      const licenseStatus = this.licenseService.getLicenseStatus();
+      
+      if (licenseStatus.status === 'unlicensed') {
+        dialog.showMessageBox(this.mainWindow, {
+          type: 'warning',
+          title: 'License Information',
+          message: 'No License',
+          detail: '라이센스가 활성화되지 않았습니다.'
+        });
+      } else {
+        const license = licenseStatus.license;
+        dialog.showMessageBox(this.mainWindow, {
+          type: 'info',
+          title: 'License Information',
+          message: `Plan: ${license.plan}`,
+          detail: `Valid until: ${license.expiresAt}\\nMachine ID: ${license.machineId}\\nStatus: ${licenseStatus.status}`
+        });
+      }
     } catch (error) {
-      dialog.showErrorBox('License Error', '라이선스 정보를 가져올 수 없습니다.');
+      dialog.showErrorBox('License Error', '라이센스 정보를 가져올 수 없습니다.');
     }
   }
 }
