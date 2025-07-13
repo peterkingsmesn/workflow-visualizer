@@ -8,7 +8,7 @@
   "homepage": "https://workflow-visualizer.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/workflow-visualizer.git"
+    "url": "https://github.com/peterkingsmesn/workflow-visualizer.git"
   },
   "scripts": {
     "start": "electron .",
@@ -60,7 +60,7 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "your-org",
+      "owner": "peterkingsmesn",
       "repo": "workflow-visualizer"
     },
     "win": {
