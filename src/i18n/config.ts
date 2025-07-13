@@ -3,37 +3,28 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
-// Import translations
-import enCommon from './locales/en/common.json';
-import koCommon from './locales/ko/common.json';
-import jaCommon from './locales/ja/common.json';
-import zhCommon from './locales/zh/common.json';
-import esCommon from './locales/es/common.json';
-
-// Import landing translations
-import enLanding from '../locales/en/landing.json';
-import koLanding from '../locales/ko/landing.json';
+// Translations will be loaded dynamically
 
 const resources = {
   en: {
-    common: enCommon,
-    landing: enLanding
+    common: {},
+    landing: {}
   },
   ko: {
-    common: koCommon,
-    landing: koLanding
+    common: {},
+    landing: {}
   },
   ja: {
-    common: jaCommon,
-    landing: enLanding // Use English for now
+    common: {},
+    landing: {}
   },
   zh: {
-    common: zhCommon,
-    landing: enLanding // Use English for now
+    common: {},
+    landing: {}
   },
   es: {
-    common: esCommon,
-    landing: enLanding // Use English for now
+    common: {},
+    landing: {}
   }
 };
 

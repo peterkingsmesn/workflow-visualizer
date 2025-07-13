@@ -49,7 +49,7 @@ export class ChunkUploadService {
       
       // 4. 병렬 업로드 (최대 동시 업로드 수 제한)
       const uploadPromises = chunks.map(async (chunk, index) => {
-        return this.uploadChunkWithRetry(uploadSession.id, chunk, index)
+        return this.uploadChunkWithRetry(uploadSession.id, chunk, index as any)
           .then(() => {
             completedChunks++;
             const progress = (completedChunks / totalChunks) * 100;
