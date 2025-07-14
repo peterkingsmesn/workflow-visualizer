@@ -3295,8 +3295,13 @@
             transform: scale(1.2);
         }
 
-        /* Progressive Enhancement for Touch Devices */
-        @media (hover: none) and (pointer: coarse) {
+        /* Hide swipe container by default, show only on small screens */
+        .download-cards-container {
+            display: none;
+        }
+
+        /* Progressive Enhancement for Small Screens */
+        @media (max-width: 768px) {
             .download-grid {
                 display: none;
             }
@@ -3308,31 +3313,28 @@
             .swipe-indicators {
                 display: flex;
             }
-            
-            .download-card {
-                margin: 0 1rem;
-            }
         }
 
-        /* Breakpoint: Extra Small Devices (< 480px) */
-        @media (max-width: 479px) {
+        /* Simplified Mobile Layout */
+        @media (max-width: 768px) {
             .download-section {
                 padding: 2rem 1rem;
             }
             
             .section-title {
-                font-size: clamp(1.5rem, 6vw, 2rem);
+                font-size: 1.5rem;
                 margin-bottom: 1rem;
             }
             
             .section-subtitle {
-                font-size: clamp(0.875rem, 4vw, 1rem);
+                font-size: 1rem;
                 margin-bottom: 2rem;
             }
             
-            .download-card {
-                padding: var(--download-card-padding);
-                min-height: 300px;
+            .download-card-swipe {
+                padding: 1.5rem;
+                margin: 0 0.5rem;
+                min-height: auto;
             }
             
             .download-header h3 {
@@ -3340,7 +3342,7 @@
             }
             
             .download-desc {
-                font-size: 0.875rem;
+                font-size: 0.9rem;
                 margin-bottom: 1rem;
             }
             
@@ -3377,30 +3379,7 @@
             }
         }
 
-        /* Breakpoint: Small Devices (480px - 768px) */
-        @media (min-width: 480px) and (max-width: 768px) {
-            .download-section {
-                padding: 3rem 1.5rem;
-            }
-            
-            .download-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 1.5rem;
-            }
-            
-            .download-card {
-                padding: 1.5rem;
-            }
-            
-            .license-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2rem;
-            }
-            
-            .requirements-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
+        /* Clean up overlapping styles - removed */
 
         /* Breakpoint: Medium Devices (769px - 1024px) */
         @media (min-width: 769px) and (max-width: 1024px) {
