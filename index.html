@@ -2654,8 +2654,10 @@
             if (savedLang) {
                 language = savedLang;
             } else {
-                // Auto-detect language based on IP if no saved preference
-                language = await detectLanguageByIP();
+                // Default to English for global users
+                language = 'en';
+                // Uncomment below for IP-based detection
+                // language = await detectLanguageByIP();
             }
             
             document.getElementById('languageSelect').value = language;
