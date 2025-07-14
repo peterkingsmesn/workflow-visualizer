@@ -2664,10 +2664,19 @@
             if (savedLang) {
                 language = savedLang;
             } else {
-                // Default to English for global users
+                // Default to English, but auto-detect for supported languages
                 language = 'en';
-                // Uncomment below for IP-based detection
-                // language = await detectLanguageByIP();
+                try {
+                    const detectedLang = await detectLanguageByIP();
+                    // Only use detected language if it's supported
+                    const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de', 'es', 'fr', 'ru'];
+                    if (supportedLangs.includes(detectedLang)) {
+                        language = detectedLang;
+                    }
+                } catch (error) {
+                    console.log('Language detection failed, using English');
+                    language = 'en';
+                }
             }
             
             document.getElementById('languageSelect').value = language;
