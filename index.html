@@ -2652,10 +2652,9 @@
             }
         }
         
-        // Initialize
-        window.addEventListener('load', async () => {
-            renderNodes();
-            animateCounters();
+        // Initialize language detection immediately
+        async function initializeLanguage() {
+            console.log('Starting language initialization...');
             
             // Check for saved language preference first
             const savedLang = localStorage.getItem('preferredLanguage');
@@ -2663,9 +2662,11 @@
             
             if (savedLang) {
                 language = savedLang;
+                console.log('Using saved language:', language);
             } else {
                 // Default to English, but auto-detect for supported languages
                 language = 'en';
+                console.log('No saved language, detecting from IP...');
                 try {
                     const detectedLang = await detectLanguageByIP();
                     console.log('Detected language from IP:', detectedLang);
@@ -2683,8 +2684,24 @@
                 }
             }
             
-            document.getElementById('languageSelect').value = language;
-            changeLanguage(); // Apply the language
+            const langSelect = document.getElementById('languageSelect');
+            if (langSelect) {
+                langSelect.value = language;
+                changeLanguage(); // Apply the language
+                console.log('Language applied:', language);
+            } else {
+                console.error('Language selector not found!');
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', async () => {
+            console.log('Page loaded, initializing...');
+            renderNodes();
+            animateCounters();
+            
+            // Initialize language detection
+            await initializeLanguage();
             
             // Welcome message
             setTimeout(() => {
@@ -3096,6 +3113,398 @@
     </style>
 
     <script>
+        // Multi-language translations
+        const translations = {
+            ko: {
+                'download.title': '데스크톱 앱 다운로드',
+                'download.subtitle': '월 $9.9 구독으로 데스크톱에서 모든 고급 기능을 사용하세요.',
+                'download.windows.desc': 'Windows 10/11 지원',
+                'download.windows.button': '⬇️ Windows 다운로드',
+                'download.mac.desc': 'Intel 및 Apple Silicon 지원',
+                'download.mac.button': '⬇️ macOS 다운로드',
+                'download.linux.desc': '모든 배포판 지원',
+                'download.linux.button': '⬇️ Linux 다운로드',
+                'download.license.title': '라이센스 키 필요',
+                'download.license.benefits': '구독 후 제공되는 것들:',
+                'download.license.benefit1': '• 개인 라이센스 키',
+                'download.license.benefit2': '• 인터넷 없이 오프라인 분석',
+                'download.license.benefit3': '• 모든 고급 분석 기능',
+                'download.license.benefit4': '• 우선 고객 지원',
+                'download.license.steps': '사용 방법:',
+                'download.license.step1': '1. Gumroad에서 구독 결제',
+                'download.license.step2': '2. 이메일로 라이센스 키 수신',
+                'download.license.step3': '3. 앱 실행 후 키 입력',
+                'download.license.step4': '4. 모든 기능 활성화!',
+                'download.license.subscribe': '💳 월 $9.9 구독하기',
+                'download.requirements.title': '📋 시스템 요구사항',
+                'download.requirements.windows1': '• Windows 10 이상',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB 저장 공간',
+                'download.requirements.mac1': '• macOS 10.14 이상',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ 권장',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            en: {
+                'download.title': 'Desktop App Download',
+                'download.subtitle': 'Subscribe for $9.9/month to use all advanced features on desktop.',
+                'download.windows.desc': 'Windows 10/11 Support',
+                'download.windows.button': '⬇️ Download Windows',
+                'download.mac.desc': 'Intel & Apple Silicon Support',
+                'download.mac.button': '⬇️ Download macOS',
+                'download.linux.desc': 'All Distributions Support',
+                'download.linux.button': '⬇️ Download Linux',
+                'download.license.title': 'License Key Required',
+                'download.license.benefits': 'What you get after subscription:',
+                'download.license.benefit1': '• Personal license key',
+                'download.license.benefit2': '• Offline analysis without internet',
+                'download.license.benefit3': '• All advanced analysis features',
+                'download.license.benefit4': '• Priority customer support',
+                'download.license.steps': 'How to use:',
+                'download.license.step1': '1. Subscribe payment on Gumroad',
+                'download.license.step2': '2. Receive license key via email',
+                'download.license.step3': '3. Enter key after app launch',
+                'download.license.step4': '4. Activate all features!',
+                'download.license.subscribe': '💳 Subscribe $9.9/month',
+                'download.requirements.title': '📋 System Requirements',
+                'download.requirements.windows1': '• Windows 10 or higher',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB storage space',
+                'download.requirements.mac1': '• macOS 10.14 or higher',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recommended',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            ja: {
+                'download.title': 'デスクトップアプリダウンロード',
+                'download.subtitle': '月額$9.9のサブスクリプションでデスクトップのすべての高度な機能をご利用ください。',
+                'download.windows.desc': 'Windows 10/11 サポート',
+                'download.windows.button': '⬇️ Windows ダウンロード',
+                'download.mac.desc': 'Intel & Apple Silicon サポート',
+                'download.mac.button': '⬇️ macOS ダウンロード',
+                'download.linux.desc': 'すべてのディストリビューション対応',
+                'download.linux.button': '⬇️ Linux ダウンロード',
+                'download.license.title': 'ライセンスキーが必要',
+                'download.license.benefits': 'サブスクリプション後に提供されるもの:',
+                'download.license.benefit1': '• 個人ライセンスキー',
+                'download.license.benefit2': '• インターネットなしでオフライン分析',
+                'download.license.benefit3': '• すべての高度な分析機能',
+                'download.license.benefit4': '• 優先カスタマーサポート',
+                'download.license.steps': '使用方法:',
+                'download.license.step1': '1. Gumroadでサブスクリプション決済',
+                'download.license.step2': '2. メールでライセンスキーを受信',
+                'download.license.step3': '3. アプリ起動後にキーを入力',
+                'download.license.step4': '4. すべての機能を有効化！',
+                'download.license.subscribe': '💳 月額$9.9でサブスクライブ',
+                'download.requirements.title': '📋 システム要件',
+                'download.requirements.windows1': '• Windows 10以上',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB ストレージ容量',
+                'download.requirements.mac1': '• macOS 10.14以上',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+推奨',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            zh: {
+                'download.title': '桌面应用下载',
+                'download.subtitle': '订阅每月$9.9以在桌面上使用所有高级功能。',
+                'download.windows.desc': 'Windows 10/11 支持',
+                'download.windows.button': '⬇️ 下载 Windows',
+                'download.mac.desc': 'Intel & Apple Silicon 支持',
+                'download.mac.button': '⬇️ 下载 macOS',
+                'download.linux.desc': '支持所有发行版',
+                'download.linux.button': '⬇️ 下载 Linux',
+                'download.license.title': '需要许可证密钥',
+                'download.license.benefits': '订阅后您将获得：',
+                'download.license.benefit1': '• 个人许可证密钥',
+                'download.license.benefit2': '• 无需互联网的离线分析',
+                'download.license.benefit3': '• 所有高级分析功能',
+                'download.license.benefit4': '• 优先客户支持',
+                'download.license.steps': '使用方法：',
+                'download.license.step1': '1. 在Gumroad上订阅付款',
+                'download.license.step2': '2. 通过电子邮件接收许可证密钥',
+                'download.license.step3': '3. 启动应用后输入密钥',
+                'download.license.step4': '4. 激活所有功能！',
+                'download.license.subscribe': '💳 订阅 $9.9/月',
+                'download.requirements.title': '📋 系统要求',
+                'download.requirements.windows1': '• Windows 10或更高版本',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB存储空间',
+                'download.requirements.mac1': '• macOS 10.14或更高版本',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• 推荐Ubuntu 18.04+',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            de: {
+                'download.title': 'Desktop-App-Download',
+                'download.subtitle': 'Abonnieren Sie für $9.9/Monat, um alle erweiterten Funktionen auf dem Desktop zu nutzen.',
+                'download.windows.desc': 'Windows 10/11 Unterstützung',
+                'download.windows.button': '⬇️ Windows herunterladen',
+                'download.mac.desc': 'Intel & Apple Silicon Unterstützung',
+                'download.mac.button': '⬇️ macOS herunterladen',
+                'download.linux.desc': 'Alle Distributionen unterstützt',
+                'download.linux.button': '⬇️ Linux herunterladen',
+                'download.license.title': 'Lizenzschlüssel erforderlich',
+                'download.license.benefits': 'Was Sie nach dem Abonnement erhalten:',
+                'download.license.benefit1': '• Persönlicher Lizenzschlüssel',
+                'download.license.benefit2': '• Offline-Analyse ohne Internet',
+                'download.license.benefit3': '• Alle erweiterten Analysefunktionen',
+                'download.license.benefit4': '• Prioritäts-Kundensupport',
+                'download.license.steps': 'So verwenden Sie es:',
+                'download.license.step1': '1. Abonnement-Zahlung auf Gumroad',
+                'download.license.step2': '2. Lizenzschlüssel per E-Mail erhalten',
+                'download.license.step3': '3. Schlüssel nach App-Start eingeben',
+                'download.license.step4': '4. Alle Funktionen aktivieren!',
+                'download.license.subscribe': '💳 $9.9/Monat abonnieren',
+                'download.requirements.title': '📋 Systemanforderungen',
+                'download.requirements.windows1': '• Windows 10 oder höher',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB Speicherplatz',
+                'download.requirements.mac1': '• macOS 10.14 oder höher',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ empfohlen',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            es: {
+                'download.title': 'Descarga de Aplicación de Escritorio',
+                'download.subtitle': 'Suscríbete por $9.9/mes para usar todas las funciones avanzadas en escritorio.',
+                'download.windows.desc': 'Soporte para Windows 10/11',
+                'download.windows.button': '⬇️ Descargar Windows',
+                'download.mac.desc': 'Soporte Intel y Apple Silicon',
+                'download.mac.button': '⬇️ Descargar macOS',
+                'download.linux.desc': 'Todas las Distribuciones Soportadas',
+                'download.linux.button': '⬇️ Descargar Linux',
+                'download.license.title': 'Clave de Licencia Requerida',
+                'download.license.benefits': 'Lo que obtienes después de suscribirte:',
+                'download.license.benefit1': '• Clave de licencia personal',
+                'download.license.benefit2': '• Análisis sin conexión a internet',
+                'download.license.benefit3': '• Todas las funciones de análisis avanzadas',
+                'download.license.benefit4': '• Soporte prioritario al cliente',
+                'download.license.steps': 'Cómo usar:',
+                'download.license.step1': '1. Pago de suscripción en Gumroad',
+                'download.license.step2': '2. Recibir clave de licencia por email',
+                'download.license.step3': '3. Introducir clave después del lanzamiento',
+                'download.license.step4': '4. ¡Activar todas las funciones!',
+                'download.license.subscribe': '💳 Suscribirse $9.9/mes',
+                'download.requirements.title': '📋 Requisitos del Sistema',
+                'download.requirements.windows1': '• Windows 10 o superior',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB espacio de almacenamiento',
+                'download.requirements.mac1': '• macOS 10.14 o superior',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recomendado',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            fr: {
+                'download.title': 'Téléchargement Application Bureau',
+                'download.subtitle': 'Abonnez-vous pour $9.9/mois pour utiliser toutes les fonctionnalités avancées sur bureau.',
+                'download.windows.desc': 'Support Windows 10/11',
+                'download.windows.button': '⬇️ Télécharger Windows',
+                'download.mac.desc': 'Support Intel & Apple Silicon',
+                'download.mac.button': '⬇️ Télécharger macOS',
+                'download.linux.desc': 'Toutes Distributions Supportées',
+                'download.linux.button': '⬇️ Télécharger Linux',
+                'download.license.title': 'Clé de Licence Requise',
+                'download.license.benefits': 'Ce que vous obtenez après abonnement:',
+                'download.license.benefit1': '• Clé de licence personnelle',
+                'download.license.benefit2': '• Analyse hors ligne sans internet',
+                'download.license.benefit3': '• Toutes les fonctionnalités d\'analyse avancées',
+                'download.license.benefit4': '• Support client prioritaire',
+                'download.license.steps': 'Comment utiliser:',
+                'download.license.step1': '1. Paiement d\'abonnement sur Gumroad',
+                'download.license.step2': '2. Recevoir la clé de licence par email',
+                'download.license.step3': '3. Entrer la clé après le lancement',
+                'download.license.step4': '4. Activer toutes les fonctionnalités!',
+                'download.license.subscribe': '💳 S\'abonner $9.9/mois',
+                'download.requirements.title': '📋 Configuration Système',
+                'download.requirements.windows1': '• Windows 10 ou supérieur',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB espace de stockage',
+                'download.requirements.mac1': '• macOS 10.14 ou supérieur',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recommandé',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            ru: {
+                'download.title': 'Загрузка Настольного Приложения',
+                'download.subtitle': 'Подпишитесь за $9.9/месяц, чтобы использовать все расширенные функции на рабочем столе.',
+                'download.windows.desc': 'Поддержка Windows 10/11',
+                'download.windows.button': '⬇️ Скачать Windows',
+                'download.mac.desc': 'Поддержка Intel и Apple Silicon',
+                'download.mac.button': '⬇️ Скачать macOS',
+                'download.linux.desc': 'Поддержка Всех Дистрибутивов',
+                'download.linux.button': '⬇️ Скачать Linux',
+                'download.license.title': 'Требуется Лицензионный Ключ',
+                'download.license.benefits': 'Что вы получите после подписки:',
+                'download.license.benefit1': '• Персональный лицензионный ключ',
+                'download.license.benefit2': '• Оффлайн анализ без интернета',
+                'download.license.benefit3': '• Все расширенные функции анализа',
+                'download.license.benefit4': '• Приоритетная поддержка клиентов',
+                'download.license.steps': 'Как использовать:',
+                'download.license.step1': '1. Оплата подписки на Gumroad',
+                'download.license.step2': '2. Получение лицензионного ключа по email',
+                'download.license.step3': '3. Ввод ключа после запуска приложения',
+                'download.license.step4': '4. Активация всех функций!',
+                'download.license.subscribe': '💳 Подписаться $9.9/месяц',
+                'download.requirements.title': '📋 Системные Требования',
+                'download.requirements.windows1': '• Windows 10 или выше',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB места для хранения',
+                'download.requirements.mac1': '• macOS 10.14 или выше',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ рекомендуется',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            }
+        };
+
+        function changeLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            const elements = document.querySelectorAll('[data-translate]');
+            
+            console.log('Changing language to:', selectedLang);
+            console.log('Found elements to translate:', elements.length);
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[selectedLang] && translations[selectedLang][key]) {
+                    element.textContent = translations[selectedLang][key];
+                    console.log(`Translated ${key} to:`, translations[selectedLang][key]);
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('preferredLanguage', selectedLang);
+            console.log('Language preference saved:', selectedLang);
+        }
+
+        // IP-based language detection
+        async function detectLanguageByIP() {
+            console.log('Starting IP-based language detection...');
+            try {
+                // Use multiple IP geolocation services for redundancy
+                const services = [
+                    'https://ipapi.co/json/',
+                    'https://ip-api.com/json/',
+                    'https://ipinfo.io/json'
+                ];
+                
+                let countryCode = null;
+                
+                // Try each service until one works
+                for (const service of services) {
+                    try {
+                        console.log(`Trying service: ${service}`);
+                        const response = await fetch(service);
+                        const data = await response.json();
+                        console.log(`Service ${service} response:`, data);
+                        
+                        // Different services use different property names
+                        countryCode = data.country_code || data.countryCode || data.country;
+                        if (countryCode) {
+                            console.log(`Found country code: ${countryCode}`);
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Failed to fetch from ${service}:`, err);
+                    }
+                }
+                
+                if (!countryCode) {
+                    console.log('No country code detected, defaulting to English');
+                    return 'en'; // Default to English
+                }
+                
+                // Map country codes to languages
+                const countryToLanguage = {
+                    // Korean
+                    'KR': 'ko', 'KP': 'ko',
+                    // Japanese
+                    'JP': 'ja',
+                    // Chinese
+                    'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
+                    // German
+                    'DE': 'de', 'AT': 'de', 'CH': 'de', 'LI': 'de', 'LU': 'de',
+                    // French
+                    'FR': 'fr', 'BE': 'fr', 'CA': 'fr', 'MC': 'fr',
+                    // Spanish
+                    'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'CL': 'es',
+                    'PE': 'es', 'VE': 'es', 'EC': 'es', 'GT': 'es', 'CU': 'es',
+                    'BO': 'es', 'DO': 'es', 'HN': 'es', 'PY': 'es', 'SV': 'es',
+                    'NI': 'es', 'CR': 'es', 'PA': 'es', 'UY': 'es', 'PR': 'es',
+                    // Russian
+                    'RU': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru'
+                };
+                
+                const detectedLang = countryToLanguage[countryCode.toUpperCase()] || 'en';
+                console.log(`Country ${countryCode} mapped to language: ${detectedLang}`);
+                
+                // Check if we support this language
+                const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de'];
+                const finalLang = supportedLangs.includes(detectedLang) ? detectedLang : 'en';
+                console.log(`Final language selected: ${finalLang}`);
+                return finalLang;
+                
+            } catch (error) {
+                console.error('Language detection failed:', error);
+                return 'en'; // Default to English on error
+            }
+        }
+
+        // Initialize language on page load
+        async function initializeLanguage() {
+            console.log('Starting language initialization...');
+            const savedLang = localStorage.getItem('preferredLanguage');
+            let language;
+            
+            if (savedLang) {
+                language = savedLang;
+                console.log('Using saved language:', language);
+            } else {
+                language = 'en';
+                console.log('No saved language, detecting from IP...');
+                try {
+                    const detectedLang = await detectLanguageByIP();
+                    console.log('Detected language from IP:', detectedLang);
+                    const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de', 'es', 'fr', 'ru'];
+                    if (supportedLangs.includes(detectedLang)) {
+                        language = detectedLang;
+                        console.log('Using detected language:', language);
+                    }
+                } catch (error) {
+                    console.log('Language detection failed, using English:', error);
+                    language = 'en';
+                }
+            }
+            
+            // Update the language selector
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) {
+                languageSelect.value = language;
+                console.log('Language selector updated to:', language);
+            } else {
+                console.log('Language selector not found!');
+            }
+            
+            // Apply translations
+            changeLanguage();
+        }
+
         // Download tracking
         function trackDownload(platform) {
             // Google Analytics tracking (if available)
@@ -3141,6 +3550,12 @@ Would you like to go to the subscription page now?`;
                 window.open('https://spiderverse10.gumroad.com/l/workflow-visualizer', '_blank');
             }
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing language...');
+            initializeLanguage();
+        });
     </script>
 
 </body>
