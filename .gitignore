@@ -142,3 +142,4 @@ desktop/assets/*.icns
 desktop/assets/*.png
 !desktop/assets/entitlements.mac.plist
 !desktop/assets/license.txt
+.vercel
