@@ -2518,7 +2518,38 @@
                 'global.note': '+ 34 additional language support. Communicate in your native language wherever your team is.',
                 'cta.title': '🚀 Escape the 90% Failure Rate and Become a Successful 10% Project!',
                 'cta.subtitle': 'Experience AI coding innovation with Halo_workflow, verified by 12,000+ developers worldwide',
-                'cta.button': 'Start Free Now →'
+                'cta.button': 'Start Free Now →',
+                // Download section translations
+                'download.title': '데스크톱 앱 다운로드',
+                'download.subtitle': '$9.9/월 구독으로 모든 고급 기능을 데스크톱에서 사용하세요.',
+                'download.windows.desc': 'Windows 10/11 지원',
+                'download.windows.button': '⬇️ Windows 다운로드',
+                'download.mac.desc': 'Intel & Apple Silicon 지원',
+                'download.mac.button': '⬇️ macOS 다운로드',
+                'download.linux.desc': '모든 배포판 지원',
+                'download.linux.button': '⬇️ Linux 다운로드',
+                'download.license.title': '라이센스 키가 필요합니다',
+                'download.license.benefits': '구독 후 받을 수 있는 것:',
+                'download.license.benefit1': '• 개인 라이센스 키',
+                'download.license.benefit2': '• 최대 3대 디바이스 사용',
+                'download.license.benefit3': '• 30일 오프라인 사용',
+                'download.license.benefit4': '• 모든 고급 분석 기능',
+                'download.license.steps': '사용 방법:',
+                'download.license.step1': '1. Gumroad에서 구독 결제',
+                'download.license.step2': '2. 이메일로 라이센스 키 수령',
+                'download.license.step3': '3. 앱 실행 후 키 입력',
+                'download.license.step4': '4. 모든 기능 활성화!',
+                'download.license.subscribe': '💳 월 $9.9 구독하기',
+                'download.requirements.title': '📋 시스템 요구사항',
+                'download.requirements.windows1': '• Windows 10 이상',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB 저장공간',
+                'download.requirements.mac1': '• macOS 10.14 이상',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ 권장',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
             }
         };
 
@@ -2684,10 +2715,10 @@
     <section class="download-section" id="download">
         <div class="download-content">
             <h2 class="section-title" style="color: #58a6ff;">
-                🖥️ <span data-translate="download.title">데스크톱 앱 다운로드</span>
+                🖥️ <span data-translate="download.title">Desktop App Download</span>
             </h2>
             <p class="section-subtitle" data-translate="download.subtitle">
-                $9.9/월 구독으로 모든 고급 기능을 데스크톱에서 사용하세요.
+                Subscribe for $9.9/month to use all advanced features on desktop.
             </p>
             
             <div class="download-grid">
@@ -2697,15 +2728,16 @@
                         <span class="download-icon">🖥️</span>
                         <h3>Windows</h3>
                     </div>
-                    <p class="download-desc">Windows 10/11 지원</p>
+                    <p class="download-desc" data-translate="download.windows.desc">Windows 10/11 Support</p>
                     <div class="download-info">
                         <span class="file-type">.exe</span>
                         <span class="file-size">~150MB</span>
                     </div>
                     <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-win.exe" 
                        class="download-btn windows-btn" 
-                       onclick="trackDownload('windows')">
-                        ⬇️ Windows 다운로드
+                       onclick="trackDownload('windows')"
+                       data-translate="download.windows.button">
+                        ⬇️ Download Windows
                     </a>
                 </div>
 
@@ -2715,15 +2747,16 @@
                         <span class="download-icon">🍎</span>
                         <h3>macOS</h3>
                     </div>
-                    <p class="download-desc">Intel & Apple Silicon 지원</p>
+                    <p class="download-desc" data-translate="download.mac.desc">Intel & Apple Silicon Support</p>
                     <div class="download-info">
                         <span class="file-type">.dmg</span>
                         <span class="file-size">~200MB</span>
                     </div>
                     <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-mac.dmg" 
                        class="download-btn mac-btn"
-                       onclick="trackDownload('mac')">
-                        ⬇️ macOS 다운로드
+                       onclick="trackDownload('mac')"
+                       data-translate="download.mac.button">
+                        ⬇️ Download macOS
                     </a>
                 </div>
 
@@ -2733,39 +2766,40 @@
                         <span class="download-icon">🐧</span>
                         <h3>Linux</h3>
                     </div>
-                    <p class="download-desc">모든 배포판 지원</p>
+                    <p class="download-desc" data-translate="download.linux.desc">All Distributions Support</p>
                     <div class="download-info">
                         <span class="file-type">.AppImage</span>
                         <span class="file-size">~180MB</span>
                     </div>
                     <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-linux.AppImage" 
                        class="download-btn linux-btn"
-                       onclick="trackDownload('linux')">
-                        ⬇️ Linux 다운로드
+                       onclick="trackDownload('linux')"
+                       data-translate="download.linux.button">
+                        ⬇️ Download Linux
                     </a>
                 </div>
             </div>
 
             <!-- License Information -->
             <div class="license-info">
-                <h3>🔑 <span data-translate="download.license.title">라이센스 키가 필요합니다</span></h3>
+                <h3>🔑 <span data-translate="download.license.title">License Key Required</span></h3>
                 <div class="license-grid">
                     <div class="license-benefits">
-                        <h4 data-translate="download.license.benefits">구독 후 받을 수 있는 것:</h4>
+                        <h4 data-translate="download.license.benefits">What you get after subscription:</h4>
                         <ul>
-                            <li>• 개인 라이센스 키</li>
-                            <li>• 최대 3대 디바이스 사용</li>
-                            <li>• 30일 오프라인 사용</li>
-                            <li>• 모든 고급 분석 기능</li>
+                            <li data-translate="download.license.benefit1">• Personal license key</li>
+                            <li data-translate="download.license.benefit2">• Use on up to 3 devices</li>
+                            <li data-translate="download.license.benefit3">• 30 days offline usage</li>
+                            <li data-translate="download.license.benefit4">• All advanced analysis features</li>
                         </ul>
                     </div>
                     <div class="license-steps">
-                        <h4 data-translate="download.license.steps">사용 방법:</h4>
+                        <h4 data-translate="download.license.steps">How to use:</h4>
                         <ul>
-                            <li>1. Gumroad에서 구독 결제</li>
-                            <li>2. 이메일로 라이센스 키 수령</li>
-                            <li>3. 앱 실행 후 키 입력</li>
-                            <li>4. 모든 기능 활성화!</li>
+                            <li data-translate="download.license.step1">1. Subscribe payment on Gumroad</li>
+                            <li data-translate="download.license.step2">2. Receive license key via email</li>
+                            <li data-translate="download.license.step3">3. Enter key after app launch</li>
+                            <li data-translate="download.license.step4">4. Activate all features!</li>
                         </ul>
                     </div>
                 </div>
@@ -2773,38 +2807,39 @@
                     <a href="https://spiderverse10.gumroad.com/l/workflow-visualizer" 
                        target="_blank" 
                        class="subscribe-btn"
-                       onclick="trackSubscription()">
-                        💳 월 $9.9 구독하기
+                       onclick="trackSubscription()"
+                       data-translate="download.license.subscribe">
+                        💳 Subscribe $9.9/month
                     </a>
                 </div>
             </div>
 
             <!-- System Requirements -->
             <div class="system-requirements">
-                <h3 data-translate="download.requirements.title">📋 시스템 요구사항</h3>
+                <h3 data-translate="download.requirements.title">📋 System Requirements</h3>
                 <div class="requirements-grid">
                     <div class="requirement-item">
                         <h4>Windows</h4>
                         <ul>
-                            <li>• Windows 10 이상</li>
-                            <li>• 4GB RAM</li>
-                            <li>• 1GB 저장공간</li>
+                            <li data-translate="download.requirements.windows1">• Windows 10 or higher</li>
+                            <li data-translate="download.requirements.windows2">• 4GB RAM</li>
+                            <li data-translate="download.requirements.windows3">• 1GB storage space</li>
                         </ul>
                     </div>
                     <div class="requirement-item">
                         <h4>macOS</h4>
                         <ul>
-                            <li>• macOS 10.14 이상</li>
-                            <li>• Intel/Apple Silicon</li>
-                            <li>• 4GB RAM</li>
+                            <li data-translate="download.requirements.mac1">• macOS 10.14 or higher</li>
+                            <li data-translate="download.requirements.mac2">• Intel/Apple Silicon</li>
+                            <li data-translate="download.requirements.mac3">• 4GB RAM</li>
                         </ul>
                     </div>
                     <div class="requirement-item">
                         <h4>Linux</h4>
                         <ul>
-                            <li>• Ubuntu 18.04+ 권장</li>
-                            <li>• GLIBC 2.17+</li>
-                            <li>• 4GB RAM</li>
+                            <li data-translate="download.requirements.linux1">• Ubuntu 18.04+ recommended</li>
+                            <li data-translate="download.requirements.linux2">• GLIBC 2.17+</li>
+                            <li data-translate="download.requirements.linux3">• 4GB RAM</li>
                         </ul>
                     </div>
                 </div>
@@ -3066,16 +3101,16 @@
 
         // Show subscription reminder
         function showSubscriptionReminder() {
-            const message = `✅ 다운로드가 시작되었습니다!
+            const message = `✅ Download has started!
 
-🔑 앱을 사용하려면 라이센스 구독이 필요합니다.
+🔑 A license subscription is required to use the app.
 
-📋 구독하기:
-• 월 $9.9로 모든 기능 이용
-• 최대 3대 기기에서 사용 가능
-• 이메일로 라이센스 키 즉시 발송
+📋 Subscribe:
+• $9.9/month for all features
+• Use on up to 3 devices
+• License key sent via email instantly
 
-지금 구독 페이지로 이동하시겠습니까?`;
+Would you like to go to the subscription page now?`;
 
             if (confirm(message)) {
                 window.open('https://spiderverse10.gumroad.com/l/workflow-visualizer', '_blank');
