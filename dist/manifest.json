@@ -1,0 +1,112 @@
+{
+  "name": "Halo_workflow - AI Coding Workflow Tool",
+  "short_name": "Halo_workflow",
+  "description": "Stop the 80% AI coding failure rate with visual workflow analysis",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0d1117",
+  "background_color": "#0d1117",
+  "categories": ["productivity", "developer", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/android-icon-36x36.png",
+      "sizes": "36x36",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-icon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Workflow visualization on desktop"
+    },
+    {
+      "src": "/screenshots/mobile-1.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile workflow interface"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Analysis",
+      "short_name": "Analyze",
+      "description": "Start new code analysis",
+      "url": "/?action=analyze",
+      "icons": [
+        {
+          "src": "/icons/shortcut-analyze.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Download Desktop",
+      "short_name": "Download",
+      "description": "Download desktop app",
+      "url": "/#download",
+      "icons": [
+        {
+          "src": "/icons/shortcut-download.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "windows",
+      "url": "https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-win.exe"
+    },
+    {
+      "platform": "macos",
+      "url": "https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-mac.dmg"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

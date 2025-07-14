@@ -4,3 +4,4 @@ Mon Jul 14 13:00:22 KST 2025 - Force redeploy with multilingual download section
 Mon Jul 14 13:34:28 KST 2025 - IP-based language detection with all translations added
 Mon Jul 14 13:46:12 KST 2025 - Advanced responsive design with swipe cards, PWA, and animations
 Mon Jul 14 13:56:30 KST 2025 - Fix Vercel deployment configuration for static HTML
+Mon Jul 14 14:04:22 KST 2025 - Copy updated files to dist directory for deployment

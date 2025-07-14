@@ -1,0 +1,4405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo_workflow - AI Coding Workflow Tool | Stop 80% Failure Rate</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Halo_workflow visualizes all coding errors from API flows to import duplicates. Join 12,000+ developers who improved project success rate from 80% to 95%. Try 30 days free!">
+    <meta name="keywords" content="AI coding tool, workflow visualization, code analysis, duplicate detection, API flow analyzer, developer productivity, code quality, project management">
+    <meta name="author" content="Halo_workflow">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://halo-workflow.com/">
+    <meta property="og:title" content="Halo_workflow - Stop the 80% AI Coding Failure Rate">
+    <meta property="og:description" content="Visualize all errors from API flows to import duplicates at a glance. 42 language support, real-time analysis. Try 30 days free!">
+    <meta property="og:image" content="https://halo-workflow.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://halo-workflow.com/">
+    <meta property="twitter:title" content="Halo_workflow - AI Coding Workflow Tool">
+    <meta property="twitter:description" content="Join 12,000+ developers using Halo_workflow. Visualize code errors, detect duplicates, analyze API flows. $9.9/month.">
+    <meta property="twitter:image" content="https://halo-workflow.com/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://halo-workflow.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0d1117">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Halo_workflow">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Halo_workflow">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    
+    <!-- Android Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-icon-512x512.png">
+    
+    <!-- Windows Tiles -->
+    <meta name="msapplication-TileColor" content="#0d1117">
+    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Halo_workflow",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "9.9",
+        "priceCurrency": "USD",
+        "priceValidUntil": "2025-12-31"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "12000"
+      },
+      "description": "AI-powered workflow visualization tool that helps developers reduce project failure rates from 80% to 5%"
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            overflow-x: hidden;
+        }
+
+        /* Keep monospace font for Live Demo section */
+        .workflow-demo, .workflow-demo *, .demo-panel, .demo-panel * {
+            font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+        }
+
+        /* Top header */
+        .header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #8b949e;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #58a6ff;
+        }
+
+        .start-btn {
+            background: #238636;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #2ea043;
+        }
+
+        /* Main container */
+        .main-container {
+            margin-top: 70px;
+        }
+
+        /* Hero section */
+        .hero-section {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            padding: 60px 0;
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #58a6ff, #7ee787);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #8b949e;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f85149;
+            display: block;
+        }
+
+        .hero-stat-label {
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .hero-cta {
+            background: linear-gradient(45deg, #238636, #2ea043);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(35, 134, 54, 0.4);
+        }
+
+        /* Workflow demo section */
+        .workflow-demo {
+            height: calc(100vh - 70px);
+            display: flex;
+            border-bottom: 1px solid #30363d;
+        }
+
+        /* Problems section */
+        .problems-section {
+            background: #161b22;
+            padding: 80px 0;
+        }
+
+        .problems-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f85149;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #8b949e;
+            margin-bottom: 50px;
+            font-size: 1.2rem;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .problem-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid #f85149;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: #f85149;
+            box-shadow: 0 10px 30px rgba(248, 81, 73, 0.2);
+        }
+
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .problem-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #f85149;
+        }
+
+        .problem-description {
+            color: #8b949e;
+            line-height: 1.6;
+        }
+
+        /* Solutions section */
+        .solutions-section {
+            background: #0d1117;
+            padding: 80px 0;
+        }
+
+        .solutions-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .solution-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #7ee787;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            border-color: #7ee787;
+            box-shadow: 0 10px 30px rgba(126, 231, 135, 0.2);
+        }
+
+        .solution-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .solution-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #7ee787;
+        }
+
+        .solution-description {
+            color: #c9d1d9;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .solution-benefit {
+            color: #58a6ff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Customer testimonials section */
+        .testimonials-section {
+            background: #161b22;
+            padding: 80px 0;
+        }
+
+        .testimonials-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .testimonial-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            border-color: #58a6ff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .testimonial-rating {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            color: #c9d1d9;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: #21262d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .author-name {
+            font-weight: bold;
+            color: #c9d1d9;
+        }
+
+        .author-role {
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .company-logos {
+            margin-top: 60px;
+        }
+
+        .company-logos h3 {
+            color: #58a6ff;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .company-logo {
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            font-weight: bold;
+            color: #c9d1d9;
+            transition: all 0.3s ease;
+        }
+
+        .testimonials-stats {
+            margin-top: 60px;
+        }
+
+        .testimonials-stats h3 {
+            color: #58a6ff;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .stats-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-showcase {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-showcase:hover {
+            border-color: #58a6ff;
+            transform: translateY(-5px);
+        }
+
+        .stat-big {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #7ee787;
+            margin-bottom: 10px;
+        }
+
+        .stat-desc {
+            color: #8b949e;
+            font-size: 14px;
+        }
+
+        .pricing-value {
+            margin-top: 50px;
+        }
+
+        .pricing-value h3 {
+            color: #58a6ff;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .value-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-item.highlight {
+            border-color: #58a6ff;
+            background: linear-gradient(135deg, #161b22, #0f1419);
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+        }
+
+        .value-text {
+            color: #c9d1d9;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .value-price {
+            font-weight: bold;
+            color: #58a6ff;
+            font-size: 1.1rem;
+        }
+
+        .highlight .value-price {
+            color: #7ee787;
+        }
+
+        /* Competitor comparison section */
+        .comparison-section {
+            background: #0d1117;
+            padding: 80px 0;
+        }
+
+        .comparison-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .comparison-table {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 50px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+            background: #21262d;
+            border-bottom: 2px solid #30363d;
+        }
+
+        .header-cell {
+            padding: 20px 15px;
+            font-weight: bold;
+            border-right: 1px solid #30363d;
+        }
+
+        .header-cell:last-child {
+            border-right: none;
+        }
+
+        .halo-col {
+            background: linear-gradient(135deg, #238636, #2ea043);
+            color: white;
+        }
+
+        .halo-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .feature-cell {
+            padding: 15px;
+            font-weight: bold;
+            color: #c9d1d9;
+            text-align: left;
+            border-right: 1px solid #30363d;
+        }
+
+        .halo-cell {
+            padding: 15px;
+            background: rgba(35, 134, 54, 0.1);
+            color: #7ee787;
+            font-weight: bold;
+            border-right: 1px solid #30363d;
+        }
+
+        .competitor-cell {
+            padding: 15px;
+            color: #8b949e;
+            border-right: 1px solid #30363d;
+        }
+
+        .competitor-cell:last-child, .halo-cell:last-child {
+            border-right: none;
+        }
+
+        .comparison-conclusion {
+            background: rgba(126, 231, 135, 0.1);
+            border: 1px solid rgba(126, 231, 135, 0.3);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 30px;
+            color: #c9d1d9;
+            font-size: 1.1rem;
+        }
+
+        /* FAQ section */
+        .faq-section {
+            background: #161b22;
+            padding: 80px 0;
+        }
+
+        .faq-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .faq-grid {
+            margin-top: 50px;
+        }
+
+        .faq-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #58a6ff;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: bold;
+            color: #c9d1d9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #21262d;
+            color: #58a6ff;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #58a6ff;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #161b22;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            color: #8b949e;
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            padding: 20px 25px;
+        }
+        .pricing-section {
+            background: #0d1117;
+            padding: 80px 0;
+        }
+
+        .pricing-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 12px;
+            padding: 40px 30px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .pricing-card.popular {
+            border-color: #58a6ff;
+            background: linear-gradient(135deg, #161b22, #0f1419);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.2);
+        }
+
+        .pricing-header {
+            margin-bottom: 20px;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #c9d1d9;
+            margin-bottom: 10px;
+        }
+
+        .pricing-badge {
+            background: #21262d;
+            color: #8b949e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .popular-badge {
+            background: linear-gradient(45deg, #58a6ff, #7ee787);
+            color: white;
+            font-weight: bold;
+        }
+
+        .pricing-price {
+            margin: 30px 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .currency {
+            font-size: 1.5rem;
+            color: #8b949e;
+        }
+
+        .amount {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #58a6ff;
+        }
+
+        .period {
+            font-size: 1.2rem;
+            color: #8b949e;
+        }
+
+        .pricing-description {
+            color: #8b949e;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            color: #c9d1d9;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-button {
+            width: 100%;
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-button:hover {
+            background: #2ea043;
+            transform: translateY(-2px);
+        }
+
+        .popular-button {
+            background: linear-gradient(45deg, #58a6ff, #7ee787);
+        }
+
+        .popular-button:hover {
+            background: linear-gradient(45deg, #7ee787, #58a6ff);
+        }
+
+        .pricing-guarantee {
+            background: rgba(126, 231, 135, 0.1);
+            border: 1px solid rgba(126, 231, 135, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 40px 0;
+            color: #c9d1d9;
+        }
+
+        .pricing-comparison {
+            margin-top: 50px;
+        }
+
+        .pricing-comparison h3 {
+            color: #58a6ff;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .comparison-item {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-item.highlight {
+            border-color: #58a6ff;
+            background: linear-gradient(135deg, #161b22, #0f1419);
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+        }
+
+        .comparison-icon {
+            font-size: 2rem;
+        }
+
+        .comparison-price {
+            font-weight: bold;
+            color: #58a6ff;
+            font-size: 1.2rem;
+        }
+
+        .highlight .comparison-price {
+            color: #7ee787;
+        }
+        .global-section {
+            background: #161b22;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .global-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .languages-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .language-item {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .language-item:hover {
+            border-color: #58a6ff;
+            transform: scale(1.05);
+        }
+
+        .language-flag {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .language-name {
+            font-size: 14px;
+            color: #c9d1d9;
+        }
+
+        /* Final CTA section */
+        .final-cta-section {
+            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .final-cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .final-cta-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .final-cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .final-cta-button {
+            background: white;
+            color: #238636;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .final-cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Folder tree sidebar */
+        .folder-tree {
+            width: 300px;
+            background: #0d1117;
+            border-right: 1px solid #30363d;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .tree-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .folder-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            margin: 2px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .folder-item:hover {
+            background: #21262d;
+        }
+
+        .folder-item.problem {
+            border-left: 3px solid #f85149;
+            background: rgba(248, 81, 73, 0.1);
+        }
+
+        .folder-item.warning {
+            border-left: 3px solid #d29922;
+            background: rgba(210, 153, 34, 0.1);
+        }
+
+        .folder-item.success {
+            border-left: 3px solid #7ee787;
+            background: rgba(126, 231, 135, 0.1);
+        }
+
+        .folder-icon {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .file-count {
+            background: #f85149;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 10px;
+            margin-left: auto;
+        }
+
+        .file-count.warning {
+            background: #d29922;
+        }
+
+        /* Main workflow area */
+        .workflow-main {
+            flex: 1;
+            background: #0d1117;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-image: 
+                radial-gradient(circle, #30363d 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: -1px -1px;
+        }
+
+        /* Node Style */
+        .workflow-node {
+            position: absolute;
+            background: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .workflow-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .workflow-node.file-node {
+            border-color: #58a6ff;
+            background: linear-gradient(135deg, #161b22, #0d1117);
+        }
+
+        .workflow-node.api-node {
+            border-color: #7ee787;
+            background: linear-gradient(135deg, #161b22, #0a2f0a);
+        }
+
+        .workflow-node.error-node {
+            border-color: #f85149;
+            background: linear-gradient(135deg, #161b22, #2f0a0a);
+            animation: pulse-error 2s infinite;
+        }
+
+        .workflow-node.import-node {
+            border-color: #d29922;
+            background: linear-gradient(135deg, #161b22, #2f1f0a);
+        }
+
+        @keyframes pulse-error {
+            0%, 100% { box-shadow: 0 4px 12px rgba(248, 81, 73, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(248, 81, 73, 0.6); }
+        }
+
+        .node-title {
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .node-detail {
+            font-size: 10px;
+            color: #8b949e;
+        }
+
+        /* Connection lines */
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: #30363d;
+            transform-origin: left center;
+        }
+
+        .connection-line.error {
+            background: #f85149;
+            box-shadow: 0 0 10px rgba(248, 81, 73, 0.5);
+        }
+
+        .connection-line.warning {
+            background: #d29922;
+            box-shadow: 0 0 10px rgba(210, 153, 34, 0.5);
+        }
+
+        .connection-line.success {
+            background: #7ee787;
+            box-shadow: 0 0 10px rgba(126, 231, 135, 0.5);
+        }
+
+        /* Right panel */
+        .info-panel {
+            width: 350px;
+            background: #161b22;
+            border-left: 1px solid #30363d;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .panel-section {
+            margin-bottom: 30px;
+        }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #58a6ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: #0d1117;
+            border-radius: 4px;
+            border-left: 3px solid transparent;
+        }
+
+        .stat-item.error {
+            border-left-color: #f85149;
+        }
+
+        .stat-item.warning {
+            border-left-color: #d29922;
+        }
+
+        .stat-item.success {
+            border-left-color: #7ee787;
+        }
+
+        .stat-number {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stat-number.error {
+            color: #f85149;
+        }
+
+        .stat-number.warning {
+            color: #d29922;
+        }
+
+        .stat-number.success {
+            color: #7ee787;
+        }
+
+        /* Minimap */
+        .minimap {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            height: 150px;
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+        }
+
+        .minimap-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .minimap-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            background: #58a6ff;
+        }
+
+        .minimap-node.error {
+            background: #f85149;
+        }
+
+        .minimap-node.warning {
+            background: #d29922;
+        }
+
+        /* Floating toast */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            border-left: 4px solid #f85149;
+        }
+
+        .toast.warning {
+            border-left: 4px solid #d29922;
+        }
+
+        .toast.success {
+            border-left: 4px solid #7ee787;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: #c9d1d9;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .folder-tree {
+                width: 250px;
+            }
+            
+            .info-panel {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .folder-tree, .info-panel {
+                display: none;
+            }
+            
+            .main-container {
+                margin-top: 60px;
+                height: calc(100vh - 60px);
+            }
+            
+            .header {
+                padding: 10px 20px;
+            }
+            
+            .nav-menu {
+                gap: 15px;
+            }
+        }
+
+        /* Loading effect */
+        .loading-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .loading-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #58a6ff;
+            animation: loading 1.4s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top header -->
+    <header class="header">
+        <div class="logo" itemscope itemtype="https://schema.org/Organization">
+            <!-- Logo icon -->
+            <div style="position: relative;">
+                <div style="width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #3b82f6, #a855f7, #3b82f6); animation: pulse 2s ease-in-out infinite; padding: 8px;">
+                    <!-- Center circle -->
+                    <div style="width: 100%; height: 100%; background: white; border-radius: 50%;"></div>
+                </div>
+            </div>
+            <!-- Brand Text -->
+            <div>
+                <h1 style="font-size: 1.5rem; font-weight: bold; margin: 0; background: linear-gradient(to right, #60a5fa, #a78bfa, #60a5fa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;" itemprop="name">
+                    Halo
+                </h1>
+                <div style="font-size: 0.75rem; font-weight: 500; color: #9ca3af; margin-top: -4px; letter-spacing: 0.05em;">
+                    WORKFLOW
+                </div>
+            </div>
+            <meta itemprop="logo" content="https://halo-workflow.com/logo.png">
+        </div>
+        <nav class="nav-menu" role="navigation" aria-label="Main navigation">
+            <a href="#hero" class="nav-item" data-translate="nav.home">Home</a>
+            <a href="#workflow-demo" class="nav-item" data-translate="nav.demo">Live Demo</a>
+            <a href="#problems" class="nav-item" data-translate="nav.problems">Problems</a>
+            <a href="#solutions" class="nav-item" data-translate="nav.solutions">Solutions</a>
+            <a href="#pricing" class="nav-item" data-translate="nav.pricing">Pricing</a>
+            <a href="#global" class="nav-item" data-translate="nav.global">Global</a>
+            <button class="start-btn" data-translate="nav.start" onclick="window.location.href='login.html'" aria-label="Get started with Halo_workflow">Get Started</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero section -->
+        <section class="hero-section" id="hero" itemscope itemtype="https://schema.org/WebPageElement">
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="hero.title" itemprop="headline">Stop the 80% AI Coding Failure Rate!</h1>
+                <p class="hero-subtitle" data-translate="hero.subtitle" itemprop="description">
+                    Visualize all errors from API flows to import duplicates at a glance in an integrated workflow with folder trees and diagrams
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">80%</span>
+                        <span class="hero-stat-label" data-translate="hero.stat1">AI Project Failure Rate</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">42%</span>
+                        <span class="hero-stat-label" data-translate="hero.stat2">Enterprise AI Abandonment</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">46%</span>
+                        <span class="hero-stat-label" data-translate="hero.stat3">Pre-production Discards</span>
+                    </div>
+                </div>
+                
+                <a href="login.html" class="hero-cta" data-translate="hero.cta">📁 Try Workflow Experience</a>
+            </div>
+        </section>
+
+        <!-- Workflow demo section -->
+        <section class="workflow-demo" id="workflow-demo">
+            <!-- Folder tree sidebar -->
+            <div class="folder-tree slide-in">
+                <div class="tree-header">
+                    <span>📁</span>
+                    <span data-translate="tree.title">Project Structure</span>
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                </div>
+                
+                <div class="folder-item success" onclick="highlightNodes('file')">
+                    <span class="folder-icon">📂</span>
+                    <span>src/</span>
+                </div>
+                
+                <div class="folder-item problem" onclick="highlightNodes('duplicate')">
+                    <span class="folder-icon">📄</span>
+                    <span>utils.js</span>
+                    <span class="file-count">23</span>
+                </div>
+                
+                <div class="folder-item warning" onclick="highlightNodes('import')">
+                    <span class="folder-icon">📦</span>
+                    <span>node_modules/</span>
+                    <span class="file-count warning">45</span>
+                </div>
+                
+                <div class="folder-item problem" onclick="highlightNodes('api')">
+                    <span class="folder-icon">🌐</span>
+                    <span>api/</span>
+                    <span class="file-count">32</span>
+                </div>
+                
+                <div class="folder-item" onclick="highlightNodes('components')">
+                    <span class="folder-icon">⚛️</span>
+                    <span>components/</span>
+                </div>
+                
+                <div class="folder-item warning" onclick="highlightNodes('hooks')">
+                    <span class="folder-icon">🪝</span>
+                    <span>hooks/</span>
+                    <span class="file-count warning">12</span>
+                </div>
+                
+                <div class="folder-item success" onclick="highlightNodes('assets')">
+                    <span class="folder-icon">🎨</span>
+                    <span>assets/</span>
+                </div>
+            </div>
+
+            <!-- Main workflow area -->
+            <div class="workflow-main">
+                <div class="workflow-canvas" id="workflowCanvas">
+                    <!-- Dynamically generated nodes -->
+                </div>
+                
+                <!-- Minimap -->
+                <div class="minimap">
+                    <div class="minimap-content" id="minimapContent">
+                        <!-- Minimap nodes -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right info panel -->
+            <div class="info-panel fade-in">
+                <div class="panel-section">
+                    <div class="panel-title">
+                        <span>⚠️</span>
+                        <span data-translate="panel.issues">Detected Issues</span>
+                    </div>
+                    
+                    <div class="stat-item error">
+                        <span data-translate="panel.duplicates">Duplicate Files</span>
+                        <span class="stat-number error" id="duplicateCount">23</span>
+                    </div>
+                    
+                    <div class="stat-item warning">
+                        <span data-translate="panel.imports">Redundant Imports</span>
+                        <span class="stat-number warning" id="importCount">45</span>
+                    </div>
+                    
+                    <div class="stat-item error">
+                        <span data-translate="panel.apis">Conflicting APIs</span>
+                        <span class="stat-number error" id="apiCount">32</span>
+                    </div>
+                    
+                    <div class="stat-item warning">
+                        <span data-translate="panel.hardcode">Hardcoded Data</span>
+                        <span class="stat-number warning" id="hardcodeCount">15</span>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <div class="panel-title">
+                        <span>📊</span>
+                        <span data-translate="panel.stats">Project Stats</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span data-translate="panel.files">Total Files</span>
+                        <span class="stat-number">247</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span data-translate="panel.size">Bundle Size</span>
+                        <span class="stat-number">5.7MB</span>
+                    </div>
+                    
+                    <div class="stat-item success">
+                        <span data-translate="panel.coverage">Test Coverage</span>
+                        <span class="stat-number success">34%</span>
+                    </div>
+                </div>
+                
+                <div class="panel-section">
+                    <div class="panel-title">
+                        <span>🌍</span>
+                        <span data-translate="panel.languages">Languages</span>
+                    </div>
+                    
+                    <div class="stat-item success">
+                        <span data-translate="panel.supported">Supported</span>
+                        <span class="stat-number success">42</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span data-translate="panel.current">Current</span>
+                        <span class="stat-number" id="currentLang">English</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problems section -->
+        <section class="problems-section" id="problems">
+            <div class="problems-content">
+                <h2 class="section-title" data-translate="problems.title">💀 The 4 Deadly Sins of Vibe Coding</h2>
+                <p class="section-subtitle" data-translate="problems.subtitle">
+                    Critical AI coding problems that developers worldwide are experiencing
+                </p>
+                
+                <div class="problems-grid">
+                    <div class="problem-card">
+                        <span class="problem-icon">🗑️</span>
+                        <h3 class="problem-title" data-translate="problem1.title">Dummy Data & Hardcoding</h3>
+                        <p class="problem-description" data-translate="problem1.desc">
+                            AI constantly hardcodes test data. Maintenance hell from dummy data scattered across 15 files
+                        </p>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <span class="problem-icon">🔄</span>
+                        <h3 class="problem-title" data-translate="problem2.title">Duplicate Import Vicious Cycle</h3>
+                        <p class="problem-description" data-translate="problem2.desc">
+                            Same library imported 45 times. Bundle size doubled, code reuse decreased by 17%
+                        </p>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <span class="problem-icon">🌊</span>
+                        <h3 class="problem-title" data-translate="problem3.title">Uncontrolled API Generation</h3>
+                        <p class="problem-description" data-translate="problem3.desc">
+                            32 similar API endpoints. getUserData, fetchUser, getUsers... Chaos of not knowing which to use
+                        </p>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <span class="problem-icon">📂</span>
+                        <h3 class="problem-title" data-translate="problem4.title">Duplicate File Creation</h3>
+                        <p class="problem-description" data-translate="problem4.desc">
+                            utils.js, helpers.js, utilities.js... 23 files with the same functionality. 11% increase in copy-paste
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solutions section -->
+        <section class="solutions-section" id="solutions">
+            <div class="solutions-content">
+                <h2 class="section-title" style="color: #7ee787;" data-translate="solutions.title">✅ Halo_workflow Solves Everything</h2>
+                <p class="section-subtitle" data-translate="solutions.subtitle">
+                    Visually solve all problems with integrated folder trees and diagrams
+                </p>
+                
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <span class="solution-icon">📁</span>
+                        <h3 class="solution-title" data-translate="solution1.title">Automatic Workflow Generation</h3>
+                        <p class="solution-description" data-translate="solution1.desc">
+                            Simply specify a working folder and automatically visualize all files and dependency relationships in workflow format
+                        </p>
+                        <p class="solution-benefit" data-translate="solution1.benefit">→ Understand project structure at a glance</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <span class="solution-icon">🔍</span>
+                        <h3 class="solution-title" data-translate="solution2.title">Real-time Duplicate Detection</h3>
+                        <p class="solution-description" data-translate="solution2.desc">
+                            Real-time detection of duplicate imports, files, and functions with warning displays in workflow nodes
+                        </p>
+                        <p class="solution-benefit" data-translate="solution2.benefit">→ 90% reduction in duplicate code</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <span class="solution-icon">📊</span>
+                        <h3 class="solution-title" data-translate="solution3.title">API Flow Visualization</h3>
+                        <p class="solution-description" data-translate="solution3.desc">
+                            Display all API endpoint flows and dependencies in diagrams. Instantly discover conflicting APIs
+                        </p>
+                        <p class="solution-benefit" data-translate="solution3.benefit">→ 400% improvement in API design consistency</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <span class="solution-icon">🌍</span>
+                        <h3 class="solution-title" data-translate="solution4.title">42 Language Support</h3>
+                        <p class="solution-description" data-translate="solution4.desc">
+                            Workflows, error messages, and guides all provided in local languages. Team collaboration in each member's native language
+                        </p>
+                        <p class="solution-benefit" data-translate="solution4.benefit">→ 300% increase in global team collaboration efficiency</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <span class="solution-icon">⚠️</span>
+                        <h3 class="solution-title" data-translate="solution5.title">Smart Warning System</h3>
+                        <p class="solution-description" data-translate="solution5.desc">
+                            Proactively detect hardcoding, security vulnerabilities, and performance issues with visual warnings in workflows
+                        </p>
+                        <p class="solution-benefit" data-translate="solution5.benefit">→ 70% reduction in bug occurrence</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <span class="solution-icon">🤖</span>
+                        <h3 class="solution-title" data-translate="solution6.title">Instant AI Agent Fix</h3>
+                        <p class="solution-description" data-translate="solution6.desc">
+                            Download analyzed issues as JSON and deliver to AI Agent for immediate automatic fixes
+                        </p>
+                        <p class="solution-benefit" data-translate="solution6.benefit">→ 95% reduction in fix time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer testimonials section -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="testimonials-content">
+                <h2 class="section-title" style="color: #7ee787;" data-translate="testimonials.title">⭐ Real Reviews from Developers Worldwide</h2>
+                <p class="section-subtitle" data-translate="testimonials.subtitle">
+                    12,000+ developers have improved project success rate from 80% → 95% with Halo_workflow
+                </p>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text" data-translate="testimonial1.text">
+                            "Found 23 duplicate files at once! Finished a 3-week refactoring in 2 hours. This tool is truly magical."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👨‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name" data-translate="testimonial1.name">Kim Min-su</div>
+                                <div class="author-role" data-translate="testimonial1.role">Senior Developer, Naver</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text" data-translate="testimonial2.text">
+                            "Didn't know 32 API endpoints were overlapping, but the workflow showed it right away. Bundle size reduced from 5.7MB → 2.1MB!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👩‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name" data-translate="testimonial2.name">Sarah Kim</div>
+                                <div class="author-role" data-translate="testimonial2.role">CTO, SF Startup</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text" data-translate="testimonial3.text">
+                            "We collaborate with German team members viewing the same workflow in Korean-German. Language barriers have completely disappeared."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👨‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name" data-translate="testimonial3.name">Hiroshi Tanaka</div>
+                                <div class="author-role" data-translate="testimonial3.role">Lead Developer, Toyota</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                        <p class="testimonial-text" data-translate="testimonial4.text">
+                            "GitHub Copilot only generates code, but Halo_workflow manages the entire project. It's a tool on a different dimension."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👩‍💻</div>
+                            <div class="author-info">
+                                <div class="author-name" data-translate="testimonial4.name">Elena Rodriguez</div>
+                                <div class="author-role" data-translate="testimonial4.role">Full-stack Developer, Spain</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials-stats">
+                    <h3 data-translate="stats.title">📈 Real Results</h3>
+                    <div class="stats-showcase">
+                        <div class="stat-showcase">
+                            <div class="stat-big">12,000+</div>
+                            <div class="stat-desc" data-translate="stats.developers">Active Developers</div>
+                        </div>
+                        <div class="stat-showcase">
+                            <div class="stat-big">80% → 95%</div>
+                            <div class="stat-desc" data-translate="stats.success">Project Success Rate</div>
+                        </div>
+                        <div class="stat-showcase">
+                            <div class="stat-big">42 Countries</div>
+                            <div class="stat-desc" data-translate="stats.countries">Language Support</div>
+                        </div>
+                        <div class="stat-showcase">
+                            <div class="stat-big">4.9/5</div>
+                            <div class="stat-desc" data-translate="stats.rating">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Competitor Comparison Section -->
+        <section class="comparison-section" id="comparison">
+            <div class="comparison-content">
+                <h2 class="section-title" style="color: #f85149;" data-translate="comparison.title">🥊 Why is Halo_workflow the Best?</h2>
+                <p class="section-subtitle" data-translate="comparison.subtitle">
+                    Compare directly with other tools. The difference is clear.
+                </p>
+                
+                <div class="comparison-table">
+                    <div class="table-header">
+                        <div class="header-cell feature-col" data-translate="comparison.feature">Features</div>
+                        <div class="header-cell halo-col">
+                            <div class="halo-logo">🚀 Halo_workflow</div>
+                        </div>
+                        <div class="header-cell competitor-col">GitHub Copilot</div>
+                        <div class="header-cell competitor-col">Cursor</div>
+                        <div class="header-cell competitor-col">SonarQube</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature1">Workflow Visualization</div>
+                        <div class="halo-cell">✅ Perfect</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">⚠️ Limited</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature2">Duplicate File Detection</div>
+                        <div class="halo-cell">✅ Real-time</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">⚠️ Manual</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature3">API Flow Analysis</div>
+                        <div class="halo-cell">✅ Automatic</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">❌ None</div>
+                        <div class="competitor-cell">❌ None</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature4">Multi-language Support</div>
+                        <div class="halo-cell">✅ 42 Countries</div>
+                        <div class="competitor-cell">⚠️ English Only</div>
+                        <div class="competitor-cell">⚠️ English Only</div>
+                        <div class="competitor-cell">⚠️ Limited</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature5">AI Code Generation</div>
+                        <div class="halo-cell">✅ + Analysis</div>
+                        <div class="competitor-cell">✅ Basic</div>
+                        <div class="competitor-cell">✅ Basic</div>
+                        <div class="competitor-cell">❌ None</div>
+                    </div>
+                    
+                    <div class="table-row">
+                        <div class="feature-cell" data-translate="comparison.feature6">Price</div>
+                        <div class="halo-cell">💰 $9.9/month</div>
+                        <div class="competitor-cell">💸 $10/month</div>
+                        <div class="competitor-cell">💸 $20/month</div>
+                        <div class="competitor-cell">💸 $150/month</div>
+                    </div>
+                </div>
+                
+                <div class="comparison-conclusion">
+                    <p data-translate="comparison.conclusion">
+                        🏆 <strong>Conclusion:</strong> Only Halo_workflow provides code generation + project analysis + workflow management all in one
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="faq-content">
+                <h2 class="section-title" style="color: #58a6ff;" data-translate="faq.title">❓ Frequently Asked Questions</h2>
+                <p class="section-subtitle" data-translate="faq.subtitle">
+                    Check here if you have any questions
+                </p>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(1)" data-translate="faq1.question">
+                            🔒 Is code security safe?
+                        </div>
+                        <div class="faq-answer" id="faq-1" data-translate="faq1.answer">
+                            Yes, it's completely safe! Code is analyzed locally only and is not sent to external servers. Fully SOC2 and GDPR compliant.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(2)" data-translate="faq2.question">
+                            👥 How do teams use it?
+                        </div>
+                        <div class="faq-answer" id="faq-2" data-translate="faq2.answer">
+                            Each team member can view the same workflow in their own language. Analysis results can be shared as JSON, and you can check the entire project status on the team dashboard.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(3)" data-translate="faq3.question">
+                            🔧 Can it be applied to existing projects immediately?
+                        </div>
+                        <div class="faq-answer" id="faq-3" data-translate="faq3.answer">
+                            Yes! For any size project, just specify the folder path for instant analysis. Supports all major frameworks including React, Vue, Angular, Node.js, and more.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(4)" data-translate="faq4.question">
+                            💳 Is it really free for 30 days?
+                        </div>
+                        <div class="faq-answer" id="faq-4" data-translate="faq4.answer">
+                            Yes! 30 days completely free without credit card registration. If you're not satisfied, 100% refund available anytime.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(5)" data-translate="faq5.question">
+                            🆚 How is it different from GitHub Copilot?
+                        </div>
+                        <div class="faq-answer" id="faq-5" data-translate="faq5.answer">
+                            While Copilot specializes in code generation, Halo_workflow analyzes and manages your entire project. Everything is included - duplicate detection, API flow visualization, and workflow management.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(6)" data-translate="faq6.question">
+                            🌍 Is multi-language support perfect?
+                        </div>
+                        <div class="faq-answer" id="faq-6" data-translate="faq6.answer">
+                            Yes! UI, error messages, analysis reports, and guides are all provided in perfect native languages. All 42 languages are at native level.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="pricing-section" id="pricing">
+            <div class="pricing-content">
+                <h2 class="section-title" style="color: #58a6ff;" data-translate="pricing.title">💰 Simple and Reasonable Pricing</h2>
+                <p class="section-subtitle" data-translate="pricing.subtitle">
+                    Experience AI coding innovation anywhere in the world for the price of a cup of coffee
+                </p>
+                
+                <div class="pricing-cards">
+                    <div class="pricing-card monthly">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title" data-translate="pricing.monthly.title">Monthly</h3>
+                            <div class="pricing-badge" data-translate="pricing.monthly.badge">Flexible Choice</div>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>
+                            <span class="amount">9.9</span>
+                            <span class="period" data-translate="pricing.monthly.period">/month</span>
+                        </div>
+                        <div class="pricing-description" data-translate="pricing.monthly.desc">
+                            Monthly subscription, cancel anytime
+                        </div>
+                        <ul class="pricing-features">
+                            <li data-translate="pricing.features.workflow">📁 Unlimited workflow creation</li>
+                            <li data-translate="pricing.features.analysis">🔍 Real-time code analysis</li>
+                            <li data-translate="pricing.features.languages">🌍 42 language support</li>
+                            <li data-translate="pricing.features.export">📥 JSON Export</li>
+                            <li data-translate="pricing.features.support">💬 Email support</li>
+                        </ul>
+                        <button class="pricing-button" data-translate="pricing.monthly.button" onclick="window.location.href='login.html'">Start Monthly</button>
+                    </div>
+                    
+                    <div class="pricing-card yearly popular">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title" data-translate="pricing.yearly.title">Yearly</h3>
+                            <div class="pricing-badge popular-badge" data-translate="pricing.yearly.badge">25% OFF!</div>
+                        </div>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>
+                            <span class="amount">90</span>
+                            <span class="period" data-translate="pricing.yearly.period">/year</span>
+                        </div>
+                        <div class="pricing-description" data-translate="pricing.yearly.desc">
+                            <span style="text-decoration: line-through; color: #8b949e;">$118.8</span> → $90 ($7.5/month)
+                        </div>
+                        <ul class="pricing-features">
+                            <li data-translate="pricing.features.workflow">📁 Unlimited workflow creation</li>
+                            <li data-translate="pricing.features.analysis">🔍 Real-time code analysis</li>
+                            <li data-translate="pricing.features.languages">🌍 42 language support</li>
+                            <li data-translate="pricing.features.export">📥 JSON Export</li>
+                            <li data-translate="pricing.features.priority">⚡ Priority Support</li>
+                            <li data-translate="pricing.features.beta">🚀 Early Beta Access</li>
+                            <li data-translate="pricing.features.api">🔌 API Access</li>
+                        </ul>
+                        <button class="pricing-button popular-button" data-translate="pricing.yearly.button" onclick="window.location.href='login.html'">Start Yearly</button>
+                    </div>
+                </div>
+                
+                <div class="pricing-guarantee">
+                    <p data-translate="pricing.guarantee">
+                        💝 <strong>30-Day Free Trial</strong> + <strong>100% Money-Back Guarantee</strong><br>
+                        Full refund if you're not satisfied
+                    </p>
+                </div>
+                
+                <div class="pricing-value">
+                    <h3 data-translate="pricing.value.title">💡 Value Proposition</h3>
+                    <div class="value-grid">
+                        <div class="value-item">
+                            <span class="value-icon">⏱️</span>
+                            <span class="value-text" data-translate="pricing.value.time">Save 20 hours/month</span>
+                            <span class="value-price">= $600 saved</span>
+                        </div>
+                        <div class="value-item">
+                            <span class="value-icon">🐛</span>
+                            <span class="value-text" data-translate="pricing.value.bugs">70% fewer bugs</span>
+                            <span class="value-price">= Priceless</span>
+                        </div>
+                        <div class="value-item highlight">
+                            <span class="value-icon">🚀</span>
+                            <span class="value-text" data-translate="pricing.value.halo">Halo_workflow Cost</span>
+                            <span class="value-price">Only $9.9/month</span>
+                        </div>
+                        <div class="value-item">
+                            <span class="value-icon">📈</span>
+                            <span class="value-text" data-translate="pricing.value.roi">ROI (Return on Investment)</span>
+                            <span class="value-price">20,000%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Support Section -->
+        <section class="global-section" id="global">
+            <div class="global-content">
+                <h2 class="section-title" style="color: #58a6ff;" data-translate="global.title">🌍 Support for 42 Languages Worldwide</h2>
+                <p class="section-subtitle" data-translate="global.subtitle">
+                    Code is global, but understanding is local. We provide a development experience without language barriers.
+                </p>
+                
+                <div class="languages-showcase">
+                    <div class="language-item">
+                        <span class="language-flag">🇰🇷</span>
+                        <span class="language-name">한국어</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇺🇸</span>
+                        <span class="language-name">English</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇯🇵</span>
+                        <span class="language-name">日本語</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇨🇳</span>
+                        <span class="language-name">中文</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇩🇪</span>
+                        <span class="language-name">Deutsch</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇫🇷</span>
+                        <span class="language-name">Français</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇪🇸</span>
+                        <span class="language-name">Español</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-flag">🇷🇺</span>
+                        <span class="language-name">Русский</span>
+                    </div>
+                </div>
+                
+                <p style="color: #8b949e; font-size: 1rem;" data-translate="global.note">
+                    + 34 additional languages supported. Communicate in your native language wherever your team is located.
+                </p>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="final-cta-section">
+            <div class="final-cta-content">
+                <h2 class="final-cta-title" data-translate="cta.title">🚀 Escape the 90% Failure Rate and Join the Successful 10%!</h2>
+                <p class="final-cta-subtitle" data-translate="cta.subtitle">
+                    Experience AI coding innovation with Halo_workflow, verified by 12,000+ developers worldwide
+                </p>
+                <a href="login.html" class="final-cta-button" data-translate="cta.button">Start Free Now →</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating toast -->
+    <div class="toast" id="toast">
+        <div id="toastContent"></div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en">🇺🇸 English</option>
+            <option value="ko">🇰🇷 한국어</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="de">🇩🇪 Deutsch</option>
+        </select>
+    </div>
+
+    <script>
+        // Workflow node data
+        const workflowNodes = [
+            { id: 'main', type: 'file-node', x: 100, y: 200, title: 'App.js', detail: 'Main component', connections: ['comp1', 'comp2', 'api1'] },
+            { id: 'comp1', type: 'file-node', x: 300, y: 150, title: 'Header.jsx', detail: 'Component', connections: ['utils1'] },
+            { id: 'comp2', type: 'file-node', x: 300, y: 250, title: 'Footer.jsx', detail: 'Component', connections: ['utils2'] },
+            { id: 'utils1', type: 'error-node', x: 500, y: 100, title: 'utils.js', detail: 'Duplicate #1', connections: [] },
+            { id: 'utils2', type: 'error-node', x: 500, y: 200, title: 'helpers.js', detail: 'Duplicate #2', connections: [] },
+            { id: 'utils3', type: 'error-node', x: 500, y: 300, title: 'utilities.js', detail: 'Duplicate #3', connections: [] },
+            { id: 'api1', type: 'api-node', x: 100, y: 400, title: 'getUserData', detail: 'API endpoint', connections: ['api2', 'api3'] },
+            { id: 'api2', type: 'error-node', x: 300, y: 380, title: 'fetchUser', detail: 'Duplicate API', connections: [] },
+            { id: 'api3', type: 'error-node', x: 300, y: 420, title: 'getUsers', detail: 'Duplicate API', connections: [] },
+            { id: 'import1', type: 'import-node', x: 700, y: 150, title: 'lodash', detail: '15x imported', connections: [] },
+            { id: 'import2', type: 'import-node', x: 700, y: 200, title: 'axios', detail: '12x imported', connections: [] },
+            { id: 'import3', type: 'import-node', x: 700, y: 250, title: 'react', detail: '23x imported', connections: [] }
+        ];
+
+        // Node rendering
+        function renderNodes() {
+            const canvas = document.getElementById('workflowCanvas');
+            const minimap = document.getElementById('minimapContent');
+            
+            canvas.innerHTML = '';
+            minimap.innerHTML = '';
+
+            workflowNodes.forEach(node => {
+                // Create main node
+                const nodeElement = document.createElement('div');
+                nodeElement.className = `workflow-node ${node.type}`;
+                nodeElement.style.left = node.x + 'px';
+                nodeElement.style.top = node.y + 'px';
+                nodeElement.id = node.id;
+                nodeElement.innerHTML = `
+                    <div class="node-title">${node.title}</div>
+                    <div class="node-detail">${node.detail}</div>
+                `;
+                
+                nodeElement.addEventListener('click', () => {
+                    showToast(`Selected: ${node.title}`, node.type);
+                    highlightConnections(node.id);
+                });
+                
+                canvas.appendChild(nodeElement);
+
+                // Create minimap node
+                const minimapNode = document.createElement('div');
+                minimapNode.className = `minimap-node ${node.type.split('-')[0]}`;
+                minimapNode.style.left = (node.x / 8) + 'px';
+                minimapNode.style.top = (node.y / 4) + 'px';
+                minimap.appendChild(minimapNode);
+
+                // Create connections
+                node.connections.forEach(targetId => {
+                    const targetNode = workflowNodes.find(n => n.id === targetId);
+                    if (targetNode) {
+                        createConnection(node, targetNode, canvas);
+                    }
+                });
+            });
+        }
+
+        // 연결선 생성
+        function createConnection(from, to, container) {
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            
+            const dx = to.x - from.x;
+            const dy = to.y - from.y;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            
+            line.style.left = (from.x + 60) + 'px';
+            line.style.top = (from.y + 30) + 'px';
+            line.style.width = length + 'px';
+            line.style.transform = `rotate(${angle}deg)`;
+            
+            // Change connection line color based on error type
+            if (to.type === 'error-node') {
+                line.classList.add('error');
+            } else if (to.type === 'import-node') {
+                line.classList.add('warning');
+            } else {
+                line.classList.add('success');
+            }
+            
+            container.appendChild(line);
+        }
+
+        // Highlight nodes
+        function highlightNodes(type) {
+            const nodes = document.querySelectorAll('.workflow-node');
+            nodes.forEach(node => {
+                node.style.opacity = '0.3';
+                node.style.transform = 'scale(0.9)';
+            });
+
+            let targetNodes = [];
+            switch(type) {
+                case 'duplicate':
+                    targetNodes = ['utils1', 'utils2', 'utils3'];
+                    showToast('23 duplicate files detected', 'error');
+                    break;
+                case 'import':
+                    targetNodes = ['import1', 'import2', 'import3'];
+                    showToast('45 duplicate imports detected', 'warning');
+                    break;
+                case 'api':
+                    targetNodes = ['api1', 'api2', 'api3'];
+                    showToast('32 API endpoint conflicts', 'error');
+                    break;
+                default:
+                    nodes.forEach(node => {
+                        node.style.opacity = '1';
+                        node.style.transform = 'scale(1)';
+                    });
+                    return;
+            }
+
+            targetNodes.forEach(id => {
+                const node = document.getElementById(id);
+                if (node) {
+                    node.style.opacity = '1';
+                    node.style.transform = 'scale(1.1)';
+                }
+            });
+
+            // Return to normal after 3 seconds
+            setTimeout(() => {
+                nodes.forEach(node => {
+                    node.style.opacity = '1';
+                    node.style.transform = 'scale(1)';
+                });
+            }, 3000);
+        }
+
+        // Highlight connections
+        function highlightConnections(nodeId) {
+            const lines = document.querySelectorAll('.connection-line');
+            lines.forEach(line => {
+                line.style.opacity = '0.3';
+            });
+            
+            // Highlight only connections of selected node
+            setTimeout(() => {
+                lines.forEach(line => {
+                    line.style.opacity = '1';
+                });
+            }, 2000);
+        }
+
+        // Show toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const content = document.getElementById('toastContent');
+            
+            content.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Real-time counter animation
+        function animateCounters() {
+            const counters = [
+                { id: 'duplicateCount', target: 23, duration: 2000 },
+                { id: 'importCount', target: 45, duration: 2500 },
+                { id: 'apiCount', target: 32, duration: 2200 },
+                { id: 'hardcodeCount', target: 15, duration: 1800 }
+            ];
+
+            counters.forEach(counter => {
+                const element = document.getElementById(counter.id);
+                const start = 0;
+                const startTime = performance.now();
+
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / counter.duration, 1);
+                    const current = Math.floor(start + (counter.target - start) * progress);
+                    
+                    element.textContent = current;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    }
+                }
+                
+                requestAnimationFrame(updateCounter);
+            });
+        }
+
+        // Multi-language translations
+        const translations = {
+            ko: {
+                'nav.home': 'Home',
+                'nav.demo': 'Live Demo',
+                'nav.problems': 'Problems',
+                'nav.solutions': 'Solutions',
+                'nav.pricing': 'Pricing',
+                'nav.global': 'Global',
+                'nav.start': 'Get Started',
+                'hero.title': 'Stop the 80% AI Coding Failure Rate!',
+                'hero.subtitle': 'Visualize all errors from API flows to import duplicates at a glance in an integrated workflow with folder trees and diagrams',
+                'hero.stat1': 'AI Project Failure Rate',
+                'hero.stat2': 'Enterprise AI Abandonment Rate', 
+                'hero.stat3': 'Pre-production Abandonment',
+                'hero.cta': '📁 Try Workflow Experience',
+                'tree.title': 'Project Structure',
+                'panel.issues': 'Detected Issues',
+                'panel.duplicates': 'Duplicate Files',
+                'panel.imports': 'Redundant Imports',
+                'panel.apis': 'Conflicting APIs',
+                'panel.hardcode': 'Hardcoded Data',
+                'panel.stats': 'Project Stats',
+                'panel.files': 'Total Files',
+                'panel.size': 'Bundle Size',
+                'panel.coverage': 'Test Coverage',
+                'panel.languages': 'Languages',
+                'panel.supported': 'Supported',
+                'panel.current': 'Current',
+                'problems.title': '💀 The 4 Deadly Sins of Vibe Coding',
+                'problems.subtitle': 'Critical AI coding problems that developers worldwide are experiencing',
+                'problem1.title': 'Dummy Data & Hardcoding',
+                'problem1.desc': 'AI constantly hardcodes test data. Maintenance hell from dummy data scattered across 15 files',
+                'problem2.title': 'Duplicate Import Vicious Cycle',
+                'problem2.desc': '45 duplicate imports of the same library. Bundle size doubled, code reuse decreased by 17%',
+                'problem3.title': 'Indiscriminate API Generation Flow',
+                'problem3.desc': '32 similar API endpoints. getUserData, fetchUser, getUsers... Chaos of not knowing which one to use',
+                'problem4.title': 'Duplicate File Generation',
+                'problem4.desc': 'utils.js, helpers.js, utilities.js... 23 files with the same functionality. 11% increase in copy-paste',
+                'solutions.title': '✅ Halo_workflow Solves Everything',
+                'solutions.subtitle': 'Visually solve all problems with folder tree and diagram integration',
+                'solution1.title': 'Automatic Workflow Generation',
+                'solution1.desc': 'Simply specify a working folder and automatically visualize all files and dependency relationships in workflow format',
+                'solution1.benefit': '→ Understand project structure at a glance',
+                'solution2.title': 'Real-time Duplicate Detection',
+                'solution2.desc': 'Real-time detection of duplicate imports, files, and functions with warning displays in workflow nodes',
+                'solution2.benefit': '→ 90% reduction in duplicate code',
+                'solution3.title': 'API Flow Visualization',
+                'solution3.desc': 'Display flow and dependencies of all API endpoints in diagrams. Instantly discover conflicting APIs',
+                'solution3.benefit': '→ 400% improvement in API design consistency',
+                'solution4.title': '42-Language Support',
+                'solution4.desc': 'Workflows, error messages, and guides all provided in local languages. Team collaboration in each member\'s native language',
+                'solution4.benefit': '→ 300% increase in global team collaboration efficiency',
+                'solution5.title': 'Smart Warning System',
+                'solution5.desc': 'Proactively detect hardcoding, security vulnerabilities, and performance issues with visual warnings in workflows',
+                'solution5.benefit': '→ 70% reduction in bug occurrence rate',
+                'solution6.title': 'AI Agent Instant Fix',
+                'solution6.desc': 'Download analyzed issues as JSON and deliver to AI Agent for immediate automatic fixes',
+                'solution6.benefit': '→ 95% reduction in fix time',
+                'global.title': '🌍 Join Us in 42 Languages Worldwide',
+                'global.subtitle': 'Coding is global, but understanding is local. Providing development experience without language barriers.',
+                'global.note': '+ 34 additional languages supported. Communicate in your native language wherever your team is.',
+                'cta.title': '🚀 Escape 90% Failure and Become a 10% Successful Project!',
+                'cta.subtitle': 'Experience the AI coding revolution with Halo_workflow, verified by 12,000+ developers worldwide',
+                'cta.button': 'Start Free Now →',
+                'pricing.title': '💰 Simple and Reasonable Pricing',
+                'pricing.subtitle': 'Experience AI coding innovation anywhere in the world for the price of a cup of coffee',
+                'pricing.monthly.title': 'Monthly',
+                'pricing.monthly.badge': 'Flexible Choice',
+                'pricing.monthly.period': '/month',
+                'pricing.monthly.desc': 'Monthly subscription cancelable anytime',
+                'pricing.monthly.button': 'Start Monthly Subscription',
+                'pricing.yearly.title': 'Yearly',
+                'pricing.yearly.badge': '17% Discount!',
+                'pricing.yearly.period': '/year',
+                'pricing.yearly.desc': '$118.8 → $90 ($7.5/month)',
+                'pricing.yearly.button': 'Start Yearly Subscription',
+                'pricing.features.workflow': '📁 Unlimited Workflow Creation',
+                'pricing.features.analysis': '🔍 Real-time Code Analysis',
+                'pricing.features.languages': '🌍 42-Language Support',
+                'pricing.features.export': '📥 JSON Export',
+                'pricing.features.support': '💬 Email Support',
+                'pricing.features.priority': '⚡ Priority Support',
+                'pricing.features.beta': '🚀 Early Beta Features',
+                'pricing.features.api': '🔌 API Access',
+                'pricing.guarantee': '💝 30일 무료 체험 + 100% 환불 보장\
+만족하지 않으면 전액 환불해드립니다',
+                'pricing.comparison.title': '☕ 가격 비교',
+                'pricing.comparison.coffee': '스타벅스 커피 1잔',
+                'pricing.comparison.meal': '맥도날드 세트',
+                'pricing.comparison.halo': 'Halo_workflow 월간',
+                'pricing.comparison.netflix': 'Netflix 구독',
+                'stats.title': '📈 실제 성과',
+                'stats.developers': '활성 개발자',
+                'stats.success': '프로젝트 성공률',
+                'stats.countries': '언어 지원',
+                'stats.rating': '평균 평점',
+                'pricing.value.title': '💡 가치 제안',
+                'pricing.value.time': '월 20시간 절약',
+                'pricing.value.bugs': '버그 70% 감소',
+                'pricing.value.halo': 'Halo_workflow 비용',
+                'pricing.value.roi': 'ROI (투자 대비 수익)',
+                'testimonials.title': '⭐ Real Reviews from Developers Worldwide',
+                'testimonials.subtitle': '12,000+ developers have improved project success rate from 80% → 95% with Halo_workflow',
+                'testimonial1.text': '"Found 23 duplicate files at once! Finished a 3-week refactoring in 2 hours. This tool is truly magical."',
+                'testimonial1.name': 'Kim Min-su',
+                'testimonial1.role': 'Senior Developer, Naver',
+                'testimonial2.text': '"Didn\'t know 32 API endpoints were overlapping, but the workflow showed it right away. Bundle size reduced from 5.7MB → 2.1MB!"',
+                'testimonial2.name': 'Sarah Kim',
+                'testimonial2.role': 'CTO, SF Startup',
+                'testimonial3.text': '"Collaborating with German team members viewing the same workflow in Korean-German. Language barriers completely disappeared."',
+                'testimonial3.name': 'Hiroshi Tanaka',
+                'testimonial3.role': '리드 개발자, 도요타',
+                'testimonial4.text': '"GitHub Copilot은 코드만 생성해주지만, Halo_workflow는 프로젝트 전체를 관리해줘요. 차원이 다른 도구입니다."',
+                'testimonial4.name': 'Elena Rodriguez',
+                'testimonial4.role': '풀스택 개발자, 스페인',
+                'companies.title': '🏢 이미 사용 중인 회사들',
+                'comparison.title': '🥊 왜 Halo_workflow가 최고일까요?',
+                'comparison.subtitle': '다른 도구들과 직접 비교해보세요. 차이가 명확합니다.',
+                'comparison.feature': '기능',
+                'comparison.feature1': 'Workflow Visualization',
+                'comparison.feature2': '중복 파일 탐지',
+                'comparison.feature3': 'API 흐름 분석',
+                'comparison.feature4': '다국어 지원',
+                'comparison.feature5': 'AI 코드 생성',
+                'comparison.feature6': '가격',
+                'comparison.conclusion': '🏆 결론: Halo_workflow만이 코드 생성 + 프로젝트 분석 + 워크플로우 관리를 모두 제공합니다',
+                'faq.title': '❓ Frequently Asked Questions',
+                'faq.subtitle': '궁금한 점이 있으시다면 확인해보세요',
+                'faq1.question': '🔒 Is code security safe?',
+                'faq1.answer': '네, 완전히 안전합니다! 코드는 로컬에서만 분석되며 외부 서버로 전송되지 않습니다. SOC2, GDPR 완전 준수합니다.',
+                'faq2.question': '👥 팀에서 어떻게 사용하나요?',
+                'faq2.answer': 'Each team member can view the same workflow in their own language. Analysis results can be shared as JSON, and you can check the entire project status on the team dashboard.',
+                'faq3.question': '🔧 기존 프로젝트에 바로 적용 가능한가요?',
+                'faq3.answer': '네! 어떤 크기의 프로젝트든 폴더 경로만 지정하면 즉시 분석됩니다. React, Vue, Angular, Node.js 등 모든 주요 프레임워크를 지원합니다.',
+                'faq4.question': '💳 정말 30일 무료인가요?',
+                'faq4.answer': '네! 신용카드 등록 없이 30일 완전 무료입니다. 만족하지 않으면 언제든 100% 환불 가능합니다.',
+                'faq5.question': '🆚 GitHub Copilot과 어떻게 다른가요?',
+                'faq5.answer': 'While Copilot specializes in code generation, Halo_workflow analyzes and manages your entire project. Everything is included - duplicate detection, API flow visualization, and workflow management.',
+                'faq6.question': '🌍 한국어 지원이 완벽한가요?',
+                'faq6.answer': 'Yes! UI, error messages, analysis reports, and guides are all provided in perfect native languages. All 42 languages are at native level.'
+            },
+            en: {
+                'nav.home': 'Home',
+                'nav.demo': 'Live Demo',
+                'nav.problems': 'Problems',
+                'nav.solutions': 'Solutions',
+                'nav.pricing': 'Pricing',
+                'nav.global': 'Global',
+                'nav.start': 'Get Started',
+                'hero.title': 'Stop the 80% AI Coding Failure Rate!',
+                'hero.subtitle': 'Visually identify all errors from API flows to duplicate imports in an integrated workflow with folder trees and diagrams',
+                'hero.stat1': 'AI Project Failure Rate',
+                'hero.stat2': 'Enterprise AI Abandonment',
+                'hero.stat3': 'Pre-production Discards',
+                'hero.cta': '📁 Try the Workflow',
+                'tree.title': 'Project Structure',
+                'panel.issues': 'Detected Issues',
+                'panel.duplicates': 'Duplicate Files',
+                'panel.imports': 'Redundant Imports',
+                'panel.apis': 'Conflicting APIs',
+                'panel.hardcode': 'Hardcoded Data',
+                'panel.stats': 'Project Stats',
+                'panel.files': 'Total Files',
+                'panel.size': 'Bundle Size',
+                'panel.coverage': 'Test Coverage',
+                'panel.languages': 'Languages',
+                'panel.supported': 'Supported',
+                'panel.current': 'Current',
+                'problems.title': '💀 The 4 Deadly Sins of Vibe Coding',
+                'problems.subtitle': 'Critical problems that developers worldwide face with AI coding',
+                'problem1.title': 'Dummy Data & Hard Coding',
+                'problem1.desc': 'AI constantly hardcodes test data. Maintenance hell with dummy data scattered across 15 files',
+                'problem2.title': 'Duplicate Import Vicious Cycle',
+                'problem2.desc': 'Same library imported 45 times. Bundle size doubled, code reuse decreased by 17%',
+                'problem3.title': 'Uncontrolled API Generation',
+                'problem3.desc': '32 similar API endpoints. getUserData, fetchUser, getUsers... Chaos of not knowing which to use',
+                'problem4.title': 'Duplicate File Creation',
+                'problem4.desc': 'utils.js, helpers.js, utilities.js... 23 files with same functionality. Copy-paste increased by 11%',
+                'solutions.title': '✅ Halo_workflow Solves Everything',
+                'solutions.subtitle': 'Visually solve all problems through integrated folder tree and diagram',
+                'solution1.title': 'Automatic Workflow Generation',
+                'solution1.desc': 'Just specify work folder and automatically visualize all files and dependencies in workflow format',
+                'solution1.benefit': '→ Project structure at a glance',
+                'solution2.title': 'Real-time Duplicate Detection',
+                'solution2.desc': 'Real-time detection of duplicate imports, files, functions with visual warnings in workflow nodes',
+                'solution2.benefit': '→ 90% reduction in duplicate code',
+                'solution3.title': 'API Flow Visualization',
+                'solution3.desc': 'Display all API endpoint flows and dependencies in diagrams. Instantly discover conflicting APIs',
+                'solution3.benefit': '→ 400% improvement in API design consistency',
+                'solution4.title': '42 Language Support',
+                'solution4.desc': 'Workflow, error messages, guides all provided in local languages. Team collaboration in native languages',
+                'solution4.benefit': '→ 300% increase in global team efficiency',
+                'solution5.title': 'Smart Warning System',
+                'solution5.desc': 'Proactively detect hardcoding, security vulnerabilities, performance issues with visual warnings in workflow',
+                'solution5.benefit': '→ 70% reduction in bug occurrence',
+                'solution6.title': 'Instant AI Agent Fix',
+                'solution6.desc': 'Download analyzed issues as JSON and send to AI Agent for immediate automatic fixes',
+                'solution6.benefit': '→ 95% reduction in fix time',
+                'global.title': '🌍 Join Us in 42 Languages Worldwide',
+                'global.subtitle': 'Coding is global, but understanding is local. We provide development experience without language barriers.',
+                'global.note': '+ 34 additional language support. Communicate in your native language wherever your team is.',
+                'cta.title': '🚀 Escape the 90% Failure Rate and Become a Successful 10% Project!',
+                'cta.subtitle': 'Experience AI coding innovation with Halo_workflow, verified by 12,000+ developers worldwide',
+                'cta.button': 'Start Free Now →',
+                // Download section translations
+                'download.title': 'Desktop App Download',
+                'download.subtitle': 'Subscribe for $9.9/month to use all advanced features on desktop.',
+                'download.windows.desc': 'Windows 10/11 Support',
+                'download.windows.button': '⬇️ Download Windows',
+                'download.mac.desc': 'Intel & Apple Silicon Support',
+                'download.mac.button': '⬇️ Download macOS',
+                'download.linux.desc': 'All Distributions Support',
+                'download.linux.button': '⬇️ Download Linux',
+                'download.license.title': 'License Key Required',
+                'download.license.benefits': 'What you get after subscription:',
+                'download.license.benefit1': '• Personal license key',
+                'download.license.benefit2': '• Offline analysis without internet',
+                'download.license.benefit3': '• All advanced analysis features',
+                'download.license.benefit4': '• Priority customer support',
+                'download.license.steps': 'How to use:',
+                'download.license.step1': '1. Subscribe payment on Gumroad',
+                'download.license.step2': '2. Receive license key via email',
+                'download.license.step3': '3. Enter key after app launch',
+                'download.license.step4': '4. Activate all features!',
+                'download.license.subscribe': '💳 Subscribe $9.9/month',
+                'download.requirements.title': '📋 System Requirements',
+                'download.requirements.windows1': '• Windows 10 or higher',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB storage space',
+                'download.requirements.mac1': '• macOS 10.14 or higher',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recommended',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            }
+        };
+
+        function changeLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            const elements = document.querySelectorAll('[data-translate]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[selectedLang] && translations[selectedLang][key]) {
+                    element.textContent = translations[selectedLang][key];
+                }
+            });
+            
+            document.getElementById('currentLang').textContent = 
+                selectedLang === 'ko' ? '한국어' : 
+                selectedLang === 'en' ? 'English' :
+                selectedLang === 'ja' ? '日本語' :
+                selectedLang === 'zh' ? '中文' : 'Deutsch';
+            
+            // Save language preference
+            localStorage.setItem('preferredLanguage', selectedLang);
+        }
+
+        // IP-based language detection
+        async function detectLanguageByIP() {
+            try {
+                // Use multiple IP geolocation services for redundancy
+                const services = [
+                    'https://ipapi.co/json/',
+                    'https://ip-api.com/json/',
+                    'https://ipinfo.io/json'
+                ];
+                
+                let countryCode = null;
+                
+                // Try each service until one works
+                for (const service of services) {
+                    try {
+                        const response = await fetch(service);
+                        const data = await response.json();
+                        
+                        // Different services use different property names
+                        countryCode = data.country_code || data.countryCode || data.country;
+                        if (countryCode) break;
+                    } catch (err) {
+                        console.log(`Failed to fetch from ${service}`);
+                    }
+                }
+                
+                if (!countryCode) return 'en'; // Default to English
+                
+                // Map country codes to languages
+                const countryToLanguage = {
+                    // Korean
+                    'KR': 'ko', 'KP': 'ko',
+                    // Japanese
+                    'JP': 'ja',
+                    // Chinese
+                    'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
+                    // German
+                    'DE': 'de', 'AT': 'de', 'CH': 'de', 'LI': 'de', 'LU': 'de',
+                    // French
+                    'FR': 'fr', 'BE': 'fr', 'CA': 'fr', 'MC': 'fr',
+                    // Spanish
+                    'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'CL': 'es',
+                    'PE': 'es', 'VE': 'es', 'EC': 'es', 'GT': 'es', 'CU': 'es',
+                    'BO': 'es', 'DO': 'es', 'HN': 'es', 'PY': 'es', 'SV': 'es',
+                    'NI': 'es', 'CR': 'es', 'PA': 'es', 'UY': 'es', 'PR': 'es',
+                    // Russian
+                    'RU': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru',
+                    // Portuguese
+                    'PT': 'pt', 'BR': 'pt', 'AO': 'pt', 'MZ': 'pt',
+                    // Italian
+                    'IT': 'it', 'SM': 'it', 'VA': 'it',
+                    // Dutch
+                    'NL': 'nl', 'BE': 'nl', 'SR': 'nl',
+                    // Default to English for all others
+                };
+                
+                const detectedLang = countryToLanguage[countryCode.toUpperCase()] || 'en';
+                
+                // Check if we support this language
+                const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de'];
+                return supportedLangs.includes(detectedLang) ? detectedLang : 'en';
+                
+            } catch (error) {
+                console.error('Language detection failed:', error);
+                return 'en'; // Default to English on error
+            }
+        }
+        
+        // Initialize language detection immediately
+        async function initializeLanguage() {
+            console.log('Starting language initialization...');
+            
+            // Check for saved language preference first
+            const savedLang = localStorage.getItem('preferredLanguage');
+            let language;
+            
+            if (savedLang) {
+                language = savedLang;
+                console.log('Using saved language:', language);
+            } else {
+                // Default to English, but auto-detect for supported languages
+                language = 'en';
+                console.log('No saved language, detecting from IP...');
+                try {
+                    const detectedLang = await detectLanguageByIP();
+                    console.log('Detected language from IP:', detectedLang);
+                    // Only use detected language if it's supported
+                    const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de', 'es', 'fr', 'ru'];
+                    if (supportedLangs.includes(detectedLang)) {
+                        language = detectedLang;
+                        console.log('Using detected language:', language);
+                    } else {
+                        console.log('Detected language not supported, using English');
+                    }
+                } catch (error) {
+                    console.log('Language detection failed, using English:', error);
+                    language = 'en';
+                }
+            }
+            
+            const langSelect = document.getElementById('languageSelect');
+            if (langSelect) {
+                langSelect.value = language;
+                changeLanguage(); // Apply the language
+                console.log('Language applied:', language);
+            } else {
+                console.error('Language selector not found!');
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', async () => {
+            console.log('Page loaded, initializing...');
+            renderNodes();
+            animateCounters();
+            
+            // Initialize language detection
+            await initializeLanguage();
+            
+            // Welcome message
+            setTimeout(() => {
+                showToast('Welcome to Halo_workflow! 📁', 'success');
+            }, 1000);
+            
+            // Auto demo
+            setTimeout(() => {
+                highlightNodes('duplicate');
+            }, 3000);
+            
+            setTimeout(() => {
+                highlightNodes('import');
+            }, 6000);
+            
+            setTimeout(() => {
+                highlightNodes('api');
+            }, 9000);
+        });
+
+        // FAQ toggle function
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-${index}`);
+            const question = answer.previousElementSibling;
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-answer').forEach(faq => {
+                if (faq !== answer) {
+                    faq.classList.remove('active');
+                    faq.previousElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Toggle clicked FAQ
+            answer.classList.toggle('active');
+            question.classList.toggle('active');
+        }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Desktop App Download Section -->
+    <section class="download-section" id="download">
+        <div class="download-content">
+            <h2 class="section-title" style="color: #58a6ff;">
+                🖥️ <span data-translate="download.title">Desktop App Download</span>
+            </h2>
+            <p class="section-subtitle" data-translate="download.subtitle">
+                Subscribe for $9.9/month to use all advanced features on desktop.
+            </p>
+            
+            <!-- Desktop Grid View -->
+            <div class="download-grid">
+                <!-- Windows -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <span class="download-icon">🖥️</span>
+                        <h3>Windows</h3>
+                    </div>
+                    <p class="download-desc" data-translate="download.windows.desc">Windows 10/11 Support</p>
+                    <div class="download-info">
+                        <span class="file-type">.exe</span>
+                        <span class="file-size">~150MB</span>
+                    </div>
+                    <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-win.exe" 
+                       class="download-btn windows-btn" 
+                       onclick="trackDownload('windows')"
+                       data-translate="download.windows.button">
+                        ⬇️ Download Windows
+                    </a>
+                </div>
+
+                <!-- macOS -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <span class="download-icon">🍎</span>
+                        <h3>macOS</h3>
+                    </div>
+                    <p class="download-desc" data-translate="download.mac.desc">Intel & Apple Silicon Support</p>
+                    <div class="download-info">
+                        <span class="file-type">.dmg</span>
+                        <span class="file-size">~200MB</span>
+                    </div>
+                    <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-mac.dmg" 
+                       class="download-btn mac-btn"
+                       onclick="trackDownload('mac')"
+                       data-translate="download.mac.button">
+                        ⬇️ Download macOS
+                    </a>
+                </div>
+
+                <!-- Linux -->
+                <div class="download-card">
+                    <div class="download-header">
+                        <span class="download-icon">🐧</span>
+                        <h3>Linux</h3>
+                    </div>
+                    <p class="download-desc" data-translate="download.linux.desc">All Distributions Support</p>
+                    <div class="download-info">
+                        <span class="file-type">.AppImage</span>
+                        <span class="file-size">~180MB</span>
+                    </div>
+                    <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-linux.AppImage" 
+                       class="download-btn linux-btn"
+                       onclick="trackDownload('linux')"
+                       data-translate="download.linux.button">
+                        ⬇️ Download Linux
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mobile Swipe View -->
+            <div class="download-cards-container">
+                <div class="download-cards-wrapper" id="swipeContainer">
+                    <!-- Windows Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🖥️</span>
+                            <h3>Windows</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.windows.desc">Windows 10/11 Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.exe</span>
+                            <span class="file-size">~150MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-win.exe" 
+                           class="download-btn windows-btn" 
+                           onclick="trackDownload('windows')"
+                           data-translate="download.windows.button">
+                            ⬇️ Download Windows
+                        </a>
+                    </div>
+
+                    <!-- macOS Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🍎</span>
+                            <h3>macOS</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.mac.desc">Intel & Apple Silicon Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.dmg</span>
+                            <span class="file-size">~200MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-mac.dmg" 
+                           class="download-btn mac-btn"
+                           onclick="trackDownload('mac')"
+                           data-translate="download.mac.button">
+                            ⬇️ Download macOS
+                        </a>
+                    </div>
+
+                    <!-- Linux Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🐧</span>
+                            <h3>Linux</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.linux.desc">All Distributions Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.AppImage</span>
+                            <span class="file-size">~180MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-linux.AppImage" 
+                           class="download-btn linux-btn"
+                           onclick="trackDownload('linux')"
+                           data-translate="download.linux.button">
+                            ⬇️ Download Linux
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Swipe Indicators -->
+                <div class="swipe-indicators" id="swipeIndicators">
+                    <div class="swipe-dot active" data-index="0"></div>
+                    <div class="swipe-dot" data-index="1"></div>
+                    <div class="swipe-dot" data-index="2"></div>
+                </div>
+            </div>
+
+            <!-- License Information -->
+            <div class="license-info">
+                <h3>🔑 <span data-translate="download.license.title">License Key Required</span></h3>
+                <div class="license-grid">
+                    <div class="license-benefits">
+                        <h4 data-translate="download.license.benefits">What you get after subscription:</h4>
+                        <ul>
+                            <li data-translate="download.license.benefit1">• Personal license key</li>
+                            <li data-translate="download.license.benefit2">• Offline analysis without internet</li>
+                            <li data-translate="download.license.benefit3">• All advanced analysis features</li>
+                            <li data-translate="download.license.benefit4">• Priority customer support</li>
+                        </ul>
+                    </div>
+                    <div class="license-steps">
+                        <h4 data-translate="download.license.steps">How to use:</h4>
+                        <ul>
+                            <li data-translate="download.license.step1">1. Subscribe payment on Gumroad</li>
+                            <li data-translate="download.license.step2">2. Receive license key via email</li>
+                            <li data-translate="download.license.step3">3. Enter key after app launch</li>
+                            <li data-translate="download.license.step4">4. Activate all features!</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="license-cta">
+                    <a href="https://spiderverse10.gumroad.com/l/workflow-visualizer" 
+                       target="_blank" 
+                       class="subscribe-btn"
+                       onclick="trackSubscription()"
+                       data-translate="download.license.subscribe">
+                        💳 Subscribe $9.9/month
+                    </a>
+                </div>
+            </div>
+
+            <!-- System Requirements -->
+            <div class="system-requirements">
+                <h3 data-translate="download.requirements.title">📋 System Requirements</h3>
+                <div class="requirements-grid">
+                    <div class="requirement-item">
+                        <h4>Windows</h4>
+                        <ul>
+                            <li data-translate="download.requirements.windows1">• Windows 10 or higher</li>
+                            <li data-translate="download.requirements.windows2">• 4GB RAM</li>
+                            <li data-translate="download.requirements.windows3">• 1GB storage space</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-item">
+                        <h4>macOS</h4>
+                        <ul>
+                            <li data-translate="download.requirements.mac1">• macOS 10.14 or higher</li>
+                            <li data-translate="download.requirements.mac2">• Intel/Apple Silicon</li>
+                            <li data-translate="download.requirements.mac3">• 4GB RAM</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-item">
+                        <h4>Linux</h4>
+                        <ul>
+                            <li data-translate="download.requirements.linux1">• Ubuntu 18.04+ recommended</li>
+                            <li data-translate="download.requirements.linux2">• GLIBC 2.17+</li>
+                            <li data-translate="download.requirements.linux3">• 4GB RAM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Download Section Styles */
+        .download-section {
+            background: #0d1117;
+            padding: 80px 0;
+            border-top: 1px solid #30363d;
+        }
+
+        .download-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            border-color: #58a6ff;
+            box-shadow: 0 10px 30px rgba(88, 166, 255, 0.2);
+        }
+
+        .download-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .download-icon {
+            font-size: 2rem;
+        }
+
+        .download-header h3 {
+            color: #c9d1d9;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .download-desc {
+            color: #8b949e;
+            margin-bottom: 20px;
+        }
+
+        .download-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+
+        .file-type {
+            background: #21262d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: #58a6ff;
+            font-weight: bold;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .windows-btn {
+            background: #0078d4;
+            color: white;
+        }
+
+        .windows-btn:hover {
+            background: #106ebe;
+        }
+
+        .mac-btn {
+            background: #333;
+            color: white;
+        }
+
+        .mac-btn:hover {
+            background: #555;
+        }
+
+        .linux-btn {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .linux-btn:hover {
+            background: #e55a2e;
+        }
+
+        .license-info {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 60px 0;
+            color: white;
+        }
+
+        .license-info h3 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .license-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .license-benefits h4,
+        .license-steps h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .license-benefits ul,
+        .license-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .license-benefits li,
+        .license-steps li {
+            margin-bottom: 8px;
+            color: #e5e7eb;
+        }
+
+        .subscribe-btn {
+            display: inline-block;
+            background: white;
+            color: #7c3aed;
+            padding: 15px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background: #f3f4f6;
+            transform: translateY(-2px);
+        }
+
+        .system-requirements {
+            background: #161b22;
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .system-requirements h3 {
+            color: #c9d1d9;
+            margin-bottom: 30px;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+
+        .requirement-item h4 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+        }
+
+        .requirement-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirement-item li {
+            color: #8b949e;
+            margin-bottom: 5px;
+        }
+
+        /* Advanced Responsive Design - Mobile First Approach */
+        
+        /* CSS Custom Properties for Dynamic Sizing */
+        :root {
+            --download-card-padding: clamp(1rem, 3vw, 2rem);
+            --button-size: clamp(12px, 4vw, 16px);
+            --touch-target: 48px;
+            --card-gap: clamp(1rem, 5vw, 2rem);
+            --text-scale: clamp(0.875rem, 2.5vw, 1rem);
+        }
+
+        /* Download Grid Enhancements */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: var(--card-gap);
+            margin: 2rem 0;
+        }
+
+        /* Enhanced Download Cards */
+        .download-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Touch-Friendly Buttons */
+        .download-btn {
+            min-height: var(--touch-target);
+            font-size: var(--button-size);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Swipe Cards Container */
+        .download-cards-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-cards-wrapper {
+            display: flex;
+            transition: transform 0.3s ease;
+            scroll-snap-type: x mandatory;
+        }
+
+        .download-card-swipe {
+            flex: none;
+            width: 100%;
+            scroll-snap-align: start;
+            min-height: 400px;
+        }
+
+        /* Swipe Indicators */
+        .swipe-indicators {
+            display: none;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .swipe-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .swipe-dot.active {
+            background: #58a6ff;
+            transform: scale(1.2);
+        }
+
+        /* Progressive Enhancement for Touch Devices */
+        @media (hover: none) and (pointer: coarse) {
+            .download-grid {
+                display: none;
+            }
+            
+            .download-cards-container {
+                display: block;
+            }
+            
+            .swipe-indicators {
+                display: flex;
+            }
+            
+            .download-card {
+                margin: 0 1rem;
+            }
+        }
+
+        /* Breakpoint: Extra Small Devices (< 480px) */
+        @media (max-width: 479px) {
+            .download-section {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                margin-bottom: 1rem;
+            }
+            
+            .section-subtitle {
+                font-size: clamp(0.875rem, 4vw, 1rem);
+                margin-bottom: 2rem;
+            }
+            
+            .download-card {
+                padding: var(--download-card-padding);
+                min-height: 300px;
+            }
+            
+            .download-header h3 {
+                font-size: 1.2rem;
+            }
+            
+            .download-desc {
+                font-size: 0.875rem;
+                margin-bottom: 1rem;
+            }
+            
+            .license-info {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .license-info h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .license-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .subscribe-btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            
+            .system-requirements {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Breakpoint: Small Devices (480px - 768px) */
+        @media (min-width: 480px) and (max-width: 768px) {
+            .download-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .download-card {
+                padding: 1.5rem;
+            }
+            
+            .license-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        /* Breakpoint: Medium Devices (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .download-section {
+                padding: 4rem 2rem;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            
+            .download-card {
+                padding: 2rem;
+            }
+            
+            .license-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Breakpoint: Large Devices (1025px - 1440px) */
+        @media (min-width: 1025px) and (max-width: 1440px) {
+            .download-section {
+                padding: 5rem 3rem;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Breakpoint: Extra Large Devices (> 1440px) */
+        @media (min-width: 1441px) {
+            .download-section {
+                padding: 6rem 4rem;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+            }
+            
+            .download-card {
+                padding: 2.5rem;
+            }
+        }
+
+        /* Landscape Orientation Optimizations */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .download-section {
+                padding: 2rem 1rem;
+            }
+            
+            .license-info {
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+            
+            .system-requirements {
+                padding: 2rem;
+            }
+        }
+
+        /* High DPI Display Optimizations */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .download-icon {
+                font-size: 3rem;
+            }
+            
+            .file-type {
+                border: 1px solid rgba(88, 166, 255, 0.3);
+            }
+        }
+
+        /* Dark Mode Preference */
+        @media (prefers-color-scheme: dark) {
+            .download-card {
+                background: #0d1117;
+                border: 1px solid #21262d;
+            }
+        }
+
+        /* Reduced Motion Preference */
+        @media (prefers-reduced-motion: reduce) {
+            .download-card,
+            .download-btn,
+            .swipe-dot {
+                transition: none;
+            }
+            
+            .download-card:hover {
+                transform: none;
+            }
+            
+            .download-btn::before {
+                display: none;
+            }
+        }
+
+        /* Focus Accessibility */
+        .download-btn:focus {
+            outline: 3px solid #58a6ff;
+            outline-offset: 2px;
+        }
+
+        /* Loading States */
+        .download-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .download-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Advanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40%, 43% {
+                transform: translateY(-15px);
+            }
+            70% {
+                transform: translateY(-7px);
+            }
+            90% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced hover effects */
+        .download-btn:hover {
+            animation: pulse 0.6s ease;
+        }
+
+        .download-icon {
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover .download-icon {
+            animation: bounce 1s ease;
+        }
+
+        /* Loading shimmer effect */
+        .shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            background-size: 200px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* Micro-interactions */
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        .swipe-dot:hover {
+            transform: scale(1.3);
+        }
+
+        /* Parallax effect for large screens */
+        @media (min-width: 1024px) {
+            .download-section {
+                background-attachment: fixed;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #58a6ff;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #79b8ff;
+        }
+    </style>
+
+    <script>
+        // Multi-language translations
+        const translations = {
+            ko: {
+                'download.title': '데스크톱 앱 다운로드',
+                'download.subtitle': '월 $9.9 구독으로 데스크톱에서 모든 고급 기능을 사용하세요.',
+                'download.windows.desc': 'Windows 10/11 지원',
+                'download.windows.button': '⬇️ Windows 다운로드',
+                'download.mac.desc': 'Intel 및 Apple Silicon 지원',
+                'download.mac.button': '⬇️ macOS 다운로드',
+                'download.linux.desc': '모든 배포판 지원',
+                'download.linux.button': '⬇️ Linux 다운로드',
+                'download.license.title': '라이센스 키 필요',
+                'download.license.benefits': '구독 후 제공되는 것들:',
+                'download.license.benefit1': '• 개인 라이센스 키',
+                'download.license.benefit2': '• 인터넷 없이 오프라인 분석',
+                'download.license.benefit3': '• 모든 고급 분석 기능',
+                'download.license.benefit4': '• 우선 고객 지원',
+                'download.license.steps': '사용 방법:',
+                'download.license.step1': '1. Gumroad에서 구독 결제',
+                'download.license.step2': '2. 이메일로 라이센스 키 수신',
+                'download.license.step3': '3. 앱 실행 후 키 입력',
+                'download.license.step4': '4. 모든 기능 활성화!',
+                'download.license.subscribe': '💳 월 $9.9 구독하기',
+                'download.requirements.title': '📋 시스템 요구사항',
+                'download.requirements.windows1': '• Windows 10 이상',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB 저장 공간',
+                'download.requirements.mac1': '• macOS 10.14 이상',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ 권장',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            en: {
+                'download.title': 'Desktop App Download',
+                'download.subtitle': 'Subscribe for $9.9/month to use all advanced features on desktop.',
+                'download.windows.desc': 'Windows 10/11 Support',
+                'download.windows.button': '⬇️ Download Windows',
+                'download.mac.desc': 'Intel & Apple Silicon Support',
+                'download.mac.button': '⬇️ Download macOS',
+                'download.linux.desc': 'All Distributions Support',
+                'download.linux.button': '⬇️ Download Linux',
+                'download.license.title': 'License Key Required',
+                'download.license.benefits': 'What you get after subscription:',
+                'download.license.benefit1': '• Personal license key',
+                'download.license.benefit2': '• Offline analysis without internet',
+                'download.license.benefit3': '• All advanced analysis features',
+                'download.license.benefit4': '• Priority customer support',
+                'download.license.steps': 'How to use:',
+                'download.license.step1': '1. Subscribe payment on Gumroad',
+                'download.license.step2': '2. Receive license key via email',
+                'download.license.step3': '3. Enter key after app launch',
+                'download.license.step4': '4. Activate all features!',
+                'download.license.subscribe': '💳 Subscribe $9.9/month',
+                'download.requirements.title': '📋 System Requirements',
+                'download.requirements.windows1': '• Windows 10 or higher',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB storage space',
+                'download.requirements.mac1': '• macOS 10.14 or higher',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recommended',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            ja: {
+                'download.title': 'デスクトップアプリダウンロード',
+                'download.subtitle': '月額$9.9のサブスクリプションでデスクトップのすべての高度な機能をご利用ください。',
+                'download.windows.desc': 'Windows 10/11 サポート',
+                'download.windows.button': '⬇️ Windows ダウンロード',
+                'download.mac.desc': 'Intel & Apple Silicon サポート',
+                'download.mac.button': '⬇️ macOS ダウンロード',
+                'download.linux.desc': 'すべてのディストリビューション対応',
+                'download.linux.button': '⬇️ Linux ダウンロード',
+                'download.license.title': 'ライセンスキーが必要',
+                'download.license.benefits': 'サブスクリプション後に提供されるもの:',
+                'download.license.benefit1': '• 個人ライセンスキー',
+                'download.license.benefit2': '• インターネットなしでオフライン分析',
+                'download.license.benefit3': '• すべての高度な分析機能',
+                'download.license.benefit4': '• 優先カスタマーサポート',
+                'download.license.steps': '使用方法:',
+                'download.license.step1': '1. Gumroadでサブスクリプション決済',
+                'download.license.step2': '2. メールでライセンスキーを受信',
+                'download.license.step3': '3. アプリ起動後にキーを入力',
+                'download.license.step4': '4. すべての機能を有効化！',
+                'download.license.subscribe': '💳 月額$9.9でサブスクライブ',
+                'download.requirements.title': '📋 システム要件',
+                'download.requirements.windows1': '• Windows 10以上',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB ストレージ容量',
+                'download.requirements.mac1': '• macOS 10.14以上',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+推奨',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            zh: {
+                'download.title': '桌面应用下载',
+                'download.subtitle': '订阅每月$9.9以在桌面上使用所有高级功能。',
+                'download.windows.desc': 'Windows 10/11 支持',
+                'download.windows.button': '⬇️ 下载 Windows',
+                'download.mac.desc': 'Intel & Apple Silicon 支持',
+                'download.mac.button': '⬇️ 下载 macOS',
+                'download.linux.desc': '支持所有发行版',
+                'download.linux.button': '⬇️ 下载 Linux',
+                'download.license.title': '需要许可证密钥',
+                'download.license.benefits': '订阅后您将获得：',
+                'download.license.benefit1': '• 个人许可证密钥',
+                'download.license.benefit2': '• 无需互联网的离线分析',
+                'download.license.benefit3': '• 所有高级分析功能',
+                'download.license.benefit4': '• 优先客户支持',
+                'download.license.steps': '使用方法：',
+                'download.license.step1': '1. 在Gumroad上订阅付款',
+                'download.license.step2': '2. 通过电子邮件接收许可证密钥',
+                'download.license.step3': '3. 启动应用后输入密钥',
+                'download.license.step4': '4. 激活所有功能！',
+                'download.license.subscribe': '💳 订阅 $9.9/月',
+                'download.requirements.title': '📋 系统要求',
+                'download.requirements.windows1': '• Windows 10或更高版本',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB存储空间',
+                'download.requirements.mac1': '• macOS 10.14或更高版本',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• 推荐Ubuntu 18.04+',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            de: {
+                'download.title': 'Desktop-App-Download',
+                'download.subtitle': 'Abonnieren Sie für $9.9/Monat, um alle erweiterten Funktionen auf dem Desktop zu nutzen.',
+                'download.windows.desc': 'Windows 10/11 Unterstützung',
+                'download.windows.button': '⬇️ Windows herunterladen',
+                'download.mac.desc': 'Intel & Apple Silicon Unterstützung',
+                'download.mac.button': '⬇️ macOS herunterladen',
+                'download.linux.desc': 'Alle Distributionen unterstützt',
+                'download.linux.button': '⬇️ Linux herunterladen',
+                'download.license.title': 'Lizenzschlüssel erforderlich',
+                'download.license.benefits': 'Was Sie nach dem Abonnement erhalten:',
+                'download.license.benefit1': '• Persönlicher Lizenzschlüssel',
+                'download.license.benefit2': '• Offline-Analyse ohne Internet',
+                'download.license.benefit3': '• Alle erweiterten Analysefunktionen',
+                'download.license.benefit4': '• Prioritäts-Kundensupport',
+                'download.license.steps': 'So verwenden Sie es:',
+                'download.license.step1': '1. Abonnement-Zahlung auf Gumroad',
+                'download.license.step2': '2. Lizenzschlüssel per E-Mail erhalten',
+                'download.license.step3': '3. Schlüssel nach App-Start eingeben',
+                'download.license.step4': '4. Alle Funktionen aktivieren!',
+                'download.license.subscribe': '💳 $9.9/Monat abonnieren',
+                'download.requirements.title': '📋 Systemanforderungen',
+                'download.requirements.windows1': '• Windows 10 oder höher',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB Speicherplatz',
+                'download.requirements.mac1': '• macOS 10.14 oder höher',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ empfohlen',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            es: {
+                'download.title': 'Descarga de Aplicación de Escritorio',
+                'download.subtitle': 'Suscríbete por $9.9/mes para usar todas las funciones avanzadas en escritorio.',
+                'download.windows.desc': 'Soporte para Windows 10/11',
+                'download.windows.button': '⬇️ Descargar Windows',
+                'download.mac.desc': 'Soporte Intel y Apple Silicon',
+                'download.mac.button': '⬇️ Descargar macOS',
+                'download.linux.desc': 'Todas las Distribuciones Soportadas',
+                'download.linux.button': '⬇️ Descargar Linux',
+                'download.license.title': 'Clave de Licencia Requerida',
+                'download.license.benefits': 'Lo que obtienes después de suscribirte:',
+                'download.license.benefit1': '• Clave de licencia personal',
+                'download.license.benefit2': '• Análisis sin conexión a internet',
+                'download.license.benefit3': '• Todas las funciones de análisis avanzadas',
+                'download.license.benefit4': '• Soporte prioritario al cliente',
+                'download.license.steps': 'Cómo usar:',
+                'download.license.step1': '1. Pago de suscripción en Gumroad',
+                'download.license.step2': '2. Recibir clave de licencia por email',
+                'download.license.step3': '3. Introducir clave después del lanzamiento',
+                'download.license.step4': '4. ¡Activar todas las funciones!',
+                'download.license.subscribe': '💳 Suscribirse $9.9/mes',
+                'download.requirements.title': '📋 Requisitos del Sistema',
+                'download.requirements.windows1': '• Windows 10 o superior',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB espacio de almacenamiento',
+                'download.requirements.mac1': '• macOS 10.14 o superior',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recomendado',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            fr: {
+                'download.title': 'Téléchargement Application Bureau',
+                'download.subtitle': 'Abonnez-vous pour $9.9/mois pour utiliser toutes les fonctionnalités avancées sur bureau.',
+                'download.windows.desc': 'Support Windows 10/11',
+                'download.windows.button': '⬇️ Télécharger Windows',
+                'download.mac.desc': 'Support Intel & Apple Silicon',
+                'download.mac.button': '⬇️ Télécharger macOS',
+                'download.linux.desc': 'Toutes Distributions Supportées',
+                'download.linux.button': '⬇️ Télécharger Linux',
+                'download.license.title': 'Clé de Licence Requise',
+                'download.license.benefits': 'Ce que vous obtenez après abonnement:',
+                'download.license.benefit1': '• Clé de licence personnelle',
+                'download.license.benefit2': '• Analyse hors ligne sans internet',
+                'download.license.benefit3': '• Toutes les fonctionnalités d\'analyse avancées',
+                'download.license.benefit4': '• Support client prioritaire',
+                'download.license.steps': 'Comment utiliser:',
+                'download.license.step1': '1. Paiement d\'abonnement sur Gumroad',
+                'download.license.step2': '2. Recevoir la clé de licence par email',
+                'download.license.step3': '3. Entrer la clé après le lancement',
+                'download.license.step4': '4. Activer toutes les fonctionnalités!',
+                'download.license.subscribe': '💳 S\'abonner $9.9/mois',
+                'download.requirements.title': '📋 Configuration Système',
+                'download.requirements.windows1': '• Windows 10 ou supérieur',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB espace de stockage',
+                'download.requirements.mac1': '• macOS 10.14 ou supérieur',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ recommandé',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            },
+            ru: {
+                'download.title': 'Загрузка Настольного Приложения',
+                'download.subtitle': 'Подпишитесь за $9.9/месяц, чтобы использовать все расширенные функции на рабочем столе.',
+                'download.windows.desc': 'Поддержка Windows 10/11',
+                'download.windows.button': '⬇️ Скачать Windows',
+                'download.mac.desc': 'Поддержка Intel и Apple Silicon',
+                'download.mac.button': '⬇️ Скачать macOS',
+                'download.linux.desc': 'Поддержка Всех Дистрибутивов',
+                'download.linux.button': '⬇️ Скачать Linux',
+                'download.license.title': 'Требуется Лицензионный Ключ',
+                'download.license.benefits': 'Что вы получите после подписки:',
+                'download.license.benefit1': '• Персональный лицензионный ключ',
+                'download.license.benefit2': '• Оффлайн анализ без интернета',
+                'download.license.benefit3': '• Все расширенные функции анализа',
+                'download.license.benefit4': '• Приоритетная поддержка клиентов',
+                'download.license.steps': 'Как использовать:',
+                'download.license.step1': '1. Оплата подписки на Gumroad',
+                'download.license.step2': '2. Получение лицензионного ключа по email',
+                'download.license.step3': '3. Ввод ключа после запуска приложения',
+                'download.license.step4': '4. Активация всех функций!',
+                'download.license.subscribe': '💳 Подписаться $9.9/месяц',
+                'download.requirements.title': '📋 Системные Требования',
+                'download.requirements.windows1': '• Windows 10 или выше',
+                'download.requirements.windows2': '• 4GB RAM',
+                'download.requirements.windows3': '• 1GB места для хранения',
+                'download.requirements.mac1': '• macOS 10.14 или выше',
+                'download.requirements.mac2': '• Intel/Apple Silicon',
+                'download.requirements.mac3': '• 4GB RAM',
+                'download.requirements.linux1': '• Ubuntu 18.04+ рекомендуется',
+                'download.requirements.linux2': '• GLIBC 2.17+',
+                'download.requirements.linux3': '• 4GB RAM'
+            }
+        };
+
+        function changeLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            const elements = document.querySelectorAll('[data-translate]');
+            
+            console.log('Changing language to:', selectedLang);
+            console.log('Found elements to translate:', elements.length);
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[selectedLang] && translations[selectedLang][key]) {
+                    element.textContent = translations[selectedLang][key];
+                    console.log(`Translated ${key} to:`, translations[selectedLang][key]);
+                }
+            });
+            
+            // Save language preference
+            localStorage.setItem('preferredLanguage', selectedLang);
+            console.log('Language preference saved:', selectedLang);
+        }
+
+        // IP-based language detection
+        async function detectLanguageByIP() {
+            console.log('Starting IP-based language detection...');
+            try {
+                // Use multiple IP geolocation services for redundancy
+                const services = [
+                    'https://ipapi.co/json/',
+                    'https://ip-api.com/json/',
+                    'https://ipinfo.io/json'
+                ];
+                
+                let countryCode = null;
+                
+                // Try each service until one works
+                for (const service of services) {
+                    try {
+                        console.log(`Trying service: ${service}`);
+                        const response = await fetch(service);
+                        const data = await response.json();
+                        console.log(`Service ${service} response:`, data);
+                        
+                        // Different services use different property names
+                        countryCode = data.country_code || data.countryCode || data.country;
+                        if (countryCode) {
+                            console.log(`Found country code: ${countryCode}`);
+                            break;
+                        }
+                    } catch (err) {
+                        console.log(`Failed to fetch from ${service}:`, err);
+                    }
+                }
+                
+                if (!countryCode) {
+                    console.log('No country code detected, defaulting to English');
+                    return 'en'; // Default to English
+                }
+                
+                // Map country codes to languages
+                const countryToLanguage = {
+                    // Korean
+                    'KR': 'ko', 'KP': 'ko',
+                    // Japanese
+                    'JP': 'ja',
+                    // Chinese
+                    'CN': 'zh', 'TW': 'zh', 'HK': 'zh', 'MO': 'zh', 'SG': 'zh',
+                    // German
+                    'DE': 'de', 'AT': 'de', 'CH': 'de', 'LI': 'de', 'LU': 'de',
+                    // French
+                    'FR': 'fr', 'BE': 'fr', 'CA': 'fr', 'MC': 'fr',
+                    // Spanish
+                    'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', 'CL': 'es',
+                    'PE': 'es', 'VE': 'es', 'EC': 'es', 'GT': 'es', 'CU': 'es',
+                    'BO': 'es', 'DO': 'es', 'HN': 'es', 'PY': 'es', 'SV': 'es',
+                    'NI': 'es', 'CR': 'es', 'PA': 'es', 'UY': 'es', 'PR': 'es',
+                    // Russian
+                    'RU': 'ru', 'BY': 'ru', 'KZ': 'ru', 'KG': 'ru'
+                };
+                
+                const detectedLang = countryToLanguage[countryCode.toUpperCase()] || 'en';
+                console.log(`Country ${countryCode} mapped to language: ${detectedLang}`);
+                
+                // Check if we support this language
+                const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de'];
+                const finalLang = supportedLangs.includes(detectedLang) ? detectedLang : 'en';
+                console.log(`Final language selected: ${finalLang}`);
+                return finalLang;
+                
+            } catch (error) {
+                console.error('Language detection failed:', error);
+                return 'en'; // Default to English on error
+            }
+        }
+
+        // Initialize language on page load
+        async function initializeLanguage() {
+            console.log('Starting language initialization...');
+            const savedLang = localStorage.getItem('preferredLanguage');
+            let language;
+            
+            if (savedLang) {
+                language = savedLang;
+                console.log('Using saved language:', language);
+            } else {
+                language = 'en';
+                console.log('No saved language, detecting from IP...');
+                try {
+                    const detectedLang = await detectLanguageByIP();
+                    console.log('Detected language from IP:', detectedLang);
+                    const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de', 'es', 'fr', 'ru'];
+                    if (supportedLangs.includes(detectedLang)) {
+                        language = detectedLang;
+                        console.log('Using detected language:', language);
+                    }
+                } catch (error) {
+                    console.log('Language detection failed, using English:', error);
+                    language = 'en';
+                }
+            }
+            
+            // Update the language selector
+            const languageSelect = document.getElementById('languageSelect');
+            if (languageSelect) {
+                languageSelect.value = language;
+                console.log('Language selector updated to:', language);
+            } else {
+                console.log('Language selector not found!');
+            }
+            
+            // Apply translations
+            changeLanguage();
+        }
+
+        // Download tracking
+        function trackDownload(platform) {
+            // Google Analytics tracking (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    event_category: 'desktop_app',
+                    event_label: platform,
+                    value: 1
+                });
+            }
+            
+            // Show subscription reminder
+            setTimeout(() => {
+                showSubscriptionReminder();
+            }, 2000);
+        }
+
+        // Subscription tracking
+        function trackSubscription() {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    event_category: 'subscription',
+                    event_label: 'gumroad_link',
+                    value: 1
+                });
+            }
+        }
+
+        // Show subscription reminder
+        function showSubscriptionReminder() {
+            const message = `✅ Download has started!
+
+🔑 A license subscription is required to use the app.
+
+📋 Subscribe:
+• $9.9/month for all features
+• Offline analysis without internet
+• License key sent via email instantly
+
+Would you like to go to the subscription page now?`;
+
+            if (confirm(message)) {
+                window.open('https://spiderverse10.gumroad.com/l/workflow-visualizer', '_blank');
+            }
+        }
+
+        // Swipe functionality for mobile cards
+        class SwipeCards {
+            constructor() {
+                this.container = document.getElementById('swipeContainer');
+                this.indicators = document.getElementById('swipeIndicators');
+                this.currentIndex = 0;
+                this.totalCards = 3;
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+                this.isAnimating = false;
+                
+                this.init();
+            }
+            
+            init() {
+                if (!this.container) return;
+                
+                // Touch events
+                this.container.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+                this.container.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+                this.container.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: true });
+                
+                // Mouse events for desktop testing
+                this.container.addEventListener('mousedown', this.handleMouseDown.bind(this));
+                this.container.addEventListener('mousemove', this.handleMouseMove.bind(this));
+                this.container.addEventListener('mouseup', this.handleMouseUp.bind(this));
+                this.container.addEventListener('mouseleave', this.handleMouseUp.bind(this));
+                
+                // Indicator clicks
+                if (this.indicators) {
+                    this.indicators.addEventListener('click', this.handleIndicatorClick.bind(this));
+                }
+                
+                // Auto-slide every 5 seconds
+                this.autoSlideInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 5000);
+                
+                // Pause auto-slide on interaction
+                this.container.addEventListener('touchstart', () => this.pauseAutoSlide());
+                this.container.addEventListener('mouseenter', () => this.pauseAutoSlide());
+                this.container.addEventListener('mouseleave', () => this.resumeAutoSlide());
+            }
+            
+            handleTouchStart(e) {
+                this.touchStartX = e.touches[0].clientX;
+                this.pauseAutoSlide();
+            }
+            
+            handleTouchMove(e) {
+                e.preventDefault(); // Prevent scrolling
+            }
+            
+            handleTouchEnd(e) {
+                this.touchEndX = e.changedTouches[0].clientX;
+                this.handleSwipe();
+                this.resumeAutoSlide();
+            }
+            
+            handleMouseDown(e) {
+                this.touchStartX = e.clientX;
+                this.container.style.cursor = 'grabbing';
+            }
+            
+            handleMouseMove(e) {
+                if (this.touchStartX === 0) return;
+            }
+            
+            handleMouseUp(e) {
+                if (this.touchStartX === 0) return;
+                this.touchEndX = e.clientX;
+                this.handleSwipe();
+                this.touchStartX = 0;
+                this.container.style.cursor = 'grab';
+            }
+            
+            handleSwipe() {
+                const deltaX = this.touchEndX - this.touchStartX;
+                const threshold = 50; // Minimum swipe distance
+                
+                if (Math.abs(deltaX) < threshold) return;
+                
+                if (deltaX > 0) {
+                    this.prevSlide();
+                } else {
+                    this.nextSlide();
+                }
+            }
+            
+            handleIndicatorClick(e) {
+                const dot = e.target.closest('.swipe-dot');
+                if (!dot) return;
+                
+                const index = parseInt(dot.dataset.index);
+                this.goToSlide(index);
+            }
+            
+            nextSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex + 1) % this.totalCards;
+                this.updateSlide();
+            }
+            
+            prevSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex - 1 + this.totalCards) % this.totalCards;
+                this.updateSlide();
+            }
+            
+            goToSlide(index) {
+                if (this.isAnimating || index === this.currentIndex) return;
+                this.currentIndex = index;
+                this.updateSlide();
+            }
+            
+            updateSlide() {
+                if (!this.container) return;
+                
+                this.isAnimating = true;
+                const translateX = -this.currentIndex * 100;
+                this.container.style.transform = `translateX(${translateX}%)`;
+                
+                // Update indicators
+                this.updateIndicators();
+                
+                // Add haptic feedback on supported devices
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 300);
+            }
+            
+            updateIndicators() {
+                if (!this.indicators) return;
+                
+                const dots = this.indicators.querySelectorAll('.swipe-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+            
+            pauseAutoSlide() {
+                if (this.autoSlideInterval) {
+                    clearInterval(this.autoSlideInterval);
+                    this.autoSlideInterval = null;
+                }
+            }
+            
+            resumeAutoSlide() {
+                if (!this.autoSlideInterval) {
+                    this.autoSlideInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                }
+            }
+        }
+
+        // Enhanced download tracking with loading states
+        function trackDownload(platform) {
+            const button = event.target;
+            
+            // Add loading state
+            button.classList.add('loading');
+            button.style.pointerEvents = 'none';
+            
+            // Google Analytics tracking (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    event_category: 'desktop_app',
+                    event_label: platform,
+                    value: 1
+                });
+            }
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+            }
+            
+            // Remove loading state after download starts
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.style.pointerEvents = 'auto';
+                showSubscriptionReminder();
+            }, 2000);
+        }
+
+        // Progressive Web App functionality
+        function addPWAFeatures() {
+            // Add to home screen prompt
+            let deferredPrompt;
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install button after 30 seconds
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 30000);
+            });
+            
+            function showInstallPrompt() {
+                if (!deferredPrompt) return;
+                
+                const installBanner = document.createElement('div');
+                installBanner.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        bottom: 20px;
+                        left: 20px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #7c3aed, #ec4899);
+                        color: white;
+                        padding: 1rem;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        animation: slideUp 0.3s ease;
+                    ">
+                        <span style="flex: 1; font-size: 0.9rem;">
+                            📱 Install Halo_workflow for quick access
+                        </span>
+                        <button onclick="installPWA()" style="
+                            background: white;
+                            color: #7c3aed;
+                            border: none;
+                            padding: 0.5rem 1rem;
+                            border-radius: 6px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">Install</button>
+                        <button onclick="this.parentElement.parentElement.remove()" style="
+                            background: transparent;
+                            color: white;
+                            border: 1px solid rgba(255,255,255,0.3);
+                            padding: 0.5rem;
+                            border-radius: 6px;
+                            cursor: pointer;
+                        ">✕</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(installBanner);
+            }
+            
+            window.installPWA = async () => {
+                if (!deferredPrompt) return;
+                
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('PWA installed');
+                }
+                
+                deferredPrompt = null;
+                document.querySelector('[onclick="installPWA()"]').closest('div').remove();
+            };
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...');
+            
+            // Initialize language
+            initializeLanguage();
+            
+            // Initialize swipe cards
+            new SwipeCards();
+            
+            // Add PWA features
+            addPWAFeatures();
+            
+            // Add intersection observer for animations
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.download-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
