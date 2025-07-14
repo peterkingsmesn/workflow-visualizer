@@ -2123,7 +2123,7 @@
     <!-- Language Selector -->
     <div class="language-selector">
         <select id="languageSelect" onchange="changeLanguage()">
-            <option value="en" selected>🇺🇸 English</option>
+            <option value="en">🇺🇸 English</option>
             <option value="ko">🇰🇷 한국어</option>
             <option value="ja">🇯🇵 日本語</option>
             <option value="zh">🇨🇳 中文</option>
@@ -2668,13 +2668,17 @@
                 language = 'en';
                 try {
                     const detectedLang = await detectLanguageByIP();
+                    console.log('Detected language from IP:', detectedLang);
                     // Only use detected language if it's supported
                     const supportedLangs = ['ko', 'en', 'ja', 'zh', 'de', 'es', 'fr', 'ru'];
                     if (supportedLangs.includes(detectedLang)) {
                         language = detectedLang;
+                        console.log('Using detected language:', language);
+                    } else {
+                        console.log('Detected language not supported, using English');
                     }
                 } catch (error) {
-                    console.log('Language detection failed, using English');
+                    console.log('Language detection failed, using English:', error);
                     language = 'en';
                 }
             }
