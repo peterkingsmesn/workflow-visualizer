@@ -1,0 +1,126 @@
+{
+  "hero": {
+    "title": "Stop the 80% AI Coding Failure Rate!",
+    "subtitle": "Halo_workflow visualizes all coding errors from API flows to import duplicates. Join 12,000+ developers who improved project success rate from 80% to 95%.",
+    "cta": "Try 30 Days Free",
+    "stats": {
+      "failureRate": "80%",
+      "failureLabel": "Current AI Coding Failure Rate",
+      "successRate": "95%", 
+      "successLabel": "Success Rate with Halo_workflow",
+      "users": "12,000+",
+      "usersLabel": "Active Developers"
+    }
+  },
+  "problems": {
+    "title": "💀 The 4 Deadly Sins of Vibe Coding",
+    "subtitle": "These critical issues are killing your projects",
+    "items": [
+      {
+        "title": "Dummy Data & Hardcoding",
+        "description": "Creating test data without structure leads to maintenance hell and technical debt"
+      },
+      {
+        "title": "Duplicate Import Vicious Cycle", 
+        "description": "Importing the same modules repeatedly creates dependency conflicts and build errors"
+      },
+      {
+        "title": "Uncontrolled API Generation",
+        "description": "APIs created without planning result in inconsistent endpoints and integration nightmares"
+      },
+      {
+        "title": "Duplicate File Creation",
+        "description": "Similar components scattered across the project cause confusion and bloated codebases"
+      }
+    ]
+  },
+  "solutions": {
+    "title": "✅ Halo_workflow Solves Everything",
+    "subtitle": "Comprehensive workflow management for modern development",
+    "items": [
+      {
+        "title": "Automatic Workflow Generation",
+        "description": "AI analyzes your entire codebase and generates optimized development workflows"
+      },
+      {
+        "title": "Real-time Duplicate Detection",
+        "description": "Instantly identifies duplicate imports, components, and API endpoints"
+      },
+      {
+        "title": "API Flow Visualization",
+        "description": "Complete mapping of your API architecture with dependency tracking"
+      },
+      {
+        "title": "42 Language Support",
+        "description": "Works with all major programming languages and frameworks"
+      },
+      {
+        "title": "Smart Warning System",
+        "description": "Proactive alerts for potential issues before they become problems"
+      },
+      {
+        "title": "Instant AI Agent Fix",
+        "description": "One-click solutions for detected issues with intelligent code suggestions"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "⭐ Real Reviews from Developers Worldwide",
+    "subtitle": "12,000+ developers have improved project success rate from 80% → 95% with Halo_workflow",
+    "items": [
+      {
+        "text": "I was spending 3 hours a day just managing duplicates. Now it's automated and my productivity increased 300%.",
+        "author": "김철수",
+        "role": "Senior Developer at Samsung"
+      },
+      {
+        "text": "Our team's project delivery rate improved from 60% to 98%. It's not just a tool, it's a game changer.",
+        "author": "田中太郎", 
+        "role": "Tech Lead at Sony"
+      },
+      {
+        "text": "GitHub Copilot only generates code, but Halo_workflow manages the entire project. It's a tool on a different dimension.",
+        "author": "Zhang Wei",
+        "role": "CTO at ByteDance"
+      }
+    ]
+  },
+  "pricing": {
+    "title": "💰 Simple and Reasonable Pricing",
+    "subtitle": "Professional-grade tools at startup-friendly prices",
+    "monthly": {
+      "title": "Monthly",
+      "price": "$9.9",
+      "period": "/month",
+      "features": [
+        "Unlimited project analysis",
+        "Real-time duplicate detection", 
+        "API flow visualization",
+        "42 language support",
+        "Smart warning system",
+        "AI agent fixes",
+        "Priority support"
+      ],
+      "cta": "Start Free Trial"
+    },
+    "yearly": {
+      "title": "Yearly", 
+      "price": "$99",
+      "period": "/year",
+      "discount": "Save $19.8",
+      "features": [
+        "Everything in Monthly",
+        "Advanced analytics",
+        "Team collaboration",
+        "Custom integrations",
+        "Dedicated support"
+      ],
+      "cta": "Get Started"
+    }
+  },
+  "cta": {
+    "title": "🚀 Escape the 90% Failure Rate and Join the Successful 10%!",
+    "subtitle": "Experience AI coding innovation with Halo_workflow, verified by 12,000+ developers worldwide",
+    "button": "Start Free Trial Now"
+  }
+}
