@@ -130,8 +130,8 @@ halo-src-backup-*
 !index.html
 !public/**/*.html
 
-# 테스트 계정이 포함된 국제화 파일들 (임시)
-src/i18n/locales/*/common.json
+# 테스트 계정이 포함된 국제화 파일들 (임시) - 비활성화
+# src/i18n/locales/*/common.json
 src/locales/*/landing.json
 
 # Desktop app build outputs
