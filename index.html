@@ -34,6 +34,37 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0d1117">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Halo_workflow">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Halo_workflow">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    
+    <!-- Android Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-icon-512x512.png">
+    
+    <!-- Windows Tiles -->
+    <meta name="msapplication-TileColor" content="#0d1117">
+    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2763,6 +2794,7 @@
                 Subscribe for $9.9/month to use all advanced features on desktop.
             </p>
             
+            <!-- Desktop Grid View -->
             <div class="download-grid">
                 <!-- Windows -->
                 <div class="download-card">
@@ -2819,6 +2851,75 @@
                        data-translate="download.linux.button">
                         ⬇️ Download Linux
                     </a>
+                </div>
+            </div>
+
+            <!-- Mobile Swipe View -->
+            <div class="download-cards-container">
+                <div class="download-cards-wrapper" id="swipeContainer">
+                    <!-- Windows Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🖥️</span>
+                            <h3>Windows</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.windows.desc">Windows 10/11 Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.exe</span>
+                            <span class="file-size">~150MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-win.exe" 
+                           class="download-btn windows-btn" 
+                           onclick="trackDownload('windows')"
+                           data-translate="download.windows.button">
+                            ⬇️ Download Windows
+                        </a>
+                    </div>
+
+                    <!-- macOS Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🍎</span>
+                            <h3>macOS</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.mac.desc">Intel & Apple Silicon Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.dmg</span>
+                            <span class="file-size">~200MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-mac.dmg" 
+                           class="download-btn mac-btn"
+                           onclick="trackDownload('mac')"
+                           data-translate="download.mac.button">
+                            ⬇️ Download macOS
+                        </a>
+                    </div>
+
+                    <!-- Linux Card -->
+                    <div class="download-card download-card-swipe">
+                        <div class="download-header">
+                            <span class="download-icon">🐧</span>
+                            <h3>Linux</h3>
+                        </div>
+                        <p class="download-desc" data-translate="download.linux.desc">All Distributions Support</p>
+                        <div class="download-info">
+                            <span class="file-type">.AppImage</span>
+                            <span class="file-size">~180MB</span>
+                        </div>
+                        <a href="https://github.com/peterkingsmesn/workflow-visualizer/releases/latest/download/workflow-visualizer-linux.AppImage" 
+                           class="download-btn linux-btn"
+                           onclick="trackDownload('linux')"
+                           data-translate="download.linux.button">
+                            ⬇️ Download Linux
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Swipe Indicators -->
+                <div class="swipe-indicators" id="swipeIndicators">
+                    <div class="swipe-dot active" data-index="0"></div>
+                    <div class="swipe-dot" data-index="1"></div>
+                    <div class="swipe-dot" data-index="2"></div>
                 </div>
             </div>
 
@@ -3095,20 +3196,472 @@
             margin-bottom: 5px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Advanced Responsive Design - Mobile First Approach */
+        
+        /* CSS Custom Properties for Dynamic Sizing */
+        :root {
+            --download-card-padding: clamp(1rem, 3vw, 2rem);
+            --button-size: clamp(12px, 4vw, 16px);
+            --touch-target: 48px;
+            --card-gap: clamp(1rem, 5vw, 2rem);
+            --text-scale: clamp(0.875rem, 2.5vw, 1rem);
+        }
+
+        /* Download Grid Enhancements */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: var(--card-gap);
+            margin: 2rem 0;
+        }
+
+        /* Enhanced Download Cards */
+        .download-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+
+        .download-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Touch-Friendly Buttons */
+        .download-btn {
+            min-height: var(--touch-target);
+            font-size: var(--button-size);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Swipe Cards Container */
+        .download-cards-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-cards-wrapper {
+            display: flex;
+            transition: transform 0.3s ease;
+            scroll-snap-type: x mandatory;
+        }
+
+        .download-card-swipe {
+            flex: none;
+            width: 100%;
+            scroll-snap-align: start;
+            min-height: 400px;
+        }
+
+        /* Swipe Indicators */
+        .swipe-indicators {
+            display: none;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .swipe-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .swipe-dot.active {
+            background: #58a6ff;
+            transform: scale(1.2);
+        }
+
+        /* Progressive Enhancement for Touch Devices */
+        @media (hover: none) and (pointer: coarse) {
             .download-grid {
-                grid-template-columns: 1fr;
+                display: none;
+            }
+            
+            .download-cards-container {
+                display: block;
+            }
+            
+            .swipe-indicators {
+                display: flex;
+            }
+            
+            .download-card {
+                margin: 0 1rem;
+            }
+        }
+
+        /* Breakpoint: Extra Small Devices (< 480px) */
+        @media (max-width: 479px) {
+            .download-section {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                margin-bottom: 1rem;
+            }
+            
+            .section-subtitle {
+                font-size: clamp(0.875rem, 4vw, 1rem);
+                margin-bottom: 2rem;
+            }
+            
+            .download-card {
+                padding: var(--download-card-padding);
+                min-height: 300px;
+            }
+            
+            .download-header h3 {
+                font-size: 1.2rem;
+            }
+            
+            .download-desc {
+                font-size: 0.875rem;
+                margin-bottom: 1rem;
+            }
+            
+            .license-info {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .license-info h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
             }
             
             .license-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
                 text-align: center;
+            }
+            
+            .subscribe-btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            
+            .system-requirements {
+                padding: 1.5rem;
+                margin-top: 2rem;
             }
             
             .requirements-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
+        }
+
+        /* Breakpoint: Small Devices (480px - 768px) */
+        @media (min-width: 480px) and (max-width: 768px) {
+            .download-section {
+                padding: 3rem 1.5rem;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .download-card {
+                padding: 1.5rem;
+            }
+            
+            .license-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+            
+            .requirements-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        /* Breakpoint: Medium Devices (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .download-section {
+                padding: 4rem 2rem;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+            
+            .download-card {
+                padding: 2rem;
+            }
+            
+            .license-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Breakpoint: Large Devices (1025px - 1440px) */
+        @media (min-width: 1025px) and (max-width: 1440px) {
+            .download-section {
+                padding: 5rem 3rem;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+        }
+
+        /* Breakpoint: Extra Large Devices (> 1440px) */
+        @media (min-width: 1441px) {
+            .download-section {
+                padding: 6rem 4rem;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .download-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+            }
+            
+            .download-card {
+                padding: 2.5rem;
+            }
+        }
+
+        /* Landscape Orientation Optimizations */
+        @media (orientation: landscape) and (max-height: 600px) {
+            .download-section {
+                padding: 2rem 1rem;
+            }
+            
+            .license-info {
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+            
+            .system-requirements {
+                padding: 2rem;
+            }
+        }
+
+        /* High DPI Display Optimizations */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .download-icon {
+                font-size: 3rem;
+            }
+            
+            .file-type {
+                border: 1px solid rgba(88, 166, 255, 0.3);
+            }
+        }
+
+        /* Dark Mode Preference */
+        @media (prefers-color-scheme: dark) {
+            .download-card {
+                background: #0d1117;
+                border: 1px solid #21262d;
+            }
+        }
+
+        /* Reduced Motion Preference */
+        @media (prefers-reduced-motion: reduce) {
+            .download-card,
+            .download-btn,
+            .swipe-dot {
+                transition: none;
+            }
+            
+            .download-card:hover {
+                transform: none;
+            }
+            
+            .download-btn::before {
+                display: none;
+            }
+        }
+
+        /* Focus Accessibility */
+        .download-btn:focus {
+            outline: 3px solid #58a6ff;
+            outline-offset: 2px;
+        }
+
+        /* Loading States */
+        .download-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .download-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Advanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40%, 43% {
+                transform: translateY(-15px);
+            }
+            70% {
+                transform: translateY(-7px);
+            }
+            90% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced hover effects */
+        .download-btn:hover {
+            animation: pulse 0.6s ease;
+        }
+
+        .download-icon {
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover .download-icon {
+            animation: bounce 1s ease;
+        }
+
+        /* Loading shimmer effect */
+        .shimmer {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            background-size: 200px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* Micro-interactions */
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        .swipe-dot:hover {
+            transform: scale(1.3);
+        }
+
+        /* Parallax effect for large screens */
+        @media (min-width: 1024px) {
+            .download-section {
+                background-attachment: fixed;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #58a6ff;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #79b8ff;
         }
     </style>
 
@@ -3551,10 +4104,300 @@ Would you like to go to the subscription page now?`;
             }
         }
 
+        // Swipe functionality for mobile cards
+        class SwipeCards {
+            constructor() {
+                this.container = document.getElementById('swipeContainer');
+                this.indicators = document.getElementById('swipeIndicators');
+                this.currentIndex = 0;
+                this.totalCards = 3;
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+                this.isAnimating = false;
+                
+                this.init();
+            }
+            
+            init() {
+                if (!this.container) return;
+                
+                // Touch events
+                this.container.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+                this.container.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+                this.container.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: true });
+                
+                // Mouse events for desktop testing
+                this.container.addEventListener('mousedown', this.handleMouseDown.bind(this));
+                this.container.addEventListener('mousemove', this.handleMouseMove.bind(this));
+                this.container.addEventListener('mouseup', this.handleMouseUp.bind(this));
+                this.container.addEventListener('mouseleave', this.handleMouseUp.bind(this));
+                
+                // Indicator clicks
+                if (this.indicators) {
+                    this.indicators.addEventListener('click', this.handleIndicatorClick.bind(this));
+                }
+                
+                // Auto-slide every 5 seconds
+                this.autoSlideInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 5000);
+                
+                // Pause auto-slide on interaction
+                this.container.addEventListener('touchstart', () => this.pauseAutoSlide());
+                this.container.addEventListener('mouseenter', () => this.pauseAutoSlide());
+                this.container.addEventListener('mouseleave', () => this.resumeAutoSlide());
+            }
+            
+            handleTouchStart(e) {
+                this.touchStartX = e.touches[0].clientX;
+                this.pauseAutoSlide();
+            }
+            
+            handleTouchMove(e) {
+                e.preventDefault(); // Prevent scrolling
+            }
+            
+            handleTouchEnd(e) {
+                this.touchEndX = e.changedTouches[0].clientX;
+                this.handleSwipe();
+                this.resumeAutoSlide();
+            }
+            
+            handleMouseDown(e) {
+                this.touchStartX = e.clientX;
+                this.container.style.cursor = 'grabbing';
+            }
+            
+            handleMouseMove(e) {
+                if (this.touchStartX === 0) return;
+            }
+            
+            handleMouseUp(e) {
+                if (this.touchStartX === 0) return;
+                this.touchEndX = e.clientX;
+                this.handleSwipe();
+                this.touchStartX = 0;
+                this.container.style.cursor = 'grab';
+            }
+            
+            handleSwipe() {
+                const deltaX = this.touchEndX - this.touchStartX;
+                const threshold = 50; // Minimum swipe distance
+                
+                if (Math.abs(deltaX) < threshold) return;
+                
+                if (deltaX > 0) {
+                    this.prevSlide();
+                } else {
+                    this.nextSlide();
+                }
+            }
+            
+            handleIndicatorClick(e) {
+                const dot = e.target.closest('.swipe-dot');
+                if (!dot) return;
+                
+                const index = parseInt(dot.dataset.index);
+                this.goToSlide(index);
+            }
+            
+            nextSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex + 1) % this.totalCards;
+                this.updateSlide();
+            }
+            
+            prevSlide() {
+                if (this.isAnimating) return;
+                this.currentIndex = (this.currentIndex - 1 + this.totalCards) % this.totalCards;
+                this.updateSlide();
+            }
+            
+            goToSlide(index) {
+                if (this.isAnimating || index === this.currentIndex) return;
+                this.currentIndex = index;
+                this.updateSlide();
+            }
+            
+            updateSlide() {
+                if (!this.container) return;
+                
+                this.isAnimating = true;
+                const translateX = -this.currentIndex * 100;
+                this.container.style.transform = `translateX(${translateX}%)`;
+                
+                // Update indicators
+                this.updateIndicators();
+                
+                // Add haptic feedback on supported devices
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                setTimeout(() => {
+                    this.isAnimating = false;
+                }, 300);
+            }
+            
+            updateIndicators() {
+                if (!this.indicators) return;
+                
+                const dots = this.indicators.querySelectorAll('.swipe-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === this.currentIndex);
+                });
+            }
+            
+            pauseAutoSlide() {
+                if (this.autoSlideInterval) {
+                    clearInterval(this.autoSlideInterval);
+                    this.autoSlideInterval = null;
+                }
+            }
+            
+            resumeAutoSlide() {
+                if (!this.autoSlideInterval) {
+                    this.autoSlideInterval = setInterval(() => {
+                        this.nextSlide();
+                    }, 5000);
+                }
+            }
+        }
+
+        // Enhanced download tracking with loading states
+        function trackDownload(platform) {
+            const button = event.target;
+            
+            // Add loading state
+            button.classList.add('loading');
+            button.style.pointerEvents = 'none';
+            
+            // Google Analytics tracking (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    event_category: 'desktop_app',
+                    event_label: platform,
+                    value: 1
+                });
+            }
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
+            }
+            
+            // Remove loading state after download starts
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.style.pointerEvents = 'auto';
+                showSubscriptionReminder();
+            }, 2000);
+        }
+
+        // Progressive Web App functionality
+        function addPWAFeatures() {
+            // Add to home screen prompt
+            let deferredPrompt;
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install button after 30 seconds
+                setTimeout(() => {
+                    showInstallPrompt();
+                }, 30000);
+            });
+            
+            function showInstallPrompt() {
+                if (!deferredPrompt) return;
+                
+                const installBanner = document.createElement('div');
+                installBanner.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        bottom: 20px;
+                        left: 20px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #7c3aed, #ec4899);
+                        color: white;
+                        padding: 1rem;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        z-index: 1000;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        animation: slideUp 0.3s ease;
+                    ">
+                        <span style="flex: 1; font-size: 0.9rem;">
+                            📱 Install Halo_workflow for quick access
+                        </span>
+                        <button onclick="installPWA()" style="
+                            background: white;
+                            color: #7c3aed;
+                            border: none;
+                            padding: 0.5rem 1rem;
+                            border-radius: 6px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        ">Install</button>
+                        <button onclick="this.parentElement.parentElement.remove()" style="
+                            background: transparent;
+                            color: white;
+                            border: 1px solid rgba(255,255,255,0.3);
+                            padding: 0.5rem;
+                            border-radius: 6px;
+                            cursor: pointer;
+                        ">✕</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(installBanner);
+            }
+            
+            window.installPWA = async () => {
+                if (!deferredPrompt) return;
+                
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('PWA installed');
+                }
+                
+                deferredPrompt = null;
+                document.querySelector('[onclick="installPWA()"]').closest('div').remove();
+            };
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing language...');
+            console.log('DOM loaded, initializing...');
+            
+            // Initialize language
             initializeLanguage();
+            
+            // Initialize swipe cards
+            new SwipeCards();
+            
+            // Add PWA features
+            addPWAFeatures();
+            
+            // Add intersection observer for animations
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.download-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
         });
     </script>
 
