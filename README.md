@@ -1,99 +1,214 @@
-# Workflow Visualizer
+# 🚀 Workflow Visualizer
 
-AI 시대의 코드베이스 이해 도구 - 복잡한 프로젝트의 워크플로우를 한눈에 시각화
+> **AI 시대의 코드베이스 이해 도구** - 복잡한 워크플로우를 명확하고 인터랙티브한 시각화로 변환
 
-코드가 복잡해서 머리 아프죠? 이 도구로 5분 만에 전체 구조를 파악하세요!
+[![Latest Release](https://img.shields.io/github/v/release/peterkingsmesn/workflow-visualizer)](https://github.com/peterkingsmesn/workflow-visualizer/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/peterkingsmesn/workflow-visualizer/build-desktop.yml)](https://github.com/peterkingsmesn/workflow-visualizer/actions)
+[![License](https://img.shields.io/badge/license-Commercial-blue.svg)](https://halowf.com/pricing)
 
-## 시작하기
+## 📋 개요
 
-### 온라인 서비스 (추천)
-https://halowf.com 접속
-- 즉시 사용 - 설치 없이 바로 시작
-- 자동 업데이트 - 항상 최신 기능
-- 클라우드 저장 - 어디서나 접근
-- 팀 협업 - 실시간 공유
+Workflow Visualizer는 개발자와 팀이 복잡한 코드베이스를 쉽게 이해할 수 있도록 도와주는 강력한 시각화 도구입니다. AI 기반 분석으로 코드 구조, 의존성, 워크플로우를 자동으로 파악하고 인터랙티브한 다이어그램으로 표현합니다.
 
-### 로컬 설치 (개발자용)
+### 🎯 주요 기능
+
+- **🔍 스마트 코드 분석**: AI 기반으로 패턴, 의존성, 잠재적 문제를 즉시 감지
+- **📊 시각적 워크플로우 매핑**: 복잡한 코드 구조를 직관적인 다이어그램으로 변환
+- **⚡ 성능 인사이트**: 병목 현상, 순환 의존성, 최적화 기회를 한눈에 파악
+- **👥 팀 협업**: 실시간 협업 및 인사이트 공유
+- **🌍 다국어 지원**: 한국어, 영어, 일본어, 중국어, 스페인어
+- **🖥️ 크로스 플랫폼**: Windows, macOS, Linux 데스크톱 앱
+
+## 💰 가격 정책
+
+**월 $9.9 구독** - 모든 고급 기능 이용 가능
+
+✅ **포함 기능:**
+- 무제한 프로젝트 분석
+- 무제한 파일 크기
+- 모든 AI 분석 기능  
+- 로컬 설치 및 사용
+- 최대 3대 기기 지원
+- 업데이트 및 기술 지원
+
+## 📥 다운로드
+
+### 🚀 최신 버전: v1.1.0
+
+| 플랫폼 | 다운로드 링크 | 시스템 요구사항 |
+|--------|--------------|-----------------|
+| **Windows** | [📦 .exe 다운로드](https://github.com/peterkingsmesn/workflow-visualizer/releases/latest) | Windows 10/11 (64-bit) |
+| **macOS** | [📦 .dmg 다운로드](https://github.com/peterkingsmesn/workflow-visualizer/releases/latest) | macOS 10.15+ (Intel/Apple Silicon) |
+| **Linux** | [📦 .AppImage 다운로드](https://github.com/peterkingsmesn/workflow-visualizer/releases/latest) | Ubuntu 18.04+ 또는 호환 배포판 |
+
+### 🔑 라이센스 활성화
+
+1. **구독**: [Gumroad에서 구독](https://halowf.com/pricing) ($9.9/월)
+2. **라이센스 키**: 이메일로 받은 키 입력
+3. **활성화**: 앱 실행 후 키 입력으로 모든 기능 활성화
+
+## 🛠️ 기술 스택
+
+### Frontend
+- **React 18** + **TypeScript** + **Vite**
+- **Tailwind CSS** + **Headless UI**
+- **ReactFlow** (다이어그램 렌더링)
+- **Zustand** (상태 관리)
+- **i18next** (다국어)
+
+### Backend
+- **Node.js** + **Express**
+- **Prisma** + **PostgreSQL**
+- **Socket.io** (실시간 협업)
+- **Gumroad** (결제 시스템)
+
+### Desktop
+- **Electron** (크로스플랫폼)
+- **라이센스 검증 시스템**
+- **자동 업데이트**
+
+### DevOps
+- **GitHub Actions** (CI/CD)
+- **Docker** (컨테이너화)
+- **Vercel** (웹 배포)
+
+## 🏗️ 아키텍처
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Web Frontend  │    │ Desktop App     │    │   Backend API   │
+│                 │    │                 │    │                 │
+│ • React + TS    │◄──►│ • Electron      │◄──►│ • Node.js       │
+│ • Vite          │    │ • License UI    │    │ • Express       │
+│ • Tailwind      │    │ • Auto Update   │    │ • Prisma        │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   CDN (Vercel)  │    │ GitHub Releases │    │  Database       │
+│                 │    │                 │    │                 │
+│ • Static Assets │    │ • .exe/.dmg     │    │ • PostgreSQL    │
+│ • Global Cache  │    │ • .AppImage     │    │ • User Data     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+## 🚀 개발 환경 설정
+
+### 전체 프로젝트 실행
+
 ```bash
-git clone 저장소
+# 저장소 클론
+git clone https://github.com/peterkingsmesn/workflow-visualizer.git
 cd workflow-visualizer
+
+# 의존성 설치
 npm install
+
+# 개발 서버 시작 (프론트엔드 + 백엔드)
 npm run dev
 ```
 
-주의: 로컬 설치는 Free 플랜 기능만 사용 가능
-
-## 주요 장점
-
-| 문제 | 해결 |
-|------|------|
-| 복잡한 코드 이해 안됨 | 한눈에 보는 시각화 |
-| API 연결 찾기 힘듦 | 자동으로 매칭 |
-| 팀원과 소통 어려움 | 실시간 협업 |
-| AI에게 설명 귀찮음 | 자동 컨텍스트 생성 |
-
-## 핵심 기능
-
-### 스마트 분석
-- 파일 간 의존성 자동 탐지
-- API 호출 추적 및 매핑
-- 순환 참조 문제 찾기
-- 번역 키 누락 체크
-
-### 팀 협업
-- 실시간 공유 - 여러 명이 동시에 보기
-- 즉석 채팅 - 분석하면서 바로 토론
-- 커서 동기화 - 누가 어디 보는지 표시
-
-### AI 친화적
-- JSON 내보내기 - Claude/ChatGPT에 바로 업로드
-- 구조 요약 - AI가 이해하기 쉽게 설명
-- 컨텍스트 생성 - 프로젝트 배경 자동 작성
-
-## 요금제
-
-**월 $9.9 구독으로 무제한 사용**
-
-- 무제한 프로젝트 분석
-- 무제한 파일 크기
-- 모든 AI 분석 기능
-- 로컬 설치 및 사용
-- 업데이트 및 기술 지원
-
-### 구독 방식 설명
-
-1. **월 $9.9 결제** → 라이센스 키 발급
-2. **프로그램 다운로드** → 본인 컴퓨터에 설치
-3. **라이센스 키 입력** → 모든 기능 활성화
-4. **로컬에서 사용** → 서버 부하 없이 빠른 속도
-
-이 방식으로 많은 사용자가 동시에 사용해도 서버 과부하 없이 안정적인 서비스 제공이 가능합니다.
-
-## 간단 명령어
+### 데스크톱 앱 개발
 
 ```bash
-npm run dev         # 개발 서버 (프론트+백엔드)
-npm run build       # 배포용 빌드
-npm run test        # 테스트
+# 데스크톱 의존성 설치
+cd desktop
+npm install
+
+# 데스크톱 앱 개발 모드
+npm run dev
 ```
 
-## 주요 폴더
+### 빌드
 
+```bash
+# 웹 빌드
+npm run build
+
+# 데스크톱 앱 빌드
+npm run desktop:build
+
+# 모든 플랫폼 빌드
+npm run desktop:build:all
 ```
-workflow-visualizer
-├── src/          # 프론트엔드 (React)
-├── server/       # 백엔드 (Node.js)
-└── public/       # 정적 파일
+
+## 📦 배포
+
+### 자동 릴리스
+
+```bash
+# 새 버전 릴리스 (자동 빌드 + GitHub Release)
+npm run release:patch   # 1.0.0 → 1.0.1
+npm run release:minor   # 1.0.0 → 1.1.0  
+npm run release:major   # 1.0.0 → 2.0.0
 ```
 
-## 문제 해결
+### 수동 배포
 
-**포트 충돌?** → `.env`에서 `PORT=3002` 변경
-**분석 안됨?** → 파일 크기 확인
-**로그인 안됨?** → OAuth 설정 확인
+```bash
+# 태그 생성 후 자동 빌드
+git tag v1.1.0
+git push origin v1.1.0
+```
 
-## 도움말
+## 🔧 설정
 
-- **버그 제보**: GitHub Issues
-- **사용법 문의**: Discord 커뮤니티  
-- **비즈니스**: contact@workflow-visualizer.com
+### 환경 변수
+
+```bash
+# .env 파일 생성
+VITE_API_URL=http://localhost:3001
+DATABASE_URL=postgresql://username:password@localhost:5432/workflow_visualizer
+GUMROAD_WEBHOOK_SECRET=your_webhook_secret
+SENDGRID_API_KEY=your_sendgrid_key
+```
+
+### 개발 명령어
+
+자세한 명령어는 [CLAUDE.md](./CLAUDE.md) 파일을 참조하세요.
+
+## 🛡️ 보안
+
+- **라이센스 암호화**: AES-256-CBC 암호화
+- **기기 바인딩**: 머신 ID 기반 라이센스 바인딩
+- **웹훅 검증**: Gumroad 서명 검증
+- **SQL 인젝션 방지**: Prisma ORM 사용
+- **XSS 방지**: React 내장 보안 기능
+
+## 📊 모니터링
+
+- **GitHub Actions**: 자동 빌드 및 테스트
+- **보안 스캔**: CodeQL, Dependabot
+- **라이센스 추적**: 다운로드 및 활성화 통계
+- **오류 추적**: Electron 크래시 리포트
+
+## 🤝 기여 방법
+
+1. 이슈 생성 또는 기존 이슈 확인
+2. 기능 브랜치 생성: `git checkout -b feature/amazing-feature`
+3. 변경사항 커밋: `git commit -m 'feat: add amazing feature'`
+4. 브랜치 푸시: `git push origin feature/amazing-feature`
+5. Pull Request 생성
+
+## 📞 지원
+
+- **이메일**: support@halowf.com
+- **이슈**: [GitHub Issues](https://github.com/peterkingsmesn/workflow-visualizer/issues)
+- **문서**: [CLAUDE.md](./CLAUDE.md)
+
+## 📄 라이센스
+
+이 프로젝트는 상용 라이센스입니다. 사용하려면 구독이 필요합니다.
+
+**구독**: [https://halowf.com/pricing](https://halowf.com/pricing)
+
+---
+
+<div align="center">
+
+**🚀 Made with [Claude Code](https://claude.ai/code)**
+
+[다운로드](https://github.com/peterkingsmesn/workflow-visualizer/releases/latest) • [구독](https://halowf.com/pricing) • [문서](./CLAUDE.md) • [지원](mailto:support@halowf.com)
+
+</div>

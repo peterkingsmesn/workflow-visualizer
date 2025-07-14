@@ -1,0 +1,25 @@
+# Windows 빌드용 Dockerfile
+FROM electronuserland/builder:wine
+
+WORKDIR /project
+
+# Node.js와 npm 설치
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
+# 빌드 스크립트 복사
+COPY package*.json ./
+COPY desktop/package*.json ./desktop/
+
+# 의존성 설치
+RUN npm ci
+RUN cd desktop && npm ci
+
+# 소스 코드 복사
+COPY . .
+
+# 웹 앱 빌드
+RUN npm run build
+
+# Windows 데스크톱 앱 빌드
+CMD ["npm", "run", "desktop:build:windows"]

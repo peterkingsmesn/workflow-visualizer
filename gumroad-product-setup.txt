@@ -1,0 +1,108 @@
+🛒 Gumroad 실제 제품 생성 가이드
+
+=== 1단계: Gumroad 계정 설정 ===
+1. https://gumroad.com 접속
+2. 계정 생성/로그인
+3. Profile 완성 (판매자 정보)
+4. Payment 설정 (은행계좌/PayPal)
+
+=== 2단계: 제품 생성 ===
+제품 정보:
+- 제품명: Workflow Visualizer Pro Subscription
+- 설명: AI-powered code analysis and visualization tool for developers
+- 가격: $9.90
+- 카테고리: Software > Developer Tools
+- 태그: code, analysis, visualization, developer, tools
+
+상세 설명:
+"""
+🚀 Workflow Visualizer Pro - AI 시대의 코드베이스 이해 도구
+
+복잡한 코드베이스를 명확하고 인터랙티브한 시각화로 변환하는 혁신적인 도구입니다.
+
+✨ 주요 기능:
+🔍 스마트 코드 분석 (AI 기반 패턴 인식)
+📊 시각적 워크플로우 매핑
+⚡ 성능 인사이트 및 병목 현상 감지
+👥 실시간 팀 협업 및 공유
+🌍 5개 언어 지원 (한국어, 영어, 일본어, 중국어, 스페인어)
+🖥️ 크로스 플랫폼 데스크톱 앱
+
+💰 구독 혜택:
+✅ 무제한 프로젝트 분석
+✅ 무제한 파일 크기
+✅ 모든 AI 분석 기능
+✅ 로컬 설치 및 사용
+✅ 최대 3대 기기 지원
+✅ 30일 오프라인 사용
+✅ 업데이트 및 기술 지원
+
+📋 시스템 요구사항:
+- Windows 10/11 (64-bit)
+- macOS 10.15+ (Intel/Apple Silicon)  
+- Linux Ubuntu 18.04+
+- RAM 4GB 이상
+- 저장공간 1GB 이상
+
+🎁 7일 무료 체험 후 월 $9.9
+언제든 취소 가능, 환불 보장
+
+📥 다운로드: https://github.com/peterkingsmesn/workflow-visualizer/releases/latest
+📧 지원: support@halowf.com
+"""
+
+=== 3단계: 구독 설정 ===
+1. Product Type: Subscription 선택
+2. Billing Period: Monthly ($9.90)
+3. Free Trial: 7 days
+4. Subscription Settings:
+   - Allow cancellation: Yes
+   - Pro-rate refunds: Yes
+   - Send renewal reminders: Yes
+
+=== 4단계: 디지털 제품 설정 ===
+1. Product Type: Digital Product
+2. File Upload: 라이센스 키 전달 방법 설명 PDF
+3. Instant Download: Yes
+4. Download Limit: Unlimited
+
+=== 5단계: 웹훅 설정 ===
+1. Settings → Advanced → Webhooks
+2. Webhook URL: https://api.halowf.com/api/gumroad/webhook
+3. Events:
+   - sale (새 구독)
+   - subscription_updated (갱신)
+   - subscription_cancelled (취소)
+   - refund (환불)
+
+=== 6단계: API 설정 ===
+1. Settings → Advanced → API
+2. Generate new token
+3. Permissions:
+   - View sales: Yes
+   - View subscribers: Yes
+   - Refund sales: Yes
+
+=== 7단계: 제품 페이지 최적화 ===
+- Cover Image: 1280x720px 제품 스크린샷
+- Gallery: 5-10장 기능 시연 이미지
+- Video: 데모 비디오 (선택사항)
+- SEO: 키워드 최적화
+
+=== 8단계: 런칭 전 테스트 ===
+1. Test Mode에서 구매 프로세스 테스트
+2. 웹훅 동작 확인
+3. 라이센스 키 발송 테스트
+4. 환불 프로세스 테스트
+
+=== 실제 제품 링크 ===
+생성 완료 후:
+- 제품 URL: https://spiderverse10.gumroad.com/l/workflow-visualizer-pro
+- 임베드 코드: 웹사이트 통합용
+- 제휴 링크: 마케팅용
+
+=== 마케팅 설정 ===
+1. Discount Codes: LAUNCH20 (20% 할인)
+2. Affiliate Program: 30% 커미션
+3. Bundle Offers: 연간 구독 할인
+4. Email Sequences: 자동 이메일 설정
