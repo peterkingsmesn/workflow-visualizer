@@ -11,3 +11,4 @@ Mon Jul 14 14:18:29 KST 2025 - Force Vercel rebuild 1752470309
 Mon Jul 14 14:25:15 KST 2025 - Deploy fixed landing page with resolved layout issues and unified logo
 Mon Jul 14 14:28:45 KST 2025 - Force Vercel redeploy with dist directory configuration update
 Mon Jul 14 16:39:48 KST 2025 - Manual deploy attempt trigger
+Mon Jul 14 16:55:22 KST 2025 - Force Vercel deployment trigger
