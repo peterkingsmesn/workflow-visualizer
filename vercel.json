@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "installCommand": "npm install"
+  "buildCommand": "echo 'Static HTML deployment'",
+  "outputDirectory": ".",
+  "framework": null,
+  "installCommand": "echo 'No install needed'"
 }
